@@ -1,1 +1,2 @@
-path 
+Microsoft Edge=C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe
+VLC media player=C:\Program Files\VideoLAN\VLC\vlc.exe
