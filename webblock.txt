@@ -1,1 +1,2 @@
-
+Microsoft Edge=www.bing.com
+VLC media player=www.videolan.org
