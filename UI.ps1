@@ -2,60 +2,14 @@ Set-ExecutionPolicy Bypass -Scope Process -Force;
 $OutputEncoding = [Console]::InputEncoding = [Console]::OutputEncoding = New-Object System.Text.UTF8Encoding
 # About Module :: https://github.com/Darkshadow2019/Uapplist/blob/main/Helper/Menu/about.psm1
 # Raw link :: https://raw.githubusercontent.com/Darkshadow2019/Uapplist/refs/heads/main/Helper/Menu/about.psm1
-class GitHubModuleManager {
-    static [string] $CachePath = "$env:TEMP\PSGitHubModules"
-    
-    static [bool] Install-GitHubModule([string]$Owner, [string]$Repo, [string]$Path, [string]$Branch = "main") {
-        # Create cache directory
-        if (-not (Test-Path [GitHubModuleManager]::CachePath)) {
-            New-Item -Path [GitHubModuleManager]::CachePath -ItemType Directory -Force | Out-Null
-        }
-        
-        $rawUrl = "https://raw.githubusercontent.com/${Owner}/${Repo}/${Branch}/${Path}"
-        $fileName = [System.IO.Path]::GetFileName($Path)
-        $localPath = Join-Path [GitHubModuleManager]::CachePath $fileName
-        
-        try {
-            # Download module
-            Write-Host "🌐 Downloading from GitHub..." -ForegroundColor Cyan
-            Invoke-WebRequest -Uri $rawUrl -OutFile $localPath
-            
-            # Verify download
-            if (Test-Path $localPath) {
-                Import-Module -Name $localPath -Force
-                Write-Host "✅ Module '$fileName' installed successfully!" -ForegroundColor Green
-                return $true
-            }
-            
-        } catch {
-            Write-Error "❌ Installation failed: $($_.Exception.Message)"
-        }
-        
-        return $false
-    }
-    
-    static [object] Get-GitHubModule([string]$Path) {
-        $fileName = [System.IO.Path]::GetFileName($Path)
-        $localPath = Join-Path [GitHubModuleManager]::CachePath $fileName
-        
-        if (Test-Path $localPath) {
-            try {
-                Import-Module -Name $localPath -Force -PassThru
-                return Get-Module -Name ([System.IO.Path]::GetFileNameWithoutExtension($fileName))
-            } catch {
-                Write-Warning "Module found but failed to import: $($_.Exception.Message)"
-            }
-        }
-        
-        return $null
-    }
-}
+# တိုက်ရိုက် တစ်ကြောင်းတည်း ခေါ်သုံးနည်း
+$githubUrl = "https://raw.githubusercontent.com/Darkshadow2019/Uapplist/refs/heads/main/Helper/Menu/about.psm1"
 
-$success = [GitHubModuleManager]::Install-GitHubModule -Owner "Darkshadow2019" -Repo "Uapplist" -Path "Helper/Menu/about.psm1" -Branch "main"
+# Method 1: Download and launch
+irm $githubUrl -OutFile "$env:TEMP\about.psm1"; Import-Module "$env:TEMP\about.psm1" -Force; Show-AboutDialog
 
-if ($success) {
-    Write-Host " About Module is ready to use!" -ForegroundColor Green
-}
+# Method 2: Direct execution (if the module supports it)
+iex (irm $githubUrl); Show-AboutDialog
 # End About module add------------------------------------------------------------
 Clear-Host;
 Write-Host; Write-Host
