@@ -4,13 +4,13 @@ Write-Host; Write-Host
 
 # Test 1: Basic dots
 function Show-Preparing {
-	Write-Host "`nPreparing" -ForegroundColor Yellow
-	Write-Host "`nLoading" -NoNewline	-ForegroundColor Green
+	Write-Host "`n~~~~~~~~~~~~~~~~~~~~Preparing~~~~~~~~~~~~~~~~~~~~" -ForegroundColor Yellow
+	Write-Host "`n[ Loading" -NoNewline	-ForegroundColor Green
 	for ($i = 0; $i -lt 5; $i++) {
     	 Write-Host "." -NoNewline
     	Start-Sleep -Milliseconds 300
 	}
-	Write-Host " Done!" -ForegroundColor Green
+	Write-Host " Done! ]" -ForegroundColor Green
 }
 
  # Test 2: Spinner
