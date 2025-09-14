@@ -3,13 +3,15 @@ Clear-Host;
 Write-Host; Write-Host
 
 # Test 1: Basic dots
-Write-Host "`nPreparing" -ForegroundColor Yellow
-Write-Host "`nLoading" -NoNewline
-for ($i = 0; $i -lt 5; $i++) {
-     Write-Host "." -NoNewline
-    Start-Sleep -Milliseconds 300
+function Show-Preparing {
+	Write-Host "`nPreparing" -ForegroundColor Yellow
+	Write-Host "`nLoading" -NoNewline	-ForegroundColor Green
+	for ($i = 0; $i -lt 5; $i++) {
+    	 Write-Host "." -NoNewline
+    	Start-Sleep -Milliseconds 300
+	}
+	Write-Host " Done!" -ForegroundColor Green
 }
-Write-Host " Done!" -ForegroundColor Green
 
  # Test 2: Spinner
 function Show-Searching {
@@ -82,7 +84,8 @@ function Search-App {
     return $foundApps
 }
 
-#main
+# Main -----------------------------------------------------------------------------------
+Show-Preparing
 $appsToProcess = Get-AppListFromGitHub -Url $githubUrl
 if ($null -ne $appsToProcess) {
 	[string]$AppName
