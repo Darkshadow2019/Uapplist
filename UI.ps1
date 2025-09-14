@@ -122,15 +122,65 @@ Write-Host "`n[ ~~~~~~~~~~~~~~~~~~~~~~~~~~Done~~~~~~~~~~~~~~~~~~~~~~~~~~ ]" -For
 
 # About Module :: https://github.com/Darkshadow2019/Uapplist/blob/main/Helper/Menu/about.psm1
 # Raw link :: https://raw.githubusercontent.com/Darkshadow2019/Uapplist/refs/heads/main/Helper/Menu/about.psm1
-# တိုက်ရိုက် တစ်ကြောင်းတည်း ခေါ်သုံးနည်း
-$githubUrl = "https://raw.githubusercontent.com/Darkshadow2019/Uapplist/refs/heads/main/Helper/Menu/about.psm1"
+# GitHub API ကို အသုံးပြုပြီး ပိုမိုတိကျစွာ သုံးခြင်း
+function Get-GitHubRawContent {
+    param(
+        [string]$Owner,
+        [string]$Repo,
+        [string]$Path,
+        [string]$Branch = "main"
+    )
+    
+    $apiUrl = "https://api.github.com/repos/${Owner}/${Repo}/contents/${Path}?ref=${Branch}"
+    
+    try {
+        $response = Invoke-RestMethod -Uri $apiUrl -Headers @{
+            'Accept' = 'application/vnd.github.v3.raw'
+            'User-Agent' = 'PowerShell'
+        }
+        
+        return $response
+    } catch {
+        Write-Error "GitHub API error: $($_.Exception.Message)"
+        return $null
+    }
+}
 
-# Method 1: Download and launch
-irm $githubUrl -OutFile "$env:TEMP\about.psm1"; Import-Module "$env:TEMP\about.psm1" -Force; Show-AboutDialog
+function Import-GitHubModuleAdvanced {
+    param(
+        [string]$Owner,
+        [string]$Repo,
+        [string]$Path,
+        [string]$Branch = "main"
+    )
+    
+    $content = Get-GitHubRawContent -Owner $Owner -Repo $Repo -Path $Path -Branch $Branch
+    
+    if ($content) {
+        try {
+            # Create temporary file
+            $tempFile = [System.IO.Path]::GetTempFileName() + ".psm1"
+            $content | Out-File -FilePath $tempFile -Encoding UTF8
+            
+            # Import module
+            Import-Module -Name $tempFile -Force
+            
+            Write-Host "✅ GitHub module imported successfully!" -ForegroundColor Green
+            
+            # Clean up
+            Remove-Item -Path $tempFile -Force -ErrorAction SilentlyContinue
+            
+            return $true
+        } catch {
+            Write-Error "Import failed: $($_.Exception.Message)"
+        }
+    }
+    
+    return $false
+}
 
-# Method 2: Direct execution (if the module supports it)
-iex (irm $githubUrl); Show-AboutDialog
-
- #wait press any key to continue
+# အသုံးပြုနည်း
+Import-GitHubModuleAdvanced -Owner "Darkshadow2019" -Repo "Uapplist" -Path "Helper/Menu/about.psm1" -Branch "main"
+#wait press any key to continue
  Read-Host -Prompt "Press any key to continue or CTRL+C to quit" | Out-Null
  
