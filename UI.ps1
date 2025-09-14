@@ -4,7 +4,7 @@ Write-Host; Write-Host
 
 # Test 1: Basic dots
 function Show-Preparing {
-	Write-Host "`n~~~~~~~~~~~~~~~~~~~~Preparing~~~~~~~~~~~~~~~~~~~~" -ForegroundColor Yellow
+	Write-Host "`n[ ~~~~~~~~~~~~~~~~~~~~Preparing~~~~~~~~~~~~~~~~~~~~ ]" -ForegroundColor Yellow
 	Write-Host "`n[ Loading" -NoNewline	-ForegroundColor Green
 	for ($i = 0; $i -lt 5; $i++) {
     	 Write-Host "." -NoNewline
@@ -103,5 +103,6 @@ if ($null -ne $appsToProcess) {
 
 Write-Host "`nScript execution complete." -ForegroundColor Green
 Write-Host;
+Write-Host "`n[ ~~~~~~~~~~~~~~~~~~~~Done~~~~~~~~~~~~~~~~~~~~ ]" -ForegroundColor Yellow
  #wait press any key to continue
  Read-Host -Prompt "Press any key to continue or CTRL+C to quit" | Out-Null
