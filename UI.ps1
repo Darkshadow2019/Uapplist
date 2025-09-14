@@ -1,4 +1,34 @@
-Set-ExecutionPolicy Bypass -Scope Process -Force; 
+Set-ExecutionPolicy Bypass -Scope Process -Force;
+
+function Show-AnimatedMenu {
+    Clear-Host
+    
+    # Loading animation
+    Write-Host "`nLoading Menu" -ForegroundColor Yellow -NoNewline
+    $dots = 3
+    for ($i = 0; $i -lt $dots; $i++) {
+        Write-Host "." -ForegroundColor Yellow -NoNewline
+        Start-Sleep -Milliseconds 300
+    }
+    Clear-Host
+    
+    # Main menu
+    Write-Host "`n"
+    Write-Host "⋆｡˚ ✦ ˚｡⋆｡˚☽˚｡⋆ ⋆｡˚ ✦ ˚｡⋆｡˚☽˚｡⋆" -ForegroundColor Magenta
+    Write-Host "    PowerShell Master Control Panel    " -ForegroundColor Cyan
+    Write-Host "⋆｡˚ ✦ ˚｡⋆｡˚☽˚｡⋆ ⋆｡˚ ✦ ˚｡⋆｡˚☽˚｡⋆" -ForegroundColor Magenta
+    Write-Host "`n"
+    
+    Write-Host "   ✦ 1. System Diagnostics    ✦" -ForegroundColor Green
+    Write-Host "   ✦ 2. Security Scan         ✦" -ForegroundColor Green
+    Write-Host "   ✦ 3. Backup Tools          ✦" -ForegroundColor Green
+    Write-Host "   ✦ 4. Network Utilities     ✦" -ForegroundColor Green
+    Write-Host "   ✦ 5. Settings              ✦" -ForegroundColor Yellow
+    Write-Host "   ✦ 6. Exit                  ✦" -ForegroundColor Red
+    Write-Host "`n"
+    Write-Host "⋆｡˚ ✦ ˚｡⋆｡˚☽˚｡⋆ ⋆｡˚ ✦ ˚｡⋆｡˚☽˚｡⋆" -ForegroundColor Magenta
+}
+Show-AnimatedMenu
 <# Set-ExecutionPolicy RemoteSigned -Scope CurrentUser #>
 $githubUrl = "https://raw.githubusercontent.com/Darkshadow2019/Uapplist/refs/heads/main/applist.txt"
 
