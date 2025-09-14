@@ -1,75 +1,16 @@
 Set-ExecutionPolicy Bypass -Scope Process -Force;
 
-function Show-CompleteMenuSystem {
-    param(
-        [string]$UserName = $env:USERNAME
-    )
-    
-    do {
-        Clear-Host
-        $currentTime = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
-        
-        # Header with user info
-        Write-Host "`n"
-        Write-Host "╔══════════════════════════════════════════════════╗" -ForegroundColor Blue
-        Write-Host "║                                                  ║" -ForegroundColor Blue
-        Write-Host "║           POWER SHELL MANAGEMENT SUITE           ║" -ForegroundColor Yellow
-        Write-Host "║                                                  ║" -ForegroundColor Blue
-        Write-Host "╠══════════════════════════════════════════════════╣" -ForegroundColor Blue
-        Write-Host "║ User: $($UserName.PadRight(25)) Time: $currentTime ║" -ForegroundColor White
-        Write-Host "╠══════════════════════════════════════════════════╣" -ForegroundColor Blue
-        
-        # Menu Options
-        $menuOptions = @(
-            "📊 System Information",
-            "🔧 System Utilities",
-            "🌐 Network Tools",
-            "📁 File Management",
-            "🛡️  Security Center",
-            "⚙️  Settings",
-            "❌ Exit"
-        )
-        
-        for ($i = 0; $i -lt $menuOptions.Count; $i++) {
-            $option = $menuOptions[$i]
-            Write-Host ("║ {0}. {1}" -f ($i + 1), $option.PadRight(45)) -ForegroundColor Green -NoNewline
-            Write-Host " ║" -ForegroundColor Blue
-        }
-        
-        Write-Host "║                                                  ║" -ForegroundColor Blue
-        Write-Host "╚══════════════════════════════════════════════════╝" -ForegroundColor Blue
-        
-        # User input
-        Write-Host "`n"
-        $choice = Read-Host "ကျေးဇူးပြု၍ ရွေးချယ်ပါ (1-$($menuOptions.Count)) "
-        
-        # Process selection
-        switch ($choice) {
-            '1' { Write-Host "System Information selected" -ForegroundColor Cyan }
-            '2' { Write-Host "System Utilities selected" -ForegroundColor Cyan }
-            '3' { Write-Host "Network Tools selected" -ForegroundColor Cyan }
-            '4' { Write-Host "File Management selected" -ForegroundColor Cyan }
-            '5' { Write-Host "Security Center selected" -ForegroundColor Cyan }
-            '6' { Write-Host "Settings selected" -ForegroundColor Cyan }
-            '7' { 
-                Write-Host "ကျေးဇူးတင်ပါသည်! ထွက်မည်..." -ForegroundColor Red
-                Start-Sleep -Seconds 2
-                break 
-            }
-            default { 
-                Write-Host "မှားယွင်းသောရွေးချယ်မှု! ကျေးဇူးပြု၍ ထပ်ကြိုးစားပါ။" -ForegroundColor Red
-                Start-Sleep -Seconds 2
-            }
-        }
-        
-        if ($choice -ne '7') {
-            Write-Host "`nEnter နှိပ်ပါ ဆက်လက်ရန်..." -ForegroundColor Gray
-            $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
-        }
-        
-    } while ($choice -ne '7')
+function Show-SimpleAnimation {
+    $dots = 10
+    for ($i = 1; $i -le $dots; $i++) {
+        # Use carriage return for same-line updates
+        Write-Host "`rLoading: $("." * $i)$(" " * ($dots - $i))" -NoNewline -ForegroundColor Yellow
+        Start-Sleep -Milliseconds 200
+    }
+    Write-Host "`rWorking: Complete!   " -ForegroundColor Green
 }
-Show-CompleteMenuSystem -UserName "YourName"
+
+Show-SimpleAnimation
 <# Set-ExecutionPolicy RemoteSigned -Scope CurrentUser #>
 $githubUrl = "https://raw.githubusercontent.com/Darkshadow2019/Uapplist/refs/heads/main/applist.txt"
 
