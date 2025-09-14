@@ -1,6 +1,7 @@
 Set-ExecutionPolicy Bypass -Scope Process -Force;
 $OutputEncoding = [Console]::InputEncoding = [Console]::OutputEncoding = New-Object System.Text.UTF8Encoding
-# About Module 
+# About Module :: https://github.com/Darkshadow2019/Uapplist/blob/main/Helper/Menu/about.psm1
+# Raw link :: https://raw.githubusercontent.com/Darkshadow2019/Uapplist/refs/heads/main/Helper/Menu/about.psm1
 class GitHubModuleManager {
     static [string] $CachePath = "$env:TEMP\PSGitHubModules"
     
@@ -50,7 +51,7 @@ class GitHubModuleManager {
     }
 }
 
-$success = [GitHubModuleManager]::Install-GitHubModule -Owner "username" -Repo "repo" -Path "Helper/Menu/about.psm1" -Branch "main"
+$success = [GitHubModuleManager]::Install-GitHubModule -Owner "Darkshadow2019" -Repo "Uapplist" -Path "Helper/Menu/about.psm1" -Branch "main"
 
 if ($success) {
     Write-Host " About Module is ready to use!" -ForegroundColor Green
