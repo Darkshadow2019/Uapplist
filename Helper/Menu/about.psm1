@@ -5,7 +5,7 @@ Add-Type -AssemblyName System.Drawing
 # Create the main form
 $form = New-Object System.Windows.Forms.Form
 $form.Text = "About"
-$form.Size = New-Object System.Drawing.Size(450, 200)
+$form.Size = New-Object System.Drawing.Size(480, 200)
 $form.StartPosition = "CenterScreen"
 $form.FormBorderStyle = "FixedSingle" # Prevents resizing
 
@@ -35,6 +35,7 @@ $form.Controls.Add($button)
 # Show the form
 
 $form.ShowDialog()
+
 
 
 
