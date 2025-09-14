@@ -5,14 +5,14 @@ Add-Type -AssemblyName System.Drawing
 # Create the main form
 $form = New-Object System.Windows.Forms.Form
 $form.Text = "About"
-$form.Size = New-Object System.Drawing.Size(400, 200)
+$form.Size = New-Object System.Drawing.Size(430, 200)
 $form.StartPosition = "CenterScreen"
 $form.FormBorderStyle = "FixedSingle" # Prevents resizing
 
 # Create a label to display text
 $label = New-Object System.Windows.Forms.Label
 $label.Text = "WINDOWS TEMPORARY CLEANNER SCRIPT"
-$label.Location = New-Object System.Drawing.Point(100, 50)
+$label.Location = New-Object System.Drawing.Point(80, 50)
 $label.AutoSize = $true
 $label.Font = New-Object System.Drawing.Font("Arial", 16, [System.Drawing.FontStyle]::Bold)
 
@@ -35,4 +35,5 @@ $form.Controls.Add($button)
 # Show the form
 
 $form.ShowDialog()
+
 
