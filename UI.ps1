@@ -1,34 +1,75 @@
 Set-ExecutionPolicy Bypass -Scope Process -Force;
 
-function Show-AnimatedMenu {
-    Clear-Host
+function Show-CompleteMenuSystem {
+    param(
+        [string]$UserName = $env:USERNAME
+    )
     
-    # Loading animation
-    Write-Host "`nLoading Menu" -ForegroundColor Yellow -NoNewline
-    $dots = 3
-    for ($i = 0; $i -lt $dots; $i++) {
-        Write-Host "." -ForegroundColor Yellow -NoNewline
-        Start-Sleep -Milliseconds 300
-    }
-    Clear-Host
-    
-    # Main menu
-    Write-Host "`n"
-    Write-Host "⋆｡˚ ✦ ˚｡⋆｡˚☽˚｡⋆ ⋆｡˚ ✦ ˚｡⋆｡˚☽˚｡⋆" -ForegroundColor Magenta
-    Write-Host "    PowerShell Master Control Panel    " -ForegroundColor Cyan
-    Write-Host "⋆｡˚ ✦ ˚｡⋆｡˚☽˚｡⋆ ⋆｡˚ ✦ ˚｡⋆｡˚☽˚｡⋆" -ForegroundColor Magenta
-    Write-Host "`n"
-    
-    Write-Host "   ✦ 1. System Diagnostics    ✦" -ForegroundColor Green
-    Write-Host "   ✦ 2. Security Scan         ✦" -ForegroundColor Green
-    Write-Host "   ✦ 3. Backup Tools          ✦" -ForegroundColor Green
-    Write-Host "   ✦ 4. Network Utilities     ✦" -ForegroundColor Green
-    Write-Host "   ✦ 5. Settings              ✦" -ForegroundColor Yellow
-    Write-Host "   ✦ 6. Exit                  ✦" -ForegroundColor Red
-    Write-Host "`n"
-    Write-Host "⋆｡˚ ✦ ˚｡⋆｡˚☽˚｡⋆ ⋆｡˚ ✦ ˚｡⋆｡˚☽˚｡⋆" -ForegroundColor Magenta
+    do {
+        Clear-Host
+        $currentTime = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
+        
+        # Header with user info
+        Write-Host "`n"
+        Write-Host "╔══════════════════════════════════════════════════╗" -ForegroundColor Blue
+        Write-Host "║                                                  ║" -ForegroundColor Blue
+        Write-Host "║           POWER SHELL MANAGEMENT SUITE           ║" -ForegroundColor Yellow
+        Write-Host "║                                                  ║" -ForegroundColor Blue
+        Write-Host "╠══════════════════════════════════════════════════╣" -ForegroundColor Blue
+        Write-Host "║ User: $($UserName.PadRight(25)) Time: $currentTime ║" -ForegroundColor White
+        Write-Host "╠══════════════════════════════════════════════════╣" -ForegroundColor Blue
+        
+        # Menu Options
+        $menuOptions = @(
+            "📊 System Information",
+            "🔧 System Utilities",
+            "🌐 Network Tools",
+            "📁 File Management",
+            "🛡️  Security Center",
+            "⚙️  Settings",
+            "❌ Exit"
+        )
+        
+        for ($i = 0; $i -lt $menuOptions.Count; $i++) {
+            $option = $menuOptions[$i]
+            Write-Host ("║ {0}. {1}" -f ($i + 1), $option.PadRight(45)) -ForegroundColor Green -NoNewline
+            Write-Host " ║" -ForegroundColor Blue
+        }
+        
+        Write-Host "║                                                  ║" -ForegroundColor Blue
+        Write-Host "╚══════════════════════════════════════════════════╝" -ForegroundColor Blue
+        
+        # User input
+        Write-Host "`n"
+        $choice = Read-Host "ကျေးဇူးပြု၍ ရွေးချယ်ပါ (1-$($menuOptions.Count)) "
+        
+        # Process selection
+        switch ($choice) {
+            '1' { Write-Host "System Information selected" -ForegroundColor Cyan }
+            '2' { Write-Host "System Utilities selected" -ForegroundColor Cyan }
+            '3' { Write-Host "Network Tools selected" -ForegroundColor Cyan }
+            '4' { Write-Host "File Management selected" -ForegroundColor Cyan }
+            '5' { Write-Host "Security Center selected" -ForegroundColor Cyan }
+            '6' { Write-Host "Settings selected" -ForegroundColor Cyan }
+            '7' { 
+                Write-Host "ကျေးဇူးတင်ပါသည်! ထွက်မည်..." -ForegroundColor Red
+                Start-Sleep -Seconds 2
+                break 
+            }
+            default { 
+                Write-Host "မှားယွင်းသောရွေးချယ်မှု! ကျေးဇူးပြု၍ ထပ်ကြိုးစားပါ။" -ForegroundColor Red
+                Start-Sleep -Seconds 2
+            }
+        }
+        
+        if ($choice -ne '7') {
+            Write-Host "`nEnter နှိပ်ပါ ဆက်လက်ရန်..." -ForegroundColor Gray
+            $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+        }
+        
+    } while ($choice -ne '7')
 }
-Show-AnimatedMenu
+Show-CompleteMenuSystem -UserName "YourName"
 <# Set-ExecutionPolicy RemoteSigned -Scope CurrentUser #>
 $githubUrl = "https://raw.githubusercontent.com/Darkshadow2019/Uapplist/refs/heads/main/applist.txt"
 
