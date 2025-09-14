@@ -18,10 +18,10 @@ function Show-SimpleAnimation {
     $dots = 10
     for ($i = 1; $i -le $dots; $i++) {
         # Use carriage return for same-line updates
-        Write-Host "`rLoading: $("." * $i)$(" " * ($dots - $i))" -NoNewline -ForegroundColor Yellow
+        Write-Host "`rPreparing: $("." * $i)$(" " * ($dots - $i))" -NoNewline -ForegroundColor Yellow
         Start-Sleep -Milliseconds 200
     }
-    Write-Host "`rLoading : Complete!   " -ForegroundColor Green
+    Write-Host "`rPreparing : Complete !" -ForegroundColor Green
 }
 
 # Start Fatch and process 
