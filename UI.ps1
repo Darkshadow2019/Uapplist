@@ -30,19 +30,7 @@ for ($i = 0; $i -le $total; $i++) {
 }
 Write-Host "`rProgress: [###############] 100%   " -ForegroundColor Green
 # End Animations----------------------------------------------------------------------------------------------
-function Show-ProgressAnimation {
-    $total = 30
-    for ($i = 0; $i -le $total; $i++) {
-        $percent = ($i / $total) * 100
-        $progressBar = "[" + ("#" * $i) + (" " * ($total - $i)) + "]"
-        
-        Write-Host "`r$progressBar $percent% Complete" -NoNewline -ForegroundColor Yellow
-        Start-Sleep -Milliseconds 100
-    }
-    Write-Host "`r" + (" " * 50) -NoNewline
-    Write-Host "`r✅ Process Completed!" -ForegroundColor Green
-}
-function Show-SimpleAnimation {
+function Show-PrepairAnimation {
     $dots = 10
     for ($i = 1; $i -le $dots; $i++) {
         # Use carriage return for same-line updates
@@ -110,7 +98,7 @@ if ($null -ne $appsToProcess) {
         Write-Host "`nApplication : $appName" -ForegroundColor Yellow
 		$searchResult = Search-App -appName $appName
 		if ($searchResult) {
-  			Show-SimpleAnimation
+  			Show-PrepairAnimation
 			$searchResult | Format-Table DisplayName, DisplayVersion, Publisher
 		} else {
 			Write-Host "$AppName not found !!!" -ForegroundColor Red
