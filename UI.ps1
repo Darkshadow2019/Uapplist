@@ -1,5 +1,4 @@
 Set-ExecutionPolicy Bypass -Scope Process -Force;
-
 function Show-SimpleAnimation {
     $dots = 10
     for ($i = 1; $i -le $dots; $i++) {
@@ -7,7 +6,7 @@ function Show-SimpleAnimation {
         Write-Host "`rLoading: $("." * $i)$(" " * ($dots - $i))" -NoNewline -ForegroundColor Yellow
         Start-Sleep -Milliseconds 200
     }
-    Write-Host "`rWorking: Complete!   " -ForegroundColor Green
+    Write-Host "`rLoading : Complete!   " -ForegroundColor Green
 }
 
 Show-SimpleAnimation
