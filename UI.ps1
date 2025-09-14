@@ -2,6 +2,34 @@ Set-ExecutionPolicy Bypass -Scope Process -Force;
 Clear-Host;
 Write-Host; Write-Host
 
+# Test 1: Basic dots
+Write-Host "`nTest 1: Basic dots..." -ForegroundColor Yellow
+Write-Host "Loading" -NoNewline
+for ($i = 0; $i -lt 5; $i++) {
+     Write-Host "." -NoNewline
+    Start-Sleep -Milliseconds 300
+}
+Write-Host " Done!" -ForegroundColor Green
+
+ # Test 2: Spinner
+Write-Host "`nTest 2: Spinner..." -ForegroundColor Yellow
+$spinner = @('|', '/', '-', '\')
+for ($i = 0; $i -lt 12; $i++) {
+    Write-Host "`rProcessing $($spinner[$i % 4])" -NoNewline -ForegroundColor Cyan
+    Start-Sleep -Milliseconds 100
+}
+Write-Host "`rProcessing complete!   " -ForegroundColor Green
+
+# Test 3: Progress bar
+Write-Host "`nTest 3: Progress bar..." -ForegroundColor Yellow
+$total = 15
+for ($i = 0; $i -le $total; $i++) {
+    $percent = [math]::Round(($i / $total) * 100)
+    Write-Host "`rProgress: [$('#' * $i)$(' ' * ($total - $i))] $percent%" -NoNewline -ForegroundColor Yellow
+    Start-Sleep -Milliseconds 50
+}
+Write-Host "`rProgress: [###############] 100%   " -ForegroundColor Green
+# End Animations----------------------------------------------------------------------------------------------
 function Show-ProgressAnimation {
     $total = 30
     for ($i = 0; $i -le $total; $i++) {
