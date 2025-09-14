@@ -117,7 +117,6 @@ if ($null -ne $appsToProcess) {
 }
 
 Write-Host "`nScript execution complete." -ForegroundColor Green
-Write-Host;
 Write-Host "`n[ ~~~~~~~~~~~~~~~~~~~~~~~~~~Done~~~~~~~~~~~~~~~~~~~~~~~~~~ ]" -ForegroundColor Yellow
  #wait press any key to continue
  Read-Host -Prompt "Press any key to continue or CTRL+C to quit" | Out-Null
