@@ -89,16 +89,16 @@ function Search-App {
 # Main -----------------------------------------------------------------------------------
 Show-Preparing
 $appsToProcess = Get-AppListFromGitHub -Url $githubUrl
-Show-ProgressBar
 if ($null -ne $appsToProcess) {
 	[string]$AppName
 	foreach ($appName in $appsToProcess) {
  		Show-Searching
    		Write-Host "`n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" -ForegroundColor Yellow
-        Write-Host "`nApplication Name : $appName" -ForegroundColor Yellow
+        Write-Host "`n[ Application Name : $appName ]" -ForegroundColor Yellow
 		$searchResult = Search-App -appName $appName
 		if ($searchResult) {
 			$searchResult | Format-Table DisplayName, DisplayVersion, Publisher
+   			Show-ProgressBar
 		} else {
 			Write-Host "$AppName not found !!!" -ForegroundColor Red
 		}
