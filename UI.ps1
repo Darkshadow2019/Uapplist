@@ -23,20 +23,20 @@ function Show-Searching {
 }
 
 # Test 3: Progress bar
-Write-Host "`nTest 3: Progress bar..." -ForegroundColor Yellow
-$total = 15
-for ($i = 0; $i -le $total; $i++) {
-    $percent = [math]::Round(($i / $total) * 100)
-    Write-Host "`rProgress: [$('#' * $i)$(' ' * ($total - $i))] $percent%" -NoNewline -ForegroundColor Yellow
-    Start-Sleep -Milliseconds 50
+function Show-ProgressBar {
+	Write-Host "`nProcessing..." -ForegroundColor Yellow
+	$total = 15
+	for ($i = 0; $i -le $total; $i++) {
+	    $percent = [math]::Round(($i / $total) * 100)
+	    Write-Host "`rProgress: [$('#' * $i)$(' ' * ($total - $i))] $percent%" -NoNewline -ForegroundColor Yellow
+	    Start-Sleep -Milliseconds 50
+	}
+	Write-Host "`rProgress: [###############] 100%   " -ForegroundColor Green
 }
-Write-Host "`rProgress: [###############] 100%   " -ForegroundColor Green
 # End Animations----------------------------------------------------------------------------------------------
-
 # Start Fatch and process 
 <# Set-ExecutionPolicy RemoteSigned -Scope CurrentUser #>
 $githubUrl = "https://raw.githubusercontent.com/Darkshadow2019/Uapplist/refs/heads/main/applist.txt"
-
 function Get-AppListFromGitHub {
     param (
         [Parameter(Mandatory = $true)]
@@ -60,6 +60,7 @@ function Get-AppListFromGitHub {
 }
 # Find installed applications using Registry  
 function Search-App {
+	 Show-Searching
     param([string]$appName)
     
     $paths = @(
@@ -71,7 +72,6 @@ function Search-App {
     $foundApps = @()
     
     foreach ($path in $paths) {
-	    Show-Searching
         if (Test-Path $path) {
             $apps = Get-ItemProperty $path | 
                    Where-Object { $_.DisplayName -like "*$appName*" } |
@@ -84,6 +84,7 @@ function Search-App {
 }
 
 #main
+Show-ProgressBar
 $appsToProcess = Get-AppListFromGitHub -Url $githubUrl
 if ($null -ne $appsToProcess) {
 	[string]$AppName
@@ -97,7 +98,7 @@ if ($null -ne $appsToProcess) {
 		}
     }
 }
-
+Show-ProgressBar
 Write-Host "`nScript execution complete." -ForegroundColor Green
 Write-Host;
  #wait press any key to continue
