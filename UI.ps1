@@ -1,4 +1,6 @@
 Set-ExecutionPolicy Bypass -Scope Process -Force;
+Clear-Host;
+Write-Host; Write-Host
 
 function Show-ProgressAnimation {
     $total = 30
