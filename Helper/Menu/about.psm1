@@ -5,16 +5,16 @@ Add-Type -AssemblyName System.Drawing
 # Create the main form
 $form = New-Object System.Windows.Forms.Form
 $form.Text = "About"
-$form.Size = New-Object System.Drawing.Size(430, 200)
+$form.Size = New-Object System.Drawing.Size(450, 200)
 $form.StartPosition = "CenterScreen"
 $form.FormBorderStyle = "FixedSingle" # Prevents resizing
 
 # Create a label to display text
 $label = New-Object System.Windows.Forms.Label
 $label.Text = "ယခု Online version 1.0.0.1 ကို`nသုံးရတာအဆင်ပြေရဲ့လားဗျာ?"
-$label.Location = New-Object System.Drawing.Point(80, 50)
+$label.Location = New-Object System.Drawing.Point(120, 50)
+$label.Font = New-Object System.Drawing.Font("Pyidaungsu", 16, [System.Drawing.FontStyle]::Bold)
 $label.AutoSize = $true
-$label.Font = New-Object System.Drawing.Font("Arial", 16, [System.Drawing.FontStyle]::Bold)
 
 # Create a button
 $button = New-Object System.Windows.Forms.Button
@@ -35,6 +35,7 @@ $form.Controls.Add($button)
 # Show the form
 
 $form.ShowDialog()
+
 
 
 
