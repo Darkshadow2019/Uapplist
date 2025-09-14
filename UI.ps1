@@ -10,7 +10,7 @@ function Show-Preparing {
     	 Write-Host "." -NoNewline
     	Start-Sleep -Milliseconds 1000
 	}
-	Write-Host " Done! ]" -ForegroundColor Green
+	Write-Host " ]" -ForegroundColor Green
 }
 
  # Test 2: Spinner
