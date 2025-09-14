@@ -178,9 +178,8 @@ function Import-GitHubModuleAdvanced {
     
     return $false
 }
-
-# အသုံးပြုနည်း
+# Show About
 Import-GitHubModuleAdvanced -Owner "Darkshadow2019" -Repo "Uapplist" -Path "Helper/Menu/about.psm1" -Branch "main"
 #wait press any key to continue
- Read-Host -Prompt "Press any key to continue or CTRL+C to quit" | Out-Null
+ # Read-Host -Prompt "Press any key to continue or CTRL+C to quit" | Out-Null
  
