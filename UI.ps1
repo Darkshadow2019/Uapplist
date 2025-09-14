@@ -102,7 +102,7 @@ $appsToProcess = Get-AppListFromGitHub -Url $githubUrl
 if ($null -ne $appsToProcess) {
 	[string]$AppName
 	foreach ($appName in $appsToProcess) {
-   		Write-Host "`n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" -ForegroundColor Yellow
+   		# Write-Host "`n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" -ForegroundColor Yellow
 	 	Show-Searching
         Write-Host "`n[ Application Name : $appName ]" -ForegroundColor Yellow
 		$searchResult = Search-App -appName $appName
