@@ -27,7 +27,8 @@ function Show-Searching {
 # Test 3: Progress bar
 function Show-ProgressBar {
 	Write-Host "`nProcessing..." -ForegroundColor Yellow
-	$total = 15
+	# $total = 15
+ 	$total = 35
 	for ($i = 0; $i -le $total; $i++) {
 	    $percent = [math]::Round(($i / $total) * 100)
 	    Write-Host "`rProgress: [$('#' * $i)$(' ' * ($total - $i))] $percent%" -NoNewline -ForegroundColor Yellow
