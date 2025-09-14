@@ -94,7 +94,8 @@ if ($null -ne $appsToProcess) {
 	[string]$AppName
 	foreach ($appName in $appsToProcess) {
  		Show-Searching
-        Write-Host "`nApplication : $appName" -ForegroundColor Yellow
+   		Write-Host "`n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" -ForegroundColor Yellow
+        Write-Host "`nApplication Name : $appName" -ForegroundColor Yellow
 		$searchResult = Search-App -appName $appName
 		if ($searchResult) {
 			$searchResult | Format-Table DisplayName, DisplayVersion, Publisher
