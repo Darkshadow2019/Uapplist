@@ -12,7 +12,7 @@ $form.FormBorderStyle = "FixedSingle" # Prevents resizing
 # Create a label to display text
 $label = New-Object System.Windows.Forms.Label
 $label.Text = "ယခု Online version 1.0.0.1 ကို`nသုံးရတာအဆင်ပြေရဲ့လားဗျာ?"
-$label.Location = New-Object System.Drawing.Point(120, 50)
+$label.Location = New-Object System.Drawing.Point(100, 50)
 $label.Font = New-Object System.Drawing.Font("Pyidaungsu", 16, [System.Drawing.FontStyle]::Bold)
 $label.AutoSize = $true
 
@@ -35,6 +35,7 @@ $form.Controls.Add($button)
 # Show the form
 
 $form.ShowDialog()
+
 
 
 
