@@ -3,14 +3,14 @@ $OutputEncoding = [Console]::InputEncoding = [Console]::OutputEncoding = New-Obj
 Clear-Host;
 Write-Host; Write-Host
 #Title+++++++++++++++++++++++++++++++++++
-Write-Host "【+】+++++++++++++++++++++++++++++++++++++++++++++++++++++++【+】" -ForegroundColor Yellow -BackgroundColor red;
-Write-Host "【+】                                                       【+】" -ForegroundColor Yellow -BackgroundColor red;
-Write-Host "【+】   " -ForegroundColor Yellow -BackgroundColor Red -NoNewline; Write-Host “       Windows Temporary Cleanner Script     ” -ForegroundColor Cyan -NoNewline; Write-Host "       【+】" -ForegroundColor Yellow -BackgroundColor red;
-Write-Host "【+】   " -ForegroundColor Yellow -BackgroundColor Red -NoNewline; Write-Host “                 Version 1.0.0.0             ” -ForegroundColor Cyan -NoNewline; Write-Host "       【+】" -ForegroundColor Yellow -BackgroundColor red;
-Write-Host "【+】   " -ForegroundColor Yellow -BackgroundColor Red -NoNewline; Write-Host “               Date : 15.Sep.2025             ” -ForegroundColor Cyan -NoNewline; Write-Host "       【+】" -ForegroundColor Yellow -BackgroundColor red;
-Write-Host "【+】   " -ForegroundColor Yellow -BackgroundColor Red -NoNewline; Write-Host “             By D@rkshadow Myanmar           ” -ForegroundColor White -NoNewline; Write-Host "       【+】" -ForegroundColor Yellow -BackgroundColor red;
-Write-Host "【+】                                                       【+】" -ForegroundColor Yellow -BackgroundColor red
-Write-Host "【+】+++++++++++++++++++++++++++++++++++++++++++++++++++++++【+】" -ForegroundColor Yellow -BackgroundColor red
+Write-Host "[+]+++++++++++++++++++++++++++++++++++++++++++++++++++++++[+]" -ForegroundColor Yellow -BackgroundColor red;
+Write-Host "[+]                                                       [+]" -ForegroundColor Yellow -BackgroundColor red;
+Write-Host "[+]   " -ForegroundColor Yellow -BackgroundColor Red -NoNewline; Write-Host “       Windows Temporary Cleanner Script     ” -ForegroundColor Cyan -NoNewline; Write-Host "       [+]" -ForegroundColor Yellow -BackgroundColor red;
+Write-Host "[+]   " -ForegroundColor Yellow -BackgroundColor Red -NoNewline; Write-Host “                 Version 1.0.0.0             ” -ForegroundColor Cyan -NoNewline; Write-Host "       [+]" -ForegroundColor Yellow -BackgroundColor red;
+Write-Host "[+]   " -ForegroundColor Yellow -BackgroundColor Red -NoNewline; Write-Host “               Date : 15.Sep.2025             ” -ForegroundColor Cyan -NoNewline; Write-Host "       [+]" -ForegroundColor Yellow -BackgroundColor red;
+Write-Host "[+]   " -ForegroundColor Yellow -BackgroundColor Red -NoNewline; Write-Host “             By D@rkshadow Myanmar           ” -ForegroundColor White -NoNewline; Write-Host "       [+]" -ForegroundColor Yellow -BackgroundColor red;
+Write-Host "[+]                                                       [+]" -ForegroundColor Yellow -BackgroundColor red
+Write-Host "[+]+++++++++++++++++++++++++++++++++++++++++++++++++++++++[+]" -ForegroundColor Yellow -BackgroundColor red
 Write-Host 
 # Test 1: Basic dots
 function Show-Preparing {
