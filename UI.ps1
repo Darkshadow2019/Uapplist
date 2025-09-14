@@ -14,9 +14,6 @@ function Show-ProgressAnimation {
     Write-Host "`r" + (" " * 50) -NoNewline
     Write-Host "`r✅ Process Completed!" -ForegroundColor Green
 }
-
-Show-ProgressAnimation
-
 function Show-SimpleAnimation {
     $dots = 10
     for ($i = 1; $i -le $dots; $i++) {
@@ -27,7 +24,7 @@ function Show-SimpleAnimation {
     Write-Host "`rLoading : Complete!   " -ForegroundColor Green
 }
 
-Show-SimpleAnimation
+# Start Fatch and process 
 <# Set-ExecutionPolicy RemoteSigned -Scope CurrentUser #>
 $githubUrl = "https://raw.githubusercontent.com/Darkshadow2019/Uapplist/refs/heads/main/applist.txt"
 
@@ -77,6 +74,7 @@ function Search-App {
 }
 
 #main
+Show-ProgressAnimation
 $appsToProcess = Get-AppListFromGitHub -Url $githubUrl
 if ($null -ne $appsToProcess) {
 	[string]$AppName
@@ -84,6 +82,7 @@ if ($null -ne $appsToProcess) {
         Write-Host "`nApplication : $appName" -ForegroundColor Yellow
 		$searchResult = Search-App -appName $appName
 		if ($searchResult) {
+  			Show-SimpleAnimation
 			$searchResult | Format-Table DisplayName, DisplayVersion, Publisher
 		} else {
 			Write-Host "$AppName not found !!!" -ForegroundColor Red
