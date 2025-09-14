@@ -43,7 +43,7 @@ function Get-AppListFromGitHub {
         [string]$Url
     )
 
-    Write-Host "Fetching application list By D@rkshadow" -ForegroundColor Cyan
+    Write-Host "`nFetching application list By D@rkshadow" -ForegroundColor Cyan
 
     try {
         <# # Fetch content from the provided raw URL. #>
@@ -83,7 +83,6 @@ function Search-App {
 }
 
 #main
-Show-ProgressBar
 $appsToProcess = Get-AppListFromGitHub -Url $githubUrl
 if ($null -ne $appsToProcess) {
 	[string]$AppName
@@ -98,7 +97,7 @@ if ($null -ne $appsToProcess) {
 		}
     }
 }
-Show-ProgressBar
+
 Write-Host "`nScript execution complete." -ForegroundColor Green
 Write-Host;
  #wait press any key to continue
