@@ -3,8 +3,8 @@ Clear-Host;
 Write-Host; Write-Host
 
 # Test 1: Basic dots
-Write-Host "`nTest 1: Basic dots..." -ForegroundColor Yellow
-Write-Host "Loading" -NoNewline
+Write-Host "`nPreparing" -ForegroundColor Yellow
+Write-Host "`nLoading" -NoNewline
 for ($i = 0; $i -lt 5; $i++) {
      Write-Host "." -NoNewline
     Start-Sleep -Milliseconds 300
@@ -12,13 +12,15 @@ for ($i = 0; $i -lt 5; $i++) {
 Write-Host " Done!" -ForegroundColor Green
 
  # Test 2: Spinner
-Write-Host "`nTest 2: Spinner..." -ForegroundColor Yellow
-$spinner = @('|', '/', '-', '\')
-for ($i = 0; $i -lt 12; $i++) {
-    Write-Host "`rProcessing $($spinner[$i % 4])" -NoNewline -ForegroundColor Cyan
-    Start-Sleep -Milliseconds 100
+function Show-Searching {
+	Write-Host "`nSearching ..." -ForegroundColor Yellow
+	$spinner = @('|', '/', '-', '\')
+	for ($i = 0; $i -lt 12; $i++) {
+    	Write-Host "`rProcessing $($spinner[$i % 4])" -NoNewline -ForegroundColor Cyan
+    	Start-Sleep -Milliseconds 100
+	}
+	Write-Host "`rProcessing complete!   " -ForegroundColor Green
 }
-Write-Host "`rProcessing complete!   " -ForegroundColor Green
 
 # Test 3: Progress bar
 Write-Host "`nTest 3: Progress bar..." -ForegroundColor Yellow
@@ -30,15 +32,6 @@ for ($i = 0; $i -le $total; $i++) {
 }
 Write-Host "`rProgress: [###############] 100%   " -ForegroundColor Green
 # End Animations----------------------------------------------------------------------------------------------
-function Show-PrepairAnimation {
-    $dots = 10
-    for ($i = 1; $i -le $dots; $i++) {
-        # Use carriage return for same-line updates
-        Write-Host "`rPreparing : $("." * $i)$(" " * ($dots - $i))" -NoNewline -ForegroundColor Yellow
-        Start-Sleep -Milliseconds 200
-    }
-    Write-Host "`rPreparing : Complete" -ForegroundColor Green
-}
 
 # Start Fatch and process 
 <# Set-ExecutionPolicy RemoteSigned -Scope CurrentUser #>
@@ -78,6 +71,7 @@ function Search-App {
     $foundApps = @()
     
     foreach ($path in $paths) {
+	    Show-Searching
         if (Test-Path $path) {
             $apps = Get-ItemProperty $path | 
                    Where-Object { $_.DisplayName -like "*$appName*" } |
@@ -90,7 +84,6 @@ function Search-App {
 }
 
 #main
-Show-ProgressAnimation
 $appsToProcess = Get-AppListFromGitHub -Url $githubUrl
 if ($null -ne $appsToProcess) {
 	[string]$AppName
@@ -98,7 +91,6 @@ if ($null -ne $appsToProcess) {
         Write-Host "`nApplication : $appName" -ForegroundColor Yellow
 		$searchResult = Search-App -appName $appName
 		if ($searchResult) {
-  			Show-PrepairAnimation
 			$searchResult | Format-Table DisplayName, DisplayVersion, Publisher
 		} else {
 			Write-Host "$AppName not found !!!" -ForegroundColor Red
