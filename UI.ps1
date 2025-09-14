@@ -1,4 +1,20 @@
 Set-ExecutionPolicy Bypass -Scope Process -Force;
+
+function Show-ProgressAnimation {
+    $total = 20
+    for ($i = 0; $i -le $total; $i++) {
+        $percent = ($i / $total) * 100
+        $progressBar = "[" + ("#" * $i) + (" " * ($total - $i)) + "]"
+        
+        Write-Host "`r$progressBar $percent% Complete" -NoNewline -ForegroundColor Yellow
+        Start-Sleep -Milliseconds 100
+    }
+    Write-Host "`r" + (" " * 50) -NoNewline
+    Write-Host "`r✅ Process Completed!" -ForegroundColor Green
+}
+
+Show-ProgressAnimation
+
 function Show-SimpleAnimation {
     $dots = 10
     for ($i = 1; $i -le $dots; $i++) {
