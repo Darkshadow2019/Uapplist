@@ -8,7 +8,7 @@ function Show-Preparing {
 	Write-Host "`n[ Loading" -NoNewline	-ForegroundColor Green
 	for ($i = 0; $i -lt 20; $i++) {
     	 Write-Host "." -NoNewline
-    	Start-Sleep -Milliseconds 1000
+    	Start-Sleep -Milliseconds 500
 	}
 	Write-Host " ]" -ForegroundColor Green
 }
@@ -45,7 +45,8 @@ function Get-AppListFromGitHub {
         [string]$Url
     )
 
-    Write-Host "`nFetching application list By D@rkshadow" -ForegroundColor Cyan
+    Write-Host "`nFetching application list By D@rkshadow Myanmar" -ForegroundColor Cyan
+	
 
     try {
         <# # Fetch content from the provided raw URL. #>
@@ -87,6 +88,7 @@ function Search-App {
 # Main -----------------------------------------------------------------------------------
 Show-Preparing
 $appsToProcess = Get-AppListFromGitHub -Url $githubUrl
+Show-ProgressBar
 if ($null -ne $appsToProcess) {
 	[string]$AppName
 	foreach ($appName in $appsToProcess) {
