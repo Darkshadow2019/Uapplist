@@ -60,7 +60,6 @@ function Get-AppListFromGitHub {
 }
 # Find installed applications using Registry  
 function Search-App {
-	 Show-Searching
     param([string]$appName)
     
     $paths = @(
@@ -89,6 +88,7 @@ $appsToProcess = Get-AppListFromGitHub -Url $githubUrl
 if ($null -ne $appsToProcess) {
 	[string]$AppName
 	foreach ($appName in $appsToProcess) {
+ 		Show-Searching
         Write-Host "`nApplication : $appName" -ForegroundColor Yellow
 		$searchResult = Search-App -appName $appName
 		if ($searchResult) {
