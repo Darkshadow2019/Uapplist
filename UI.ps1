@@ -8,7 +8,7 @@ function Show-Preparing {
 	Write-Host "`n[ Loading" -NoNewline	-ForegroundColor Green
 	for ($i = 0; $i -lt 20; $i++) {
     	 Write-Host "." -NoNewline
-    	Start-Sleep -Milliseconds 300
+    	Start-Sleep -Milliseconds 1000
 	}
 	Write-Host " Done! ]" -ForegroundColor Green
 }
