@@ -108,10 +108,11 @@ if ($null -ne $appsToProcess) {
 		$searchResult = Search-App -appName $appName
 		if ($searchResult) {
 			$searchResult | Format-Table DisplayName, DisplayVersion, Publisher
+   			Show-ProgressBar
 		} else {
 			Write-Host "[ $AppName not found !!! ]" -ForegroundColor Red
 		}
-  		Show-ProgressBar
+  		Write-Host "`n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" -ForegroundColor Yellow
     }
 }
 
