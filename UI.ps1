@@ -1,15 +1,5 @@
 Set-ExecutionPolicy Bypass -Scope Process -Force;
 $OutputEncoding = [Console]::InputEncoding = [Console]::OutputEncoding = New-Object System.Text.UTF8Encoding
-# About Module :: https://github.com/Darkshadow2019/Uapplist/blob/main/Helper/Menu/about.psm1
-# Raw link :: https://raw.githubusercontent.com/Darkshadow2019/Uapplist/refs/heads/main/Helper/Menu/about.psm1
-# တိုက်ရိုက် တစ်ကြောင်းတည်း ခေါ်သုံးနည်း
-$githubUrl = "https://raw.githubusercontent.com/Darkshadow2019/Uapplist/refs/heads/main/Helper/Menu/about.psm1"
-
-# Method 1: Download and launch
-irm $githubUrl -OutFile "$env:TEMP\about.psm1"; Import-Module "$env:TEMP\about.psm1" -Force; Show-AboutDialog
-
-# Method 2: Direct execution (if the module supports it)
-iex (irm $githubUrl); Show-AboutDialog
 # End About module add------------------------------------------------------------
 Clear-Host;
 Write-Host; Write-Host
@@ -129,6 +119,18 @@ if ($null -ne $appsToProcess) {
 
 Write-Host "`nScript execution complete." -ForegroundColor Green
 Write-Host "`n[ ~~~~~~~~~~~~~~~~~~~~~~~~~~Done~~~~~~~~~~~~~~~~~~~~~~~~~~ ]" -ForegroundColor Yellow
+
+# About Module :: https://github.com/Darkshadow2019/Uapplist/blob/main/Helper/Menu/about.psm1
+# Raw link :: https://raw.githubusercontent.com/Darkshadow2019/Uapplist/refs/heads/main/Helper/Menu/about.psm1
+# တိုက်ရိုက် တစ်ကြောင်းတည်း ခေါ်သုံးနည်း
+$githubUrl = "https://raw.githubusercontent.com/Darkshadow2019/Uapplist/refs/heads/main/Helper/Menu/about.psm1"
+
+# Method 1: Download and launch
+irm $githubUrl -OutFile "$env:TEMP\about.psm1"; Import-Module "$env:TEMP\about.psm1" -Force; Show-AboutDialog
+
+# Method 2: Direct execution (if the module supports it)
+iex (irm $githubUrl); Show-AboutDialog
+
  #wait press any key to continue
  Read-Host -Prompt "Press any key to continue or CTRL+C to quit" | Out-Null
  
