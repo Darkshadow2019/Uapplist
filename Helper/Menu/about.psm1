@@ -11,7 +11,7 @@ $form.FormBorderStyle = "FixedSingle" # Prevents resizing
 
 # Create a label to display text
 $label = New-Object System.Windows.Forms.Label
-$label.Text = "WINDOWS TEMPORARY CLEANNER SCRIPT"
+$label.Text = "အဆင်ပြေရဲ့လားဗျာ?"
 $label.Location = New-Object System.Drawing.Point(80, 50)
 $label.AutoSize = $true
 $label.Font = New-Object System.Drawing.Font("Arial", 16, [System.Drawing.FontStyle]::Bold)
@@ -35,5 +35,6 @@ $form.Controls.Add($button)
 # Show the form
 
 $form.ShowDialog()
+
 
 
