@@ -1,7 +1,7 @@
 Set-ExecutionPolicy Bypass -Scope Process -Force;
 
 function Show-ProgressAnimation {
-    $total = 20
+    $total = 60
     for ($i = 0; $i -le $total; $i++) {
         $percent = ($i / $total) * 100
         $progressBar = "[" + ("#" * $i) + (" " * ($total - $i)) + "]"
