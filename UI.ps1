@@ -1,5 +1,61 @@
 Set-ExecutionPolicy Bypass -Scope Process -Force;
 $OutputEncoding = [Console]::InputEncoding = [Console]::OutputEncoding = New-Object System.Text.UTF8Encoding
+# About Module 
+class GitHubModuleManager {
+    static [string] $CachePath = "$env:TEMP\PSGitHubModules"
+    
+    static [bool] Install-GitHubModule([string]$Owner, [string]$Repo, [string]$Path, [string]$Branch = "main") {
+        # Create cache directory
+        if (-not (Test-Path [GitHubModuleManager]::CachePath)) {
+            New-Item -Path [GitHubModuleManager]::CachePath -ItemType Directory -Force | Out-Null
+        }
+        
+        $rawUrl = "https://raw.githubusercontent.com/${Owner}/${Repo}/${Branch}/${Path}"
+        $fileName = [System.IO.Path]::GetFileName($Path)
+        $localPath = Join-Path [GitHubModuleManager]::CachePath $fileName
+        
+        try {
+            # Download module
+            Write-Host "🌐 Downloading from GitHub..." -ForegroundColor Cyan
+            Invoke-WebRequest -Uri $rawUrl -OutFile $localPath
+            
+            # Verify download
+            if (Test-Path $localPath) {
+                Import-Module -Name $localPath -Force
+                Write-Host "✅ Module '$fileName' installed successfully!" -ForegroundColor Green
+                return $true
+            }
+            
+        } catch {
+            Write-Error "❌ Installation failed: $($_.Exception.Message)"
+        }
+        
+        return $false
+    }
+    
+    static [object] Get-GitHubModule([string]$Path) {
+        $fileName = [System.IO.Path]::GetFileName($Path)
+        $localPath = Join-Path [GitHubModuleManager]::CachePath $fileName
+        
+        if (Test-Path $localPath) {
+            try {
+                Import-Module -Name $localPath -Force -PassThru
+                return Get-Module -Name ([System.IO.Path]::GetFileNameWithoutExtension($fileName))
+            } catch {
+                Write-Warning "Module found but failed to import: $($_.Exception.Message)"
+            }
+        }
+        
+        return $null
+    }
+}
+
+$success = [GitHubModuleManager]::Install-GitHubModule -Owner "username" -Repo "repo" -Path "Helper/Menu/about.psm1" -Branch "main"
+
+if ($success) {
+    Write-Host " About Module is ready to use!" -ForegroundColor Green
+}
+# End About module add------------------------------------------------------------
 Clear-Host;
 Write-Host; Write-Host
 #Title+++++++++++++++++++++++++++++++++++
@@ -120,3 +176,4 @@ Write-Host "`nScript execution complete." -ForegroundColor Green
 Write-Host "`n[ ~~~~~~~~~~~~~~~~~~~~~~~~~~Done~~~~~~~~~~~~~~~~~~~~~~~~~~ ]" -ForegroundColor Yellow
  #wait press any key to continue
  Read-Host -Prompt "Press any key to continue or CTRL+C to quit" | Out-Null
+ 
