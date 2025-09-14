@@ -33,7 +33,7 @@ function Show-ProgressBar {
 	    Write-Host "`rProgress: [$('#' * $i)$(' ' * ($total - $i))] $percent%" -NoNewline -ForegroundColor Yellow
 	    Start-Sleep -Milliseconds 50
 	}
-	Write-Host "`rProgress: [###############] 100%   " -ForegroundColor Green
+	Write-Host "`rProgress: [###################################] 100%   " -ForegroundColor Green
 }
 # End Animations----------------------------------------------------------------------------------------------
 # Start Fatch and process 
