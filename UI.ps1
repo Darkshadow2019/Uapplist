@@ -57,18 +57,18 @@ function Import-GitHubModuleAdvanced {
         [string]$Branch = "main"
     )
     
-    $content = Get-GitHubRawContent -Owner $Owner -Repo $Repo -Path $Path -Branch $Branch
+    $contentAbout = Get-GitHubRawContent -Owner $Owner -Repo $Repo -Path $Path -Branch $Branch
     
-    if ($content) {
+    if ($contentAbout) {
         try {
             # Create temporary file
-            $tempFile = [System.IO.Path]::GetTempFileName() + ".psm1"
-            $content | Out-File -FilePath $tempFile -Encoding UTF8
+            $tempFileAbout = [System.IO.Path]::GetTempFileName() + ".psm1"
+            $contentAbout | Out-File -FilePath $tempFileAbout -Encoding UTF8
             
             # Import module
-            Import-Module -Name $tempFile -Force
+            Import-Module -Name $tempFileAbout -Force
             
-            Write-Host "✅ GitHub module imported successfully!" -ForegroundColor Green
+            Write-Host "✅ GitHub About module imported successfully!" -ForegroundColor Green
             
             # Clean up
             Remove-Item -Path $tempFile -Force -ErrorAction SilentlyContinue
@@ -82,6 +82,63 @@ function Import-GitHubModuleAdvanced {
     return $false
 }
 # End Module Adding ----------------------------------------------------------------------------------------------------------
+# uni Module -----------------------------------------------------------------------------------------------------------------
+# GitHub API 
+function Get-GitHubRawContentUni {
+    param(
+        [string]$Owner,
+        [string]$Repo,
+        [string]$Path,
+        [string]$Branch = "main"
+    )
+    
+    $apiUrl = "https://api.github.com/repos/${Owner}/${Repo}/contents/${Path}?ref=${Branch}"
+    
+    try {
+        $response = Invoke-RestMethod -Uri $apiUrl -Headers @{
+            'Accept' = 'application/vnd.github.v3.raw'
+            'User-Agent' = 'PowerShell'
+        }
+        
+        return $response
+    } catch {
+        Write-Error "GitHub API error: $($_.Exception.Message)"
+        return $null
+    }
+}
+
+function Import-GitHubModuleAdvancedUni {
+    param(
+        [string]$Owner,
+        [string]$Repo,
+        [string]$Path,
+        [string]$Branch = "main"
+    )
+    
+    $contentUni = Get-GitHubRawContentUni -Owner $Owner -Repo $Repo -Path $Path -Branch $Branch
+    
+    if ($contentUnin) {
+        try {
+            # Create temporary file
+            $tempFileUni = [System.IO.Path]::GetTempFileName() + ".psm1"
+            $contentUnin | Out-File -FilePath $tempFileUni -Encoding UTF8
+            
+            # Import module
+            Import-Module -Name $tempFileUni -Force
+            
+            Write-Host "✅ GitHub Uninstaller module imported successfully!" -ForegroundColor Green
+            
+            # Clean up
+            Remove-Item -Path $tempFileUni -Force -ErrorAction SilentlyContinue
+            
+            return $true
+        } catch {
+            Write-Error "Import failed: $($_.Exception.Message)"
+        }
+    }
+    
+    return $false
+}
 Clear-Host;
 Write-Host; Write-Host
 #Title+++++++++++++++++++++++++++++++++++
