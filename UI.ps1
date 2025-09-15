@@ -24,70 +24,62 @@ if (-not (Test-Admin)) {
 Write-Host "✅ Running with administrator privileges!" -ForegroundColor Green
 Get-Date
 # End About module add------------------------------------------------------------
-# GitHub API နဲ့ module import လုပ်ခြင်း
-function Import-GitHubModule {
+function Get-GitHubRawContent {
     param(
         [string]$Owner,
         [string]$Repo,
-        [string]$FolderPath = "Helper/Menu",
+        [string]$Path,
         [string]$Branch = "main"
     )
     
-    # GitHub API URL
-    $apiUrl = "https://api.github.com/repos/$Owner/$Repo/contents/$FolderPath"
+    $apiUrl = "https://api.github.com/repos/${Owner}/${Repo}/contents/${Path}?ref=${Branch}"
     
     try {
-        Write-Host "🔍 Searching for modules in GitHub..." -ForegroundColor Yellow
-        
-        # Get folder contents
         $response = Invoke-RestMethod -Uri $apiUrl -Headers @{
-            'Accept' = 'application/vnd.github.v3+json'
+            'Accept' = 'application/vnd.github.v3.raw'
             'User-Agent' = 'PowerShell'
         }
         
-        # Filter for .psm1 files
-        $moduleFiles = $response | Where-Object { $_.name -like "*.psm1" }
-        
-        if (-not $moduleFiles) {
-            Write-Host "❌ No .psm1 files found in the Tools folder" -ForegroundColor Red
-            return $false
-        }
-        
-        Write-Host "✅ Found $($moduleFiles.Count) module files:" -ForegroundColor Green
-        $moduleFiles | ForEach-Object { Write-Host "• $($_.name)" -ForegroundColor Cyan }
-        
-        # Download and import each module
-        foreach ($moduleFile in $moduleFiles) {
-            $downloadUrl = $moduleFile.download_url
-            $moduleName = [System.IO.Path]::GetFileNameWithoutExtension($moduleFile.name)
-            
-            Write-Host "📥 Downloading $($moduleFile.name)..." -ForegroundColor Yellow
-            
-            # Download module content
-            $moduleContent = Invoke-RestMethod -Uri $downloadUrl -ErrorAction Stop
-            
-            # Create temporary module file
-            $tempFile = Join-Path $env:TEMP "$($moduleFile.name)"
-            $moduleContent | Out-File -FilePath $tempFile -Encoding UTF8
-            
-            # Import module
-            try {
-                Import-Module -Name $tempFile -Force -ErrorAction Stop
-                Write-Host "✅ Successfully imported: $moduleName" -ForegroundColor Green
-            } catch {
-                Write-Host "⚠️  Warning: Could not import $moduleName - $($_.Exception.Message)" -ForegroundColor Yellow
-            }
-        }
-        
-        return $true
-        
+        return $response
     } catch {
-        Write-Host "❌ GitHub API error: $($_.Exception.Message)" -ForegroundColor Red
-        return $false
+        Write-Error "GitHub API error: $($_.Exception.Message)"
+        return $null
     }
 }
 
-$success = Import-GitHubModule -Owner "username" -Repo "Darkshadow2019" -FolderPath "Menu" -ModuleName "about.psm1" -Branch "main"
+function Import-GitHubModuleAdvanced {
+    param(
+        [string]$Owner,
+        [string]$Repo,
+        [string]$Path,
+        [string]$Branch = "main"
+    )
+    
+    $content = Get-GitHubRawContent -Owner $Owner -Repo $Repo -Path $Path -Branch $Branch
+    
+    if ($content) {
+        try {
+            # Create temporary file
+            $tempFile = [System.IO.Path]::GetTempFileName() + ".psm1"
+            $content | Out-File -FilePath $tempFile -Encoding UTF8
+            
+            # Import module
+            Import-Module -Name $tempFile -Force
+            
+            Write-Host "✅ GitHub module imported successfully!" -ForegroundColor Green
+            
+            # Clean up
+            Remove-Item -Path $tempFile -Force -ErrorAction SilentlyContinue
+            
+            return $true
+        } catch {
+            Write-Error "Import failed: $($_.Exception.Message)"
+        }
+    }
+    
+    return $false
+}
+Import-GitHubModuleAdvanced -Owner "Darkshadow2019" -Repo "Uapplist" -Path "Helper/Menu/about.psm1" -Branch "main"
 # End Module Adding ----------------------------------------------------------------------------------------------------------
 Clear-Host;
 Write-Host; Write-Host
