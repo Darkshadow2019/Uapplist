@@ -24,63 +24,70 @@ if (-not (Test-Admin)) {
 Write-Host "✅ Running with administrator privileges!" -ForegroundColor Green
 Get-Date
 # End About module add------------------------------------------------------------
-function Get-GitHubRawContent {
+# GitHub API နဲ့ module import လုပ်ခြင်း
+function Import-GitHubModule {
     param(
         [string]$Owner,
         [string]$Repo,
-        [string]$Path,
+        [string]$FolderPath = "Tools",
         [string]$Branch = "main"
     )
     
-    $apiUrl = "https://api.github.com/repos/${Owner}/${Repo}/contents/${Path}?ref=${Branch}"
+    # GitHub API URL
+    $apiUrl = "https://api.github.com/repos/$Owner/$Repo/contents/$FolderPath"
     
     try {
+        Write-Host "🔍 Searching for modules in GitHub..." -ForegroundColor Yellow
+        
+        # Get folder contents
         $response = Invoke-RestMethod -Uri $apiUrl -Headers @{
-            'Accept' = 'application/vnd.github.v3.raw'
+            'Accept' = 'application/vnd.github.v3+json'
             'User-Agent' = 'PowerShell'
         }
         
-        return $response
-    } catch {
-        Write-Error "GitHub API error: $($_.Exception.Message)"
-        return $null
-    }
-}
-
-function Import-GitHubModuleAdvanced {
-    param(
-        [string]$Owner,
-        [string]$Repo,
-        [string]$Path,
-        [string]$Branch = "main"
-    )
-    
-    $content = Get-GitHubRawContent -Owner $Owner -Repo $Repo -Path $Path -Branch $Branch
-    
-    if ($content) {
-        try {
-            # Create temporary file
-            $tempFile = [System.IO.Path]::GetTempFileName() + ".psm1"
-            $content | Out-File -FilePath $tempFile -Encoding UTF8
+        # Filter for .psm1 files
+        $moduleFiles = $response | Where-Object { $_.name -like "*.psm1" }
+        
+        if (-not $moduleFiles) {
+            Write-Host "❌ No .psm1 files found in the Tools folder" -ForegroundColor Red
+            return $false
+        }
+        
+        Write-Host "✅ Found $($moduleFiles.Count) module files:" -ForegroundColor Green
+        $moduleFiles | ForEach-Object { Write-Host "• $($_.name)" -ForegroundColor Cyan }
+        
+        # Download and import each module
+        foreach ($moduleFile in $moduleFiles) {
+            $downloadUrl = $moduleFile.download_url
+            $moduleName = [System.IO.Path]::GetFileNameWithoutExtension($moduleFile.name)
+            
+            Write-Host "📥 Downloading $($moduleFile.name)..." -ForegroundColor Yellow
+            
+            # Download module content
+            $moduleContent = Invoke-RestMethod -Uri $downloadUrl -ErrorAction Stop
+            
+            # Create temporary module file
+            $tempFile = Join-Path $env:TEMP "$($moduleFile.name)"
+            $moduleContent | Out-File -FilePath $tempFile -Encoding UTF8
             
             # Import module
-            Import-Module -Name $tempFile -Force
-            
-            Write-Host "✅ GitHub module imported successfully!" -ForegroundColor Green
-            
-            # Clean up
-            Remove-Item -Path $tempFile -Force -ErrorAction SilentlyContinue
-            
-            return $true
-        } catch {
-            Write-Error "Import failed: $($_.Exception.Message)"
+            try {
+                Import-Module -Name $tempFile -Force -ErrorAction Stop
+                Write-Host "✅ Successfully imported: $moduleName" -ForegroundColor Green
+            } catch {
+                Write-Host "⚠️  Warning: Could not import $moduleName - $($_.Exception.Message)" -ForegroundColor Yellow
+            }
         }
+        
+        return $true
+        
+    } catch {
+        Write-Host "❌ GitHub API error: $($_.Exception.Message)" -ForegroundColor Red
+        return $false
     }
-    
-    return $false
 }
 
-# Import-GitHubModuleAdvanced -Owner "Darkshadow2019" -Repo "Uapplist" -Path "Helper/Menu/about.psm1" -Branch "main"
+$success = Import-GitHubModule -Owner "username" -Repo "Darkshadow2019" -FolderPath "Tools/about.psm1" -Branch "main"
 # End Module Adding ----------------------------------------------------------------------------------------------------------
 Clear-Host;
 Write-Host; Write-Host
@@ -206,7 +213,7 @@ Write-Host "`nScript execution complete." -ForegroundColor Green
 Write-Host "`n[ ~~~~~~~~~~~~~~~~~~~~~~~~~~Done~~~~~~~~~~~~~~~~~~~~~~~~~~ ]" -ForegroundColor Yellow
 
 # Show About
-Import-GitHubModuleAdvanced -Owner "Darkshadow2019" -Repo "Uapplist" -Path "Helper/Menu/about.psm1" -Branch "main"
+# Import-GitHubModuleAdvanced -Owner "Darkshadow2019" -Repo "Uapplist" -Path "Helper/Menu/about.psm1" -Branch "main"
 # Import-GitHubModulesWithCache -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Menu/about.psm1" -Branch "main"
 #wait press any key to continue
  # Read-Host -Prompt "Press any key to continue or CTRL+C to quit" | Out-Null
