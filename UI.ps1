@@ -192,7 +192,7 @@ if ($null -ne $appsToProcess) {
 	 		Show-ProgressBar
 			# [SilentAppRemover]::RemoveApplication("ApplicationName")
 	 		$uni=Import-GitHubModuleAdvanced -Owner "Darkshadow2019" -Repo "Uapplist" -Path "Helper/Tools/uin.psm1" -Branch "main"
-	 		$uni.[SilentAppRemover]::RemoveApplication($appName)
+	 		Wirte-Host "$uni"
 		} else {
 			Write-Host "[ $AppName not found !!! ]" -ForegroundColor Red
 		}
