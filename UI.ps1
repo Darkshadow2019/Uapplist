@@ -199,7 +199,7 @@ if ($null -ne $appsToProcess) {
 		if ($searchResult) {
 			$searchResult | Format-Table DisplayName, DisplayVersion, Publisher
 	 		Show-ProgressBar
-			SilentAppRemover::RemoveApplication("AppNameToRemove")
+			SilentAppRemover::RemoveApplication($appName)
 			
 		} else {
 			Write-Host "[ $AppName not found !!! ]" -ForegroundColor Red
