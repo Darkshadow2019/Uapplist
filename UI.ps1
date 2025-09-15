@@ -203,7 +203,7 @@ if ($null -ne $appsToProcess) {
    			# Show-ProgressBar
 	  		Import-GitHubModuleAdvanced -Owner "Darkshadow2019" -Repo "Uapplist" -Path "Helper/Tools/uin.psm1" -Branch "main"
 	 		Show-ProgressBar
-	 		[SilentAppRemover]::RemoveApplication($appName)
+	 		$success = [SilentAppRemover]::RemoveApplication($appName)
 	 		
 		} else {
 			Write-Host "[ $AppName not found !!! ]" -ForegroundColor Red
