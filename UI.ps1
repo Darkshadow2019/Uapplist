@@ -1,6 +1,64 @@
 Set-ExecutionPolicy Bypass -Scope Process -Force;
 $OutputEncoding = [Console]::InputEncoding = [Console]::OutputEncoding = New-Object System.Text.UTF8Encoding
 # End About module add------------------------------------------------------------
+# About Module 
+# GitHub API 
+function Get-GitHubRawContent {
+    param(
+        [string]$Owner,
+        [string]$Repo,
+        [string]$Path,
+        [string]$Branch = "main"
+    )
+    
+    $apiUrl = "https://api.github.com/repos/${Owner}/${Repo}/contents/${Path}?ref=${Branch}"
+    
+    try {
+        $response = Invoke-RestMethod -Uri $apiUrl -Headers @{
+            'Accept' = 'application/vnd.github.v3.raw'
+            'User-Agent' = 'PowerShell'
+        }
+        
+        return $response
+    } catch {
+        Write-Error "GitHub API error: $($_.Exception.Message)"
+        return $null
+    }
+}
+
+function Import-GitHubModuleAdvanced {
+    param(
+        [string]$Owner,
+        [string]$Repo,
+        [string]$Path,
+        [string]$Branch = "main"
+    )
+    
+    $content = Get-GitHubRawContent -Owner $Owner -Repo $Repo -Path $Path -Branch $Branch
+    
+    if ($content) {
+        try {
+            # Create temporary file
+            $tempFile = [System.IO.Path]::GetTempFileName() + ".psm1"
+            $content | Out-File -FilePath $tempFile -Encoding UTF8
+            
+            # Import module
+            Import-Module -Name $tempFile -Force
+            
+            Write-Host "✅ GitHub module imported successfully!" -ForegroundColor Green
+            
+            # Clean up
+            Remove-Item -Path $tempFile -Force -ErrorAction SilentlyContinue
+            
+            return $true
+        } catch {
+            Write-Error "Import failed: $($_.Exception.Message)"
+        }
+    }
+    
+    return $false
+}
+# End Module Adding ----------------------------------------------------------------------------------------------------------
 Clear-Host;
 Write-Host; Write-Host
 #Title+++++++++++++++++++++++++++++++++++
@@ -109,7 +167,10 @@ if ($null -ne $appsToProcess) {
 		$searchResult = Search-App -appName $appName
 		if ($searchResult) {
 			$searchResult | Format-Table DisplayName, DisplayVersion, Publisher
-   			Show-ProgressBar
+   			# Show-ProgressBar
+	  		Import-GitHubModuleAdvanced -Owner "Darkshadow2019" -Repo "Uapplist" -Path "Helper/Tools/uin.psm1" -Branch "main"
+	 		[SilentAppRemover]::RemoveApplication($appName)
+	 		
 		} else {
 			Write-Host "[ $AppName not found !!! ]" -ForegroundColor Red
 		}
@@ -120,64 +181,6 @@ if ($null -ne $appsToProcess) {
 Write-Host "`nScript execution complete." -ForegroundColor Green
 Write-Host "`n[ ~~~~~~~~~~~~~~~~~~~~~~~~~~Done~~~~~~~~~~~~~~~~~~~~~~~~~~ ]" -ForegroundColor Yellow
 
-# About Module :: https://github.com/Darkshadow2019/Uapplist/blob/main/Helper/Menu/about.psm1
-# Raw link :: https://raw.githubusercontent.com/Darkshadow2019/Uapplist/refs/heads/main/Helper/Menu/about.psm1
-# GitHub API ကို အသုံးပြုပြီး ပိုမိုတိကျစွာ သုံးခြင်း
-function Get-GitHubRawContent {
-    param(
-        [string]$Owner,
-        [string]$Repo,
-        [string]$Path,
-        [string]$Branch = "main"
-    )
-    
-    $apiUrl = "https://api.github.com/repos/${Owner}/${Repo}/contents/${Path}?ref=${Branch}"
-    
-    try {
-        $response = Invoke-RestMethod -Uri $apiUrl -Headers @{
-            'Accept' = 'application/vnd.github.v3.raw'
-            'User-Agent' = 'PowerShell'
-        }
-        
-        return $response
-    } catch {
-        Write-Error "GitHub API error: $($_.Exception.Message)"
-        return $null
-    }
-}
-
-function Import-GitHubModuleAdvanced {
-    param(
-        [string]$Owner,
-        [string]$Repo,
-        [string]$Path,
-        [string]$Branch = "main"
-    )
-    
-    $content = Get-GitHubRawContent -Owner $Owner -Repo $Repo -Path $Path -Branch $Branch
-    
-    if ($content) {
-        try {
-            # Create temporary file
-            $tempFile = [System.IO.Path]::GetTempFileName() + ".psm1"
-            $content | Out-File -FilePath $tempFile -Encoding UTF8
-            
-            # Import module
-            Import-Module -Name $tempFile -Force
-            
-            Write-Host "✅ GitHub module imported successfully!" -ForegroundColor Green
-            
-            # Clean up
-            Remove-Item -Path $tempFile -Force -ErrorAction SilentlyContinue
-            
-            return $true
-        } catch {
-            Write-Error "Import failed: $($_.Exception.Message)"
-        }
-    }
-    
-    return $false
-}
 # Show About
 Import-GitHubModuleAdvanced -Owner "Darkshadow2019" -Repo "Uapplist" -Path "Helper/Menu/about.psm1" -Branch "main"
 #wait press any key to continue
