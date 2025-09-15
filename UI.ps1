@@ -29,7 +29,7 @@ function Get-GitHubRawContent {
     param(
         [string]$Owner,
         [string]$Repo,
-        [string]$Path,
+        [string]$Path="Helper",
         [string]$Branch = "main"
     )
     
@@ -208,7 +208,7 @@ Write-Host "`n[ ~~~~~~~~~~~~~~~~~~~~~~~~~~Done~~~~~~~~~~~~~~~~~~~~~~~~~~ ]" -For
 
 # Show About
 # Import-GitHubModuleAdvanced -Owner "Darkshadow2019" -Repo "Uapplist" -Path "Helper/Menu/about.psm1" -Branch "main"
-Import-GitHubModulesWithCache -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Menu" -Module "about.psm1" -Branch "main"
+Import-GitHubModulesWithCache -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Menu/about.psm1" -Branch "main"
 #wait press any key to continue
  # Read-Host -Prompt "Press any key to continue or CTRL+C to quit" | Out-Null
  
