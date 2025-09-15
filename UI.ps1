@@ -29,7 +29,7 @@ function Import-GitHubModule {
     param(
         [string]$Owner,
         [string]$Repo,
-        [string]$FolderPath = "Helper",
+        [string]$FolderPath = "Helper/Menu",
         [string]$Branch = "main"
     )
     
@@ -87,7 +87,7 @@ function Import-GitHubModule {
     }
 }
 
-$success = Import-GitHubModule -Owner "username" -Repo "Darkshadow2019" -FolderPath "/Menu/about.psm1" -Branch "main"
+$success = Import-GitHubModule -Owner "username" -Repo "Darkshadow2019" -FolderPath "Menu" -ModuleName "about.psm1" -Branch "main"
 # End Module Adding ----------------------------------------------------------------------------------------------------------
 Clear-Host;
 Write-Host; Write-Host
