@@ -1,5 +1,28 @@
 Set-ExecutionPolicy Bypass -Scope Process -Force;
 $OutputEncoding = [Console]::InputEncoding = [Console]::OutputEncoding = New-Object System.Text.UTF8Encoding
+
+# UAC Accept ---------------------------------------------------------------------
+# Admin check လုပ်ပြီး auto-elevate လုပ်ခြင်း
+function Test-Admin {
+    $currentUser = [Security.Principal.WindowsIdentity]::GetCurrent()
+    $adminRole = [Security.Principal.WindowsBuiltInRole]::Administrator
+    return ([Security.Principal.WindowsPrincipal]::new($currentUser)).IsInRole($adminRole)
+}
+
+if (-not (Test-Admin)) {
+    Write-Host "🔄 Admin rights required. Elevating..." -ForegroundColor Yellow
+    
+    # Relaunch as admin
+    $scriptPath = $MyInvocation.MyCommand.Definition
+    $arguments = "-NoProfile -ExecutionPolicy Bypass -File `"$scriptPath`""
+    
+    Start-Process powershell.exe -ArgumentList $arguments -Verb RunAs
+    exit
+}
+
+# Admin rights ရပြီးရင် ဒီအောက်က code တွေ run မယ်
+Write-Host "✅ Running with administrator privileges!" -ForegroundColor Green
+Get-Date
 # End About module add------------------------------------------------------------
 # About Module 
 # GitHub API 
