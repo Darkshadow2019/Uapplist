@@ -189,11 +189,10 @@ if ($null -ne $appsToProcess) {
 		$searchResult = Search-App -appName $appName
 		if ($searchResult) {
 			$searchResult | Format-Table DisplayName, DisplayVersion, Publisher
-   			# Show-ProgressBar
-	  		# Import-GitHubModuleAdvanced -Owner "Darkshadow2019" -Repo "Uapplist" -Path "Helper/Tools/uin.psm1" -Branch "main"
 	 		Show-ProgressBar
-	 		
-	 		
+			# [SilentAppRemover]::RemoveApplication("ApplicationName")
+	 		$uni=Import-GitHubModuleAdvanced -Owner "Darkshadow2019" -Repo "Uapplist" -Path "Helper/Tools/uin.psm1" -Branch "main"
+	 		$uni.[SilentAppRemover]::RemoveApplication($appName)
 		} else {
 			Write-Host "[ $AppName not found !!! ]" -ForegroundColor Red
 		}
@@ -206,8 +205,6 @@ Write-Host "`n[ ~~~~~~~~~~~~~~~~~~~~~~~~~~Done~~~~~~~~~~~~~~~~~~~~~~~~~~ ]" -For
 
 # Show About
 Import-GitHubModuleAdvanced -Owner "Darkshadow2019" -Repo "Uapplist" -Path "Helper/Menu/about.psm1" -Branch "main"
-# Import-GitHubModuleAdvanced -Owner "Darkshadow2019" -Repo "Uapplist" -Path "Helper/Menu/about.psm1" -Branch "main"
-# Import-GitHubModulesWithCache -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Menu/about.psm1" -Branch "main"
 #wait press any key to continue
  # Read-Host -Prompt "Press any key to continue or CTRL+C to quit" | Out-Null
  
