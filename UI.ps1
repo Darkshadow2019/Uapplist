@@ -87,7 +87,7 @@ function Import-GitHubModule {
     }
 }
 
-$success = Import-GitHubModule -Owner "username" -Repo "Darkshadow2019" -FolderPath "Tools/about.psm1" -Branch "main"
+$success = Import-GitHubModule -Owner "username" -Repo "Darkshadow2019" -FolderPath "Menu/about.psm1" -Branch "main"
 # End Module Adding ----------------------------------------------------------------------------------------------------------
 Clear-Host;
 Write-Host; Write-Host
