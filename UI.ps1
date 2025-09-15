@@ -29,7 +29,7 @@ function Get-GitHubRawContent {
     param(
         [string]$Owner,
         [string]$Repo,
-        [string]$Path="Helper",
+        [string]$Path=,
         [string]$Branch = "main"
     )
     
