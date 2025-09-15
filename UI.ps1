@@ -24,10 +24,61 @@ if (-not (Test-Admin)) {
 Write-Host "✅ Running with administrator privileges!" -ForegroundColor Green
 Get-Date
 # End About module add------------------------------------------------------------
-# About Module 
-# GitHub API 
-# GitHub API နဲ့ module import လုပ်ခြင်း
-function Import-GitHubModule {
+function Get-GitHubModuleLoader {
+    param(
+        [string]$Owner,
+        [string]$Repo,
+        [string]$FolderPath = "Tools",
+        [string]$Branch = "main",
+        [int]$CacheHours = 24
+    )
+    
+    $cachePath = "$env:TEMP\GitHubModuleCache\$Owner-$Repo"
+    $cacheFile = Join-Path $cachePath "modulecache.json"
+    
+    # Load from cache if available and fresh
+    if (Test-Path $cacheFile) {
+        $cache = Get-Content $cacheFile | ConvertFrom-Json
+        $cacheTime = [datetime]::Parse($cache.LastUpdated)
+        
+        if ((Get-Date).Subtract($cacheTime).TotalHours -le $CacheHours) {
+            Write-Host "📦 Loading from cache..." -ForegroundColor Yellow
+            return $cache.Modules
+        }
+    }
+    
+    # Fetch from GitHub API
+    $apiUrl = "https://api.github.com/repos/$Owner/$Repo/contents/$FolderPath?ref=$Branch"
+    
+    try {
+        $response = Invoke-RestMethod -Uri $apiUrl -Headers @{
+            'Accept' = 'application/vnd.github.v3+json'
+            'User-Agent' = 'PowerShell'
+        }
+        
+        $modules = $response | Where-Object { $_.name -like "*.psm1" } | Select-Object name, download_url, size
+        
+        # Save to cache
+        if (-not (Test-Path $cachePath)) {
+            New-Item -Path $cachePath -ItemType Directory -Force | Out-Null
+        }
+        
+        $cacheData = @{
+            LastUpdated = (Get-Date).ToString()
+            Modules = $modules
+        }
+        
+        $cacheData | ConvertTo-Json | Out-File -FilePath $cacheFile -Encoding UTF8
+        
+        return $modules
+        
+    } catch {
+        Write-Host "❌ GitHub API error: $($_.Exception.Message)" -ForegroundColor Red
+        return $null
+    }
+}
+
+function Import-GitHubModulesWithCache {
     param(
         [string]$Owner,
         [string]$Repo,
@@ -35,62 +86,30 @@ function Import-GitHubModule {
         [string]$Branch = "main"
     )
     
-    # GitHub API URL
-    $apiUrl = "https://api.github.com/repos/$Owner/$Repo/contents/$FolderPath"
+    $modules = Get-GitHubModuleLoader -Owner $Owner -Repo $Repo -FolderPath $FolderPath -Branch $Branch
     
-    try {
-        Write-Host "🔍 Searching for modules in GitHub..." -ForegroundColor Yellow
-        
-        # Get folder contents
-        $response = Invoke-RestMethod -Uri $apiUrl -Headers @{
-            'Accept' = 'application/vnd.github.v3+json'
-            'User-Agent' = 'PowerShell'
-        }
-        
-        # Filter for .psm1 files
-        $moduleFiles = $response | Where-Object { $_.name -like "*.psm1" }
-        
-        if (-not $moduleFiles) {
-            Write-Host "❌ No .psm1 files found in the Tools folder" -ForegroundColor Red
-            return $false
-        }
-        
-        Write-Host "✅ Found $($moduleFiles.Count) module files:" -ForegroundColor Green
-        $moduleFiles | ForEach-Object { Write-Host "• $($_.name)" -ForegroundColor Cyan }
-        
-        # Download and import each module
-        foreach ($moduleFile in $moduleFiles) {
-            $downloadUrl = $moduleFile.download_url
-            $moduleName = [System.IO.Path]::GetFileNameWithoutExtension($moduleFile.name)
+    if (-not $modules) {
+        Write-Host "❌ No modules found or failed to fetch" -ForegroundColor Red
+        return
+    }
+    
+    foreach ($module in $modules) {
+        try {
+            Write-Host "📥 Downloading $($module.name)..." -ForegroundColor Yellow
             
-            Write-Host "📥 Downloading $($moduleFile.name)..." -ForegroundColor Yellow
-            
-            # Download module content
-            $moduleContent = Invoke-RestMethod -Uri $downloadUrl -ErrorAction Stop
-            
-            # Create temporary module file
-            $tempFile = Join-Path $env:TEMP "$($moduleFile.name)"
+            $moduleContent = Invoke-RestMethod -Uri $module.download_url -ErrorAction Stop
+            $tempFile = Join-Path $env:TEMP $module.name
             $moduleContent | Out-File -FilePath $tempFile -Encoding UTF8
             
-            # Import module
-            try {
-                Import-Module -Name $tempFile -Force -ErrorAction Stop
-                Write-Host "✅ Successfully imported: $moduleName" -ForegroundColor Green
-            } catch {
-                Write-Host "⚠️  Warning: Could not import $moduleName - $($_.Exception.Message)" -ForegroundColor Yellow
-            }
+            Import-Module -Name $tempFile -Force -ErrorAction Stop
+            Write-Host "✅ Imported: $([System.IO.Path]::GetFileNameWithoutExtension($module.name))" -ForegroundColor Green
+            
+        } catch {
+            Write-Host "⚠️  Failed to import $($module.name): $($_.Exception.Message)" -ForegroundColor Yellow
         }
-        
-        return $true
-        
-    } catch {
-        Write-Host "❌ GitHub API error: $($_.Exception.Message)" -ForegroundColor Red
-        return $false
     }
 }
-
-#Usage -------------
-$success = Import-GitHubModule -Owner "Darkshadow2019" -Repo "-Uapplist" -FolderPath "Tools" -Branch "main"
+Import-GitHubModulesWithCache -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Tools"
 # End Module Adding ----------------------------------------------------------------------------------------------------------
 Clear-Host;
 Write-Host; Write-Host
@@ -216,7 +235,8 @@ Write-Host "`nScript execution complete." -ForegroundColor Green
 Write-Host "`n[ ~~~~~~~~~~~~~~~~~~~~~~~~~~Done~~~~~~~~~~~~~~~~~~~~~~~~~~ ]" -ForegroundColor Yellow
 
 # Show About
-Import-GitHubModuleAdvanced -Owner "Darkshadow2019" -Repo "Uapplist" -Path "Helper/Menu/about.psm1" -Branch "main"
+# Import-GitHubModuleAdvanced -Owner "Darkshadow2019" -Repo "Uapplist" -Path "Helper/Menu/about.psm1" -Branch "main"
+Import-GitHubModulesWithCache -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Tools" -Module "about.psm1" -Branch "main"
 #wait press any key to continue
  # Read-Host -Prompt "Press any key to continue or CTRL+C to quit" | Out-Null
  
