@@ -1,6 +1,46 @@
 Set-ExecutionPolicy Bypass -Scope Process -Force;
 $OutputEncoding = [Console]::InputEncoding = [Console]::OutputEncoding = New-Object System.Text.UTF8Encoding
 
+# Import Module Folder -----------------------------------------------------------
+# GitHub repository ရဲ့ အချက်အလက်
+$githubUser = "Darkshadow2019"
+$repoName = "Uapplist"
+$branchName = "main" # သို့မဟုတ် master
+
+# Module တွေရှိတဲ့ folder ရဲ့ path
+$folderPath = "Helper/Tools"
+
+# GitHub API URL
+$apiUrl = "https://api.github.com/repos/$githubUser/$repoName/contents/$folderPath?ref=$branchName"
+
+# Download လုပ်ဖို့ temporary directory တစ်ခု ဖန်တီးမယ်
+$tempDir = New-Item -ItemType Directory -Path "$env:TEMP\$repoName-modules" -Force
+
+try {
+    Write-Host "Getting module list from GitHub..."
+    $response = Invoke-RestMethod -Uri $apiUrl
+    
+    # ရလာတဲ့ file တစ်ခုချင်းစီကို download လုပ်မယ်
+    foreach ($file in $response) {
+        if ($file.type -eq "file" -and $file.name.EndsWith(".psm1")) {
+            Write-Host "Downloading $($file.name)..."
+            $fileUrl = $file.download_url
+            $filePath = Join-Path -Path $tempDir -ChildPath $file.name
+            Invoke-WebRequest -Uri $fileUrl -OutFile $filePath -UseBasicParsing
+        }
+    }
+    
+    # Download လုပ်ပြီးသား module အားလုံးကို import လုပ်မယ်
+    Write-Host "Helper Tools Importing all modules from the temporary directory..."
+    Import-Module $tempDir
+    
+    Write-Host "All modules from GitHub imported successfully!"
+    
+} catch {
+    Write-Error "An error occurred during the process: $_"
+    exit
+}
+# End Import Modulde Folder ------------------------------------------------------
 # UAC Accept ---------------------------------------------------------------------
 # Admin check လုပ်ပြီး auto-elevate လုပ်ခြင်း
 function Test-Admin {
@@ -191,7 +231,17 @@ if ($null -ne $appsToProcess) {
 			$searchResult | Format-Table DisplayName, DisplayVersion, Publisher
 	 		Show-ProgressBar
 			# [SilentAppRemover]::RemoveApplication("ApplicationName")
-	 		$uni=Import-GitHubModuleAdvanced -Owner "Darkshadow2019" -Repo "Uapplist" -Path "Helper/Tools/uin.psm1" -Branch "main"
+	 		# $uni=Import-GitHubModuleAdvanced -Owner "Darkshadow2019" -Repo "Uapplist" -Path "Helper/Tools/uin.psm1" -Branch "main"
+			# module တွေထဲက function တွေကို ခေါ်သုံးခြင်း
+			$university = Get-UniName
+			$company = Get-CompanyName
+			
+			Write-Host "University: $university"
+			Write-Host "Company: $company"
+			
+			# clean-up: temp folder ကို ပြန်ဖျက်ခြင်း
+			Remove-Item $tempDir -Recurse -Force
+
 	 		Wirte-Host "$uni"
 		} else {
 			Write-Host "[ $AppName not found !!! ]" -ForegroundColor Red
