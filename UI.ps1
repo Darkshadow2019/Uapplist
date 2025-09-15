@@ -24,7 +24,6 @@ if (-not (Test-Admin)) {
 Write-Host "✅ Running with administrator privileges!" -ForegroundColor Green
 Get-Date
 # End About module add------------------------------------------------------------
- GitHub API ကို အသုံးပြုပြီး ပိုမိုတိကျစွာ သုံးခြင်း
 function Get-GitHubRawContent {
     param(
         [string]$Owner,
