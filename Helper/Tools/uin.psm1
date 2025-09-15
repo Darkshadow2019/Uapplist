@@ -1,20 +1,7 @@
 # Complete silent application remover
 class SilentAppRemover {
-    function Show-ProgressBar {
-	    Write-Host "`nProcessing..." -ForegroundColor Yellow
-	    # $total = 15
- 	    $total = 35
-	    for ($i = 0; $i -le $total; $i++) {
-	        $percent = [math]::Round(($i / $total) * 100)
-	        Write-Host "`rProgress: [$('#' * $i)$(' ' * ($total - $i))] $percent%" -NoNewline -ForegroundColor Yellow
-	        Start-Sleep -Milliseconds 50
-	    }
-	    Write-Host "`rProgress: [###################################] 100%   " -ForegroundColor Green
-    }
     static [void] RemoveApplication([string]$AppName) {
-        Write-Host "Starting silent removal of $AppName..." -ForegroundColor Cyan
-        Show-ProgressBar
-        
+        Write-Host "Starting silent removal of $AppName..." -ForegroundColor Cyan   
         # Method 1: Try MSI uninstall
         try {
             $products = Get-WmiObject -Class Win32_Product | 
@@ -79,4 +66,5 @@ class SilentAppRemover {
         Write-Host "✅ Silent removal process completed for $AppName" -ForegroundColor Green
     }
 }
+
 
