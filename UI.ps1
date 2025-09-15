@@ -29,7 +29,7 @@ function Import-GitHubModule {
     param(
         [string]$Owner,
         [string]$Repo,
-        [string]$FolderPath = "Tools",
+        [string]$FolderPath = "Helper",
         [string]$Branch = "main"
     )
     
