@@ -1,3 +1,4 @@
+$OutputEncoding = [Console]::InputEncoding = [Console]::OutputEncoding = New-Object System.Text.UTF8Encoding
 # Load the necessary .NET assemblies
 Add-Type -AssemblyName System.Windows.Forms
 Add-Type -AssemblyName System.Drawing
@@ -36,6 +37,7 @@ $form.Controls.Add($button)
 # Show the form
 
 $form.ShowDialog()
+
 
 
 
