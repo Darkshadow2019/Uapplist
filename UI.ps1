@@ -97,9 +97,9 @@ Write-Host
 function Show-Preparing {
 	Write-Host "`n[ ~~~~~~~~~~~~~~~~~~~~Preparing~~~~~~~~~~~~~~~~~~~~ ]" -ForegroundColor Yellow
 	Write-Host "`n[ Loading" -NoNewline	-ForegroundColor Green
-	for ($i = 0; $i -lt 20; $i++) {
+	for ($i = 0; $i -lt 10; $i++) {
     	 Write-Host "." -NoNewline
-    	Start-Sleep -Milliseconds 500
+    	Start-Sleep -Milliseconds 400
 	}
 	Write-Host " ]" -ForegroundColor Green
 }
