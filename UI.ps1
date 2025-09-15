@@ -94,17 +94,17 @@ function Show-Searching {
 }
 
 # Test 3: Progress bar
-function Show-ProgressBar {
-	Write-Host "`nProcessing..." -ForegroundColor Yellow
-	# $total = 15
- 	$total = 35
-	for ($i = 0; $i -le $total; $i++) {
-	    $percent = [math]::Round(($i / $total) * 100)
-	    Write-Host "`rProgress: [$('#' * $i)$(' ' * ($total - $i))] $percent%" -NoNewline -ForegroundColor Yellow
-	    Start-Sleep -Milliseconds 50
-	}
-	Write-Host "`rProgress: [###################################] 100%   " -ForegroundColor Green
-}
+# function Show-ProgressBar {
+# 	Write-Host "`nProcessing..." -ForegroundColor Yellow
+# 	# $total = 15
+#  	$total = 35
+# 	for ($i = 0; $i -le $total; $i++) {
+# 	    $percent = [math]::Round(($i / $total) * 100)
+# 	    Write-Host "`rProgress: [$('#' * $i)$(' ' * ($total - $i))] $percent%" -NoNewline -ForegroundColor Yellow
+# 	    Start-Sleep -Milliseconds 50
+# 	}
+# 	Write-Host "`rProgress: [###################################] 100%   " -ForegroundColor Green
+# }
 # End Animations----------------------------------------------------------------------------------------------
 # Start Fatch and process 
 <# Set-ExecutionPolicy RemoteSigned -Scope CurrentUser #>
