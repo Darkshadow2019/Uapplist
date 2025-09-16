@@ -1,4 +1,15 @@
-﻿
+﻿#script UAC (User Account Control)
+
+# Check RunAs Administrator
+if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
+    $scriptPath = $PSCommandPath
+    Start-Process -FilePath "powershell.exe" -ArgumentList "-File `"$scriptPath`"" -Verb RunAs
+    exit
+}
+
+Write-Host "✅ The script is now running with Administrator privileges." -ForegroundColor Green
+# --------------------------------------------------------------------------------------------------
+
 $githubUrl = "https://raw.githubusercontent.com/Darkshadow2019/Uapplist/refs/heads/main/applist.txt"
 
 # =========================================================
@@ -83,3 +94,4 @@ if ($null -ne $appsToProcess) {
 }
 
 Write-Host "`nScript execution complete." -ForegroundColor Green
+
