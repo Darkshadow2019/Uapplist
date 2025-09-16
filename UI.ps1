@@ -118,6 +118,8 @@ function Import-GitModule {
 
 # Call the function to import modules.
 Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Tools"
+$Gni = Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Tools/gni.ps1"
+. ([scriptblock]::Create($Gni))
 # End About module add------------------------------------------------------------
 
 # End Module Adding ----------------------------------------------------------------------------------------------------------
@@ -231,8 +233,6 @@ if ($null -ne $appsToProcess) {
 			$searchResult | Format-Table DisplayName, DisplayVersion, Publisher
 	 		Show-ProgressBar
 			#SilentAppRemover::RemoveApplication($appName)
-   			$Gni = Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Tools/gni.ps1"
-			. ([scriptblock]::Create($Gni))
    			Invoke-Command -ScriptBlock $Gni
 	  		
 		} else {
