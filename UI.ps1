@@ -245,9 +245,6 @@ Write-Host "`n[ ~~~~~~~~~~~~~~~~~~~~~~~~~~Done~~~~~~~~~~~~~~~~~~~~~~~~~~ ]" -For
 Get-Version
 # Class to Object ----
 Gni-Version
-
-# Uni Version
-Version()
 # Object Get-Version call method 
 Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Menu/about.psm1"
 #wait press any key to continue
