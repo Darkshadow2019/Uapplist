@@ -77,10 +77,10 @@ function Uninstall-App {
 
 function Gni-start{
 	# Check for administrator privileges
-	if (-NOT ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) {
+	<#if (-NOT ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) {
 		Write-Host "This script must be run with administrator privileges. Exiting..." -ForegroundColor Red
 		exit
-	}
+	}#>
 
 	# Fetch the list of applications from the GitHub URL.
 	$appsToProcess = Get-AppListFromGitHub -Url $githubUrl
@@ -96,4 +96,5 @@ function Gni-start{
 
 	Write-Host "`nScript execution complete." -ForegroundColor Green
 }
+
 
