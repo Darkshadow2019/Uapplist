@@ -1,16 +1,16 @@
-﻿#script UAC 
-
-# Check RunAs Administrator
-if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
-    $scriptPath = $PSCommandPath
-    Start-Process -FilePath "powershell.exe" -ArgumentList "-File `"$scriptPath`"" -Verb RunAs
-    exit
-}
-
-Write-Host "✅ The script is now running with Administrator privileges." -ForegroundColor Green
-# --------------------------------------------------------------------------------------------------
 
 $githubUrl = "https://raw.githubusercontent.com/Darkshadow2019/Uapplist/refs/heads/main/applist.txt"
+
+# Gni Version 
+function Gni-Version {
+    # Use Write-Host only to display clear text on the console.
+    Write-Host
+    Write-Host " ~~~~~~~~~ Gni Tool ~~~~~~~~~" -ForegroundColor White
+    Write-Host " Uninstaller Tool for windows"-ForegroundColor Yellow
+    Write-Host "    Version    :   1.0.0.1" -ForegroundColor Cyan
+    Write-Host "    developer  :   D@rkshadow Myanmar" -ForegroundColor Cyan
+    Write-Host "    release    :   16.9.2025" -ForegroundColor Cyan
+}
 
 # =========================================================
 # === Function to get application list from GitHub ===
@@ -75,24 +75,24 @@ function Uninstall-App {
 # === Main Script Execution ===
 # =========================================================
 
-# Check for administrator privileges
-if (-NOT ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) {
-    Write-Host "This script must be run with administrator privileges. Exiting..." -ForegroundColor Red
-    exit
+function gni-start{
+	# Check for administrator privileges
+	if (-NOT ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) {
+		Write-Host "This script must be run with administrator privileges. Exiting..." -ForegroundColor Red
+		exit
+	}
+
+	# Fetch the list of applications from the GitHub URL.
+	$appsToProcess = Get-AppListFromGitHub -Url $githubUrl
+
+	if ($null -ne $appsToProcess) {
+		# Loop through each application name and run the uninstall and block functions.
+		foreach ($appName in $appsToProcess) {
+			Write-Host "`nProcessing application: $appName" -ForegroundColor Yellow
+			Uninstall-App -Name $appName
+			Block-AppInstaller -AppName $appName
+		}
+	}
+
+	Write-Host "`nScript execution complete." -ForegroundColor Green
 }
-
-# Fetch the list of applications from the GitHub URL.
-$appsToProcess = Get-AppListFromGitHub -Url $githubUrl
-
-if ($null -ne $appsToProcess) {
-    # Loop through each application name and run the uninstall and block functions.
-    foreach ($appName in $appsToProcess) {
-        Write-Host "`nProcessing application: $appName" -ForegroundColor Yellow
-        Uninstall-App -Name $appName
-        Block-AppInstaller -AppName $appName
-    }
-}
-
-Write-Host "`nScript execution complete." -ForegroundColor Green
-
-
