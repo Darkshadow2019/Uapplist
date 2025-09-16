@@ -38,7 +38,7 @@ function Get-GitHubRawContent {
         [string]$Owner,
         [string]$Repo,
         [string]$Path,
-        [string]$Branch = "6585838290f5778f834cbf1b9c5da507fce40b18"
+        [string]$Branch
     )
     
     $apiUrl = "https://api.github.com/repos/${Owner}/${Repo}/contents/${Path}?ref=${Branch}"
