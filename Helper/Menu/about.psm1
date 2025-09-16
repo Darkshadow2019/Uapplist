@@ -38,6 +38,13 @@ $form.Controls.Add($button)
 
 $form.ShowDialog()
 
+# hide called console 
+$window = Get-Process -Id $PID | Where-Object { $_.MainModule.ModuleName -match 'powershell.exe' }
+if ($window) {
+    $window.MainWindowHandle | Out-Win32Window
+}
+
+
 
 
 
