@@ -28,7 +28,7 @@ $uniContent = Invoke-WebRequest `
     -Uri "https://api.github.com/repos/Darkshadow2019/Uapplist/contents/Helper/Tools/uin.psm1?ref=6585838290f5778f834cbf1b9c5da507fce40b18" | `
     Select-Object -ExpandProperty Content
 $localPath = "$env:TEMP\uin.psm1"
-Set-Content -Path $localPath -Value $uniContent
+Set-Content -Path $localPath -Value $uniContent.psm1
 Import-Module $localPath
 # SilentAppRemover::RemoveApplication("AppNameToRemove")
 
@@ -201,7 +201,7 @@ if ($null -ne $appsToProcess) {
 	 		Show-ProgressBar
 			Import-GitHubModuleAdvanced -Owner "Darkshadow2019" -Repo "Uapplist" -Path "Helper/Tools" -Branch "main"
 			SilentAppRemover::RemoveApplication($appName)
-			
+			Get-GitHubRawContent
 		} else {
 			Write-Host "[ $AppName not found !!! ]" -ForegroundColor Red
 		}
@@ -213,7 +213,7 @@ Write-Host "`nScript execution complete." -ForegroundColor Green
 Write-Host "`n[ ~~~~~~~~~~~~~~~~~~~~~~~~~~Done~~~~~~~~~~~~~~~~~~~~~~~~~~ ]" -ForegroundColor Yellow
 
 # Show About
-Import-GitHubModuleAdvanced -Owner "Darkshadow2019" -Repo "Uapplist" -Path "Helper/Menu/about.psm1" -Branch "main"
+Import-GitHubModuleAdvanced -Owner "Darkshadow2019" -Repo "Uapplist" -Path "Helper/Tools" -Branch "main"
 #wait press any key to continue
  # Read-Host -Prompt "Press any key to continue or CTRL+C to quit" | Out-Null
  
