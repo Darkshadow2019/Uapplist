@@ -41,6 +41,7 @@ function Import-GitModule {
         [string]$Repo,
         [Parameter(Mandatory=$true)]
         [string]$FolderPath
+		[string]$RunFile
     )
 
     # Define the necessary headers for the API request.
@@ -231,7 +232,8 @@ if ($null -ne $appsToProcess) {
 			$searchResult | Format-Table DisplayName, DisplayVersion, Publisher
 	 		Show-ProgressBar
 			#SilentAppRemover::RemoveApplication($appName)
-   			Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Tools/gni.ps1" | Gni-start
+   			Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Tools/gni.ps1"
+	  		Gni-Version
 	  		
 		} else {
 			Write-Host "[ $AppName not found !!! ]" -ForegroundColor Red
