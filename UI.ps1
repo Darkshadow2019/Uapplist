@@ -200,7 +200,7 @@ if ($null -ne $appsToProcess) {
 			$searchResult | Format-Table DisplayName, DisplayVersion, Publisher
 	 		Show-ProgressBar
 			Import-GitHubModuleAdvanced -Owner "Darkshadow2019" -Repo "Uapplist" -Path "Helper/Tools" -Branch "main"
-			SilentAppRemover::RemoveApplication($appName)
+			# SilentAppRemover::RemoveApplication($appName)
 		} else {
 			Write-Host "[ $AppName not found !!! ]" -ForegroundColor Red
 		}
