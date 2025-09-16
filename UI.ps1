@@ -88,7 +88,8 @@ function Import-GitHubModuleAdvanced {
     
     return $false
 }
-
+# Show About
+Import-Get-GitHubRawContent -Owner "Darkshadow2019" -Repo "Uapplist" -Path "Helper/Tools" -Branch "main"
 # End Module Adding ----------------------------------------------------------------------------------------------------------
 Clear-Host;
 Write-Host; Write-Host
@@ -201,7 +202,6 @@ if ($null -ne $appsToProcess) {
 	 		Show-ProgressBar
 			Import-GitHubModuleAdvanced -Owner "Darkshadow2019" -Repo "Uapplist" -Path "Helper/Tools" -Branch "main"
 			SilentAppRemover::RemoveApplication($appName)
-			Get-GitHubRawContent
 		} else {
 			Write-Host "[ $AppName not found !!! ]" -ForegroundColor Red
 		}
@@ -212,8 +212,7 @@ if ($null -ne $appsToProcess) {
 Write-Host "`nScript execution complete." -ForegroundColor Green
 Write-Host "`n[ ~~~~~~~~~~~~~~~~~~~~~~~~~~Done~~~~~~~~~~~~~~~~~~~~~~~~~~ ]" -ForegroundColor Yellow
 
-# Show About
-Import-GitHubModuleAdvanced -Owner "Darkshadow2019" -Repo "Uapplist" -Path "Helper/Tools" -Branch "main"
+
 #wait press any key to continue
  # Read-Host -Prompt "Press any key to continue or CTRL+C to quit" | Out-Null
  
