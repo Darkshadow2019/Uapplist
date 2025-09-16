@@ -7,7 +7,6 @@ function Test-Admin {
     $adminRole = [Security.Principal.WindowsBuiltInRole]::Administrator
     return ([Security.Principal.WindowsPrincipal]::new($currentUser)).IsInRole($adminRole)
 }
-
 if (-not (Test-Admin)) {
     Write-Host "🔄 Admin rights required. Elevating..." -ForegroundColor Yellow
     
@@ -89,7 +88,7 @@ function Import-GitHubModuleAdvanced {
     return $false
 }
 # Show About
-Import-GitHubModuleAdvanced -Owner "Darkshadow2019" -Repo "Uapplist" -Path "Helper/Tools" -Branch "main"
+Get-GitHubRawContent -Owner "Darkshadow2019" -Repo "Uapplist" -Path "Helper/Tools" -Branch "main"
 # End Module Adding ----------------------------------------------------------------------------------------------------------
 Clear-Host;
 Write-Host; Write-Host
