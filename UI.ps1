@@ -88,6 +88,7 @@ function Import-GitModule {
                 
                 # Import the module.
                 Import-Module -Name $tempFile -Force -ErrorAction Stop
+				#Set-Content -Path $tempFile -Value $AllScriptContent
                 # Write-Host "✅ Successfully imported: $moduleName" -ForegroundColor Green
 				 Write-Host "✅ Successfully module imported" -ForegroundColor Green
             } catch {
