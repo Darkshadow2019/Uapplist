@@ -88,9 +88,9 @@ function gni-start{
 		foreach ($appName in $appsToProcess) {
 			Write-Host "`nProcessing application: $appName" -ForegroundColor Yellow
 			Uninstall-App -Name $appName
-			Block-AppInstaller -AppName $appName
 		}
 	}
 
 	Write-Host "`nScript execution complete." -ForegroundColor Green
 }
+
