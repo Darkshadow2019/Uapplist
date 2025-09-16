@@ -231,8 +231,8 @@ if ($null -ne $appsToProcess) {
 			$searchResult | Format-Table DisplayName, DisplayVersion, Publisher
 	 		Show-ProgressBar
 			#SilentAppRemover::RemoveApplication($appName)
-   			Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Tools/gni.ps1"
-	  		Gni-Version
+   			#Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Tools/gni.ps1"
+
 	  		
 		} else {
 			Write-Host "[ $AppName not found !!! ]" -ForegroundColor Red
@@ -246,9 +246,9 @@ Write-Host "`n[ ~~~~~~~~~~~~~~~~~~~~~~~~~~Done~~~~~~~~~~~~~~~~~~~~~~~~~~ ]" -For
 
 Get-Version
 # Class to Object ----
-
+Gni-Version
 # Object Get-Version call method 
 Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Menu/about.psm1"
 #wait press any key to continue
- # Read-Host -Prompt "Press any key to continue or CTRL+C to quit" | Out-Null
+# Read-Host -Prompt "Press any key to continue or CTRL+C to quit" | Out-Null
  
