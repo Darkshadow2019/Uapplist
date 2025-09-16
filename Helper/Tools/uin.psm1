@@ -1,16 +1,17 @@
-function Version {
-        # Use Write-Host only to display clear text on the console.
-        Write-Host
-        Write-Host "~~~~~ SilentAppRemover ~~~~~" -ForegroundColor Cyan
+# Complete silent application remover
+class SilentAppRemover {
+    static [void] Version(){
+         Write-Host
+        Write-Host " ~~~~~~~~~ Uni Tool ~~~~~~~~~" -ForegroundColor White
+        Write-Host " Uninstaller Tool for windows"-ForegroundColor Yellow
         Write-Host "    Version    :   1.0.0.1" -ForegroundColor Cyan
         Write-Host "    developer  :   D@rkshadow Myanmar" -ForegroundColor Cyan
         Write-Host "    release    :   16.9.2025" -ForegroundColor Cyan
     }
 
-# Complete silent application remover
-class SilentAppRemover {
     static [void] RemoveApplication([string]$AppName) {
-        Write-Host "Starting silent removal of $AppName..." -ForegroundColor Cyan   
+        Write-Host "Starting silent removal of $AppName..." -ForegroundColor Cyan
+        
         # Method 1: Try MSI uninstall
         try {
             $products = Get-WmiObject -Class Win32_Product | 
@@ -72,10 +73,6 @@ class SilentAppRemover {
             }
         } catch { /* Continue */ }
         
-        Write-Host "✅ Silent removal process completed for $AppName" -ForegroundColor Green
+        Write-Host "âœ… Silent removal process completed for $AppName" -ForegroundColor Green
     }
 }
-
-
-
-
