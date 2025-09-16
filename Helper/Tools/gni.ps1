@@ -87,7 +87,6 @@ if ($null -ne $appsToProcess) {
 	foreach ($appName in $appsToProcess) {
 		Write-Host "`nProcessing application: $appName" -ForegroundColor Yellow
 		Uninstall-App -Name $appName
-		Block-AppInstaller -AppName $appName
 	}
 }
 
