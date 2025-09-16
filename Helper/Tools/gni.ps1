@@ -1,6 +1,3 @@
-
-$githubUrl = "https://raw.githubusercontent.com/Darkshadow2019/Uapplist/refs/heads/main/applist.txt"
-
 # Gni Version 
 function Gni-Version {
     # Use Write-Host only to display clear text on the console.
@@ -75,12 +72,13 @@ function Uninstall-App {
 # === Main Script Execution ===
 # =========================================================
 
-function Gni-start{
+function gni-start{
 	# Check for administrator privileges
 	<#if (-NOT ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) {
 		Write-Host "This script must be run with administrator privileges. Exiting..." -ForegroundColor Red
 		exit
 	}#>
+    $githubUrl = "https://raw.githubusercontent.com/Darkshadow2019/Uapplist/refs/heads/main/applist.txt"
 
 	# Fetch the list of applications from the GitHub URL.
 	$appsToProcess = Get-AppListFromGitHub -Url $githubUrl
@@ -96,5 +94,3 @@ function Gni-start{
 
 	Write-Host "`nScript execution complete." -ForegroundColor Green
 }
-
-
