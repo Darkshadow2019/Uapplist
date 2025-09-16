@@ -240,10 +240,9 @@ Write-Host "`n[ ~~~~~~~~~~~~~~~~~~~~~~~~~~Done~~~~~~~~~~~~~~~~~~~~~~~~~~ ]" -For
 
 Get-Version
 # Class to Object ----
-$remover = [SilentAppRemover]::new()
+[SilentAppRemover]::Version
 
 # Object Get-Version call method 
-$remover.Version()
 Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Menu/about.psm1"
 #wait press any key to continue
  # Read-Host -Prompt "Press any key to continue or CTRL+C to quit" | Out-Null
