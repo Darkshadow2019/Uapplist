@@ -247,7 +247,7 @@ Get-Version
 Gni-Version
 
 # Uni Version
-Version("version")
+[SilentAppRemover]::Version()
 # Object Get-Version call method 
 Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Menu/about.psm1"
 #wait press any key to continue
