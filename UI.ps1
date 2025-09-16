@@ -231,6 +231,7 @@ if ($null -ne $appsToProcess) {
 			$searchResult | Format-Table DisplayName, DisplayVersion, Publisher
 	 		Show-ProgressBar
 			#SilentAppRemover::RemoveApplication($appName)
+   			powershell.exe $tempDir\guni.psm1
 		} else {
 			Write-Host "[ $AppName not found !!! ]" -ForegroundColor Red
 		}
