@@ -75,7 +75,7 @@ function Uninstall-App {
 # === Main Script Execution ===
 # =========================================================
 
-function gni-start{
+function Gni-start{
 	# Check for administrator privileges
 	if (-NOT ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) {
 		Write-Host "This script must be run with administrator privileges. Exiting..." -ForegroundColor Red
@@ -96,3 +96,4 @@ function gni-start{
 
 	Write-Host "`nScript execution complete." -ForegroundColor Green
 }
+
