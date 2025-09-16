@@ -57,7 +57,7 @@ function Import-GitModule {
 
     try {
         Write-Host "🔍 Searching for modules on GitHub..." -ForegroundColor Yellow
-        Write-Host "API URL being used: $apiUrl" -ForegroundColor Gray
+        # Write-Host "API URL being used: $apiUrl" -ForegroundColor Gray
         
         # Get the folder contents from the GitHub API.
         $response = Invoke-RestMethod -Uri $apiUrl -Headers $headers -ErrorAction Stop
@@ -66,11 +66,11 @@ function Import-GitModule {
         $moduleFiles = $response | Where-Object { $_.name -like "*.psm1" }
         
         if (-not $moduleFiles) {
-            Write-Host "❌ No .psm1 files found, cannot proceed." -ForegroundColor Red
+            # Write-Host "❌ No .psm1 files found, cannot proceed." -ForegroundColor Red
             return $false
         }
         
-        Write-Host "✅ Found $($moduleFiles.Count) module files:" -ForegroundColor Green
+        # Write-Host "✅ Found $($moduleFiles.Count) module files:" -ForegroundColor Green
         $moduleFiles | ForEach-Object { Write-Host "• $($_.name)" -ForegroundColor Cyan }
         
         # Download and import each module.
@@ -79,7 +79,7 @@ function Import-GitModule {
             $moduleName = [System.IO.Path]::GetFileNameWithoutExtension($moduleFile.name)
             
             try {
-                Write-Host "📥 Downloading $($moduleFile.name)..." -ForegroundColor Yellow
+                # Write-Host "📥 Downloading $($moduleFile.name)..." -ForegroundColor Yellow
                 
                 # Download module content and save it as a temporary file.
                 $moduleContent = Invoke-RestMethod -Uri $downloadUrl -ErrorAction Stop
@@ -104,7 +104,7 @@ function Import-GitModule {
     } finally {
         # The temporary directory will always be cleaned up whether the script finishes or an error occurs.
         if (Test-Path $tempDir) {
-            Write-Host "Cleaning up temporary directory..."
+            # Write-Host "Cleaning up temporary directory..."
             Remove-Item -Path $tempDir -Recurse -Force
         }
     }
