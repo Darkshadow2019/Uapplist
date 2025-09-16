@@ -20,75 +20,103 @@ if (-not (Test-Admin)) {
 
 # After rights 
 Write-Host "✅ Running with administrator privileges!" -ForegroundColor Green
-Get-Date
 
 # Adding Tools -------------------------------------------------------------------
-$uniContent = Invoke-WebRequest `
-    -Uri "https://api.github.com/repos/Darkshadow2019/Uapplist/contents/Helper/Tools/uin.psm1?ref=6585838290f5778f834cbf1b9c5da507fce40b18" | `
-    Select-Object -ExpandProperty Content
-$localPath = "$env:TEMP\uin.psm1"
-Set-Content -Path $localPath -Value $uniContent
-Import-Module $localPath
-# SilentAppRemover::RemoveApplication("AppNameToRemove")
+function Get-Version {
+    # Use Write-Host only to display clear text on the console.
+    Write-Host
+    Write-Host "~~~~~ GithubModuleAPI ~~~~~" -ForegroundColor Cyan
+    Write-Host "    Version    :   51.0.0.1" -ForegroundColor Cyan
+    Write-Host "    developer  :   D@rkshadow Myanmar" -ForegroundColor Cyan
+    Write-Host "    release    :   16.9.2025" -ForegroundColor Cyan
+}
 
-# End About module add------------------------------------------------------------
-function Get-GitHubRawContent {
+function Import-GitModule {
+    # Use CmdletBinding() and Mandatory parameters to make the script more robust.
+    [CmdletBinding()]
     param(
+        [Parameter(Mandatory=$true)]
         [string]$Owner,
+        [Parameter(Mandatory=$true)]
         [string]$Repo,
-        [string]$Path,
-        [string]$Branch
+        [Parameter(Mandatory=$true)]
+        [string]$FolderPath
     )
+
+    # Define the necessary headers for the API request.
+    $headers = @{
+        'Accept' = 'application/vnd.github.v3+json'
+        'User-Agent' = 'PowerShell Script'
+    }
+
+    # Build the API URL without the branch.
+    $apiUrl = "https://api.github.com/repos/$Owner/$Repo/contents/$FolderPath"
     
-    $apiUrl = "https://api.github.com/repos/${Owner}/${Repo}/contents/${Path}?ref=${Branch}"
-    
+    # Create a temporary directory to download modules.
+    $tempDir = New-Item -ItemType Directory -Path (Join-Path $env:TEMP -ChildPath "GitHubModules-$(Get-Random)") -Force -ErrorAction Stop
+
     try {
-        $response = Invoke-RestMethod -Uri $apiUrl -Headers @{
-            'Accept' = 'application/vnd.github.v3.raw'
-            'User-Agent' = 'PowerShell'
+        Write-Host "🔍 Searching for modules on GitHub..." -ForegroundColor Yellow
+        Write-Host "API URL being used: $apiUrl" -ForegroundColor Gray
+        
+        # Get the folder contents from the GitHub API.
+        $response = Invoke-RestMethod -Uri $apiUrl -Headers $headers -ErrorAction Stop
+        
+        # Filter for .psm1 files.
+        $moduleFiles = $response | Where-Object { $_.name -like "*.psm1" }
+        
+        if (-not $moduleFiles) {
+            Write-Host "❌ No .psm1 files found, cannot proceed." -ForegroundColor Red
+            return $false
         }
         
-        return $response
+        Write-Host "✅ Found $($moduleFiles.Count) module files:" -ForegroundColor Green
+        $moduleFiles | ForEach-Object { Write-Host "• $($_.name)" -ForegroundColor Cyan }
+        
+        # Download and import each module.
+        foreach ($moduleFile in $moduleFiles) {
+            $downloadUrl = $moduleFile.download_url
+            $moduleName = [System.IO.Path]::GetFileNameWithoutExtension($moduleFile.name)
+            
+            try {
+                Write-Host "📥 Downloading $($moduleFile.name)..." -ForegroundColor Yellow
+                
+                # Download module content and save it as a temporary file.
+                $moduleContent = Invoke-RestMethod -Uri $downloadUrl -ErrorAction Stop
+                $tempFile = Join-Path $tempDir "$($moduleFile.name)"
+                $moduleContent | Out-File -FilePath $tempFile -Encoding UTF8 -ErrorAction Stop
+                
+                # Import the module.
+                Import-Module -Name $tempFile -Force -ErrorAction Stop
+                Write-Host "✅ Successfully imported: $moduleName" -ForegroundColor Green
+            } catch {
+                # This will catch errors during the download or saving of the file.
+                Write-Host "⚠️ Warning: Could not download or import $moduleName." -ForegroundColor Yellow
+                Write-Host "Error Details: $($_.Exception.Message)" -ForegroundColor Red
+            }
+        }
+        # The typo has been correctly fixed.
+        return $true
     } catch {
-        Write-Error "GitHub API error: $($_.Exception.Message)"
-        return $null
+        # This will catch errors from the initial API call.
+        Write-Host "❌ Initial GitHub API error: $($_.Exception.Message)" -ForegroundColor Red
+        return $false
+    } finally {
+        # The temporary directory will always be cleaned up whether the script finishes or an error occurs.
+        if (Test-Path $tempDir) {
+            Write-Host "Cleaning up temporary directory..."
+            Remove-Item -Path $tempDir -Recurse -Force
+        }
     }
 }
 
-function Import-GitHubModuleAdvanced {
-    param(
-        [string]$Owner,
-        [string]$Repo,
-        [string]$Path,
-        [string]$Branch = "main"
-    )
-    
-    $content = Get-GitHubRawContent -Owner $Owner -Repo $Repo -Path $Path -Branch $Branch
-    
-    if ($content) {
-        try {
-            # Create temporary file
-            $tempFile = [System.IO.Path]::GetTempFileName() + ".psm1"
-            $content | Out-File -FilePath $tempFile -Encoding UTF8
-            
-            # Import module
-            Import-Module -Name $tempFile -Force
-            
-            Write-Host "✅ GitHub module imported successfully!" -ForegroundColor Green
-            
-            # Clean up
-            Remove-Item -Path $tempFile -Force -ErrorAction SilentlyContinue
-            
-            return $true
-        } catch {
-            Write-Error "Import failed: $($_.Exception.Message)"
-        }
-    }
-    
-    return $false
-}
-# Show About
-$tools = Import-GitHubModuleAdvanced -Owner "Darkshadow2019" -Repo "Uapplist" -Path "Helper/Tools" -Branch "main"
+# The following code is an example of how to call the function correctly.
+# Remove the <# #> comments to run this code directly.
+
+# Call the function to import modules.
+Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Tools"
+# End About module add------------------------------------------------------------
+
 # End Module Adding ----------------------------------------------------------------------------------------------------------
 Clear-Host;
 Write-Host; Write-Host
@@ -102,7 +130,7 @@ Write-Host "[+]   " -ForegroundColor Yellow -BackgroundColor Red -NoNewline; Wri
 Write-Host "[+]                                                       [+]" -ForegroundColor Yellow -BackgroundColor red
 Write-Host "[+]+++++++++++++++++++++++++++++++++++++++++++++++++++++++[+]" -ForegroundColor Yellow -BackgroundColor red
 Write-Host 
-# Test 1: Basic dots
+Get-Date
 function Show-Preparing {
 	Write-Host "`n[ ~~~~~~~~~~~~~~~~~~~~Preparing~~~~~~~~~~~~~~~~~~~~ ]" -ForegroundColor Yellow
 	Write-Host "`n[ Loading" -NoNewline	-ForegroundColor Green
@@ -211,7 +239,9 @@ if ($null -ne $appsToProcess) {
 Write-Host "`nScript execution complete." -ForegroundColor Green
 Write-Host "`n[ ~~~~~~~~~~~~~~~~~~~~~~~~~~Done~~~~~~~~~~~~~~~~~~~~~~~~~~ ]" -ForegroundColor Yellow
 
-Import-GitHubModuleAdvanced -Owner "Darkshadow2019" -Repo "Uapplist" -Path "Helper/Menu/about.psm1" -Branch "main"
+Get-Version
+
+Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Menu/about.psm1"
 #wait press any key to continue
  # Read-Host -Prompt "Press any key to continue or CTRL+C to quit" | Out-Null
  
