@@ -1,6 +1,6 @@
 # Complete silent application remover
 class SilentAppRemover {
-    static [void] Version(){
+    static [void] Version([string]){
          Write-Host
         Write-Host " ~~~~~~~~~ Uni Tool ~~~~~~~~~" -ForegroundColor White
         Write-Host " Uninstaller Tool for windows"-ForegroundColor Yellow
@@ -76,3 +76,4 @@ class SilentAppRemover {
         Write-Host "âœ… Silent removal process completed for $AppName" -ForegroundColor Green
     }
 }
+
