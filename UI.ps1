@@ -89,7 +89,7 @@ function Import-GitHubModuleAdvanced {
     return $false
 }
 # Show About
-Import-GitHubModuleAdvanced-Owner "Darkshadow2019" -Repo "Uapplist" -Path "Helper/Tools" -Branch "main"
+Import-GitHubModuleAdvanced -Owner "Darkshadow2019" -Repo "Uapplist" -Path "Helper/Tools" -Branch "main"
 # End Module Adding ----------------------------------------------------------------------------------------------------------
 Clear-Host;
 Write-Host; Write-Host
