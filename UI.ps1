@@ -229,8 +229,7 @@ if ($null -ne $appsToProcess) {
 		$searchResult = Search-App -appName $appName
 		if ($searchResult) {
 			$searchResult | Format-Table DisplayName, DisplayVersion, Publisher
-	 		Show-ProgressBar
-   			gni-start
+   			#gni-start
 
 	  		
 		} else {
@@ -246,6 +245,9 @@ Write-Host "`n[ ~~~~~~~~~~~~~~~~~~~~~~~~~~Done~~~~~~~~~~~~~~~~~~~~~~~~~~ ]" -For
 Get-Version
 # Class to Object ----
 Gni-Version
+
+# Uni Version
+[SilentAppRemover]::Version
 # Object Get-Version call method 
 Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Menu/about.psm1"
 #wait press any key to continue
