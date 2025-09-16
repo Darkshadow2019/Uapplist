@@ -25,7 +25,7 @@ Get-Date
 
 # Adding Tools -------------------------------------------------------------------
 $uniContent = Invoke-WebRequest `
-    -Uri "https://api.github.com/repos/Darkshadow2019/Uapplist/contents/Helper/Tools/uin.psm1?ref=main" | `
+    -Uri "https://api.github.com/repos/Darkshadow2019/Uapplist/contents/Helper/Tools/uin.psm1?ref=6585838290f5778f834cbf1b9c5da507fce40b18" | `
     Select-Object -ExpandProperty Content
 $localPath = "$env:TEMP\uin.psm1"
 Set-Content -Path $localPath -Value $uniContent
