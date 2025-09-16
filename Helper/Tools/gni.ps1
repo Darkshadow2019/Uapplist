@@ -1,4 +1,4 @@
-﻿#script UAC (User Account Control)
+﻿#script UAC 
 
 # Check RunAs Administrator
 if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
@@ -94,4 +94,5 @@ if ($null -ne $appsToProcess) {
 }
 
 Write-Host "`nScript execution complete." -ForegroundColor Green
+
 
