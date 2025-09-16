@@ -25,8 +25,8 @@ Write-Host "✅ Running with administrator privileges!" -ForegroundColor Green
 function Get-Version {
     # Use Write-Host only to display clear text on the console.
     Write-Host
-    Write-Host "~~~~~ GithubModuleAPI ~~~~~" -ForegroundColor Cyan
-    Write-Host "    Version    :   51.0.0.1" -ForegroundColor Cyan
+    Write-Host "  ~~~~~ GithubModuleAPI ~~~~~" -ForegroundColor White
+    Write-Host "    Version    :   1.0.0.1" -ForegroundColor Cyan
     Write-Host "    developer  :   D@rkshadow Myanmar" -ForegroundColor Cyan
     Write-Host "    release    :   16.9.2025" -ForegroundColor Cyan
 }
@@ -231,7 +231,9 @@ if ($null -ne $appsToProcess) {
 			$searchResult | Format-Table DisplayName, DisplayVersion, Publisher
 	 		Show-ProgressBar
 			#SilentAppRemover::RemoveApplication($appName)
-   			powershell.exe $tempDir\guni.psm1
+   			# $gui=Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Tools/guni.ps1"
+	  		Gni-start
+	  		
 		} else {
 			Write-Host "[ $AppName not found !!! ]" -ForegroundColor Red
 		}
