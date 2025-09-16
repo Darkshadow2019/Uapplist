@@ -41,7 +41,6 @@ function Import-GitModule {
         [string]$Repo,
         [Parameter(Mandatory=$true)]
         [string]$FolderPath
-		[string]$RunFile
     )
 
     # Define the necessary headers for the API request.
