@@ -88,18 +88,21 @@ function Import-GitModule {
                 
                 # Import the module.
                 Import-Module -Name $tempFile -Force -ErrorAction Stop
-                Write-Host "✅ Successfully imported: $moduleName" -ForegroundColor Green
+                # Write-Host "✅ Successfully imported: $moduleName" -ForegroundColor Green
+				 Write-Host "✅ Successfully module imported" -ForegroundColor Green
             } catch {
                 # This will catch errors during the download or saving of the file.
-                Write-Host "⚠️ Warning: Could not download or import $moduleName." -ForegroundColor Yellow
-                Write-Host "Error Details: $($_.Exception.Message)" -ForegroundColor Red
+                # Write-Host "⚠️ Warning: Could not download or import $moduleName." -ForegroundColor Yellow
+                # Write-Host "Error Details: $($_.Exception.Message)" -ForegroundColor Red
+				Write-Host "⚠️ Warning: Could not import module" -ForegroundColor Yellow
             }
         }
         # The typo has been correctly fixed.
         return $true
     } catch {
         # This will catch errors from the initial API call.
-        Write-Host "❌ Initial GitHub API error: $($_.Exception.Message)" -ForegroundColor Red
+        # Write-Host "❌ Initial GitHub API error: $($_.Exception.Message)" -ForegroundColor Red
+		Write-Host "❌ Initial API error: $($_.Exception.Message)" -ForegroundColor Red
         return $false
     } finally {
         # The temporary directory will always be cleaned up whether the script finishes or an error occurs.
