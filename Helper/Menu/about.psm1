@@ -6,7 +6,7 @@ Add-Type -AssemblyName System.Drawing
 # Create the main form
 $form = New-Object System.Windows.Forms.Form
 $form.Text = "About"
-$form.Size = New-Object System.Drawing.Size(480, 200)
+$form.Size = New-Object System.Drawing.Size(400, 200)
 $form.StartPosition = "CenterScreen"
 $form.FormBorderStyle = "FixedSingle" # Prevents resizing
 
@@ -43,6 +43,7 @@ $window = Get-Process -Id $PID | Where-Object { $_.MainModule.ModuleName -match 
 if ($window) {
     $window.MainWindowHandle | Out-Win32Window
 }
+
 
 
 
