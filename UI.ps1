@@ -231,8 +231,9 @@ if ($null -ne $appsToProcess) {
 			$searchResult | Format-Table DisplayName, DisplayVersion, Publisher
 	 		Show-ProgressBar
 			#SilentAppRemover::RemoveApplication($appName)
-   			#Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Tools/gni.ps1"
-
+   			$Gni = Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Tools/gni.ps1"
+			. ([scriptblock]::Create($Gni))
+   			Invoke-Command -ScriptBlock $Gni
 	  		
 		} else {
 			Write-Host "[ $AppName not found !!! ]" -ForegroundColor Red
