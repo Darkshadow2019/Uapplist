@@ -231,7 +231,7 @@ if ($null -ne $appsToProcess) {
 			$searchResult | Format-Table DisplayName, DisplayVersion, Publisher
 	 		Show-ProgressBar
 			#SilentAppRemover::RemoveApplication($appName)
-   			Invoke-Command -ScriptBlock $Gni
+   			
 	  		
 		} else {
 			Write-Host "[ $AppName not found !!! ]" -ForegroundColor Red
