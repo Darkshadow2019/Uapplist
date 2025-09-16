@@ -1,5 +1,13 @@
 # Complete silent application remover
 class SilentAppRemover {
+    function Get-Version {
+        # Use Write-Host only to display clear text on the console.
+        Write-Host
+        Write-Host "~~~~~ SilentAppRemover ~~~~~" -ForegroundColor Cyan
+        Write-Host "    Version    :   1.0.0.1" -ForegroundColor Cyan
+        Write-Host "    developer  :   D@rkshadow Myanmar" -ForegroundColor Cyan
+        Write-Host "    release    :   16.9.2025" -ForegroundColor Cyan
+    }
     static [void] RemoveApplication([string]$AppName) {
         Write-Host "Starting silent removal of $AppName..." -ForegroundColor Cyan   
         # Method 1: Try MSI uninstall
@@ -66,5 +74,6 @@ class SilentAppRemover {
         Write-Host "✅ Silent removal process completed for $AppName" -ForegroundColor Green
     }
 }
+
 
 
