@@ -56,7 +56,7 @@ function Import-GitModule {
     $tempDir = New-Item -ItemType Directory -Path (Join-Path $env:TEMP -ChildPath "GitHubModules-$(Get-Random)") -Force -ErrorAction Stop
 
     try {
-        Write-Host "🔍 Searching for modules on GitHub..." -ForegroundColor Yellow
+        Write-Host "🔍 Searching modules for import..." -ForegroundColor Yellow
         # Write-Host "API URL being used: $apiUrl" -ForegroundColor Gray
         
         # Get the folder contents from the GitHub API.
