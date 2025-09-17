@@ -27,7 +27,7 @@ function Get-Version {
     Write-Host
     Write-Host "  ~~~~~ GithubModuleAPI ~~~~~" -ForegroundColor White
     Write-Host "    Version    :   1.0.0.1" -ForegroundColor Cyan
-    Write-Host "    developer  :   D@rkshadow Myanmar" -ForegroundColor Cyan
+    Write-Host "    developer  :   D@rkshadow" -ForegroundColor Cyan
     Write-Host "    release    :   16.9.2025" -ForegroundColor Cyan
 }
 
@@ -243,9 +243,6 @@ if ($null -ne $appsToProcess) {
 Write-Host "`nScript execution complete." -ForegroundColor Green
 Write-Host "`n[ ~~~~~~~~~~~~~~~~~~~~~~~~~~Done~~~~~~~~~~~~~~~~~~~~~~~~~~ ]" -ForegroundColor Yellow
 
-Get-Version
-# Class to Object ----
-Gni-Version
 # Object Get-Version call method 
 Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Menu/about.psm1"
 #wait press any key to continue
