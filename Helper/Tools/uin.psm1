@@ -91,10 +91,11 @@ function Remove-Application {
 }
 
 # Example Usage:
-#  b Show-Version
+  Show-Version
 
 # To remove an application, call the function like this:
 # Remove-Application -AppName "Mozilla Firefox"
+
 
 
 
