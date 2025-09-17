@@ -17,7 +17,8 @@ function Remove-Application {
         [string]$AppName
     )
     
-    Write-Host "Starting silent removal of $AppName..." -ForegroundColor Cyan
+    # Write-Host "Starting silent removal of $AppName..." -ForegroundColor Cyan
+    Write-Host "☕☕☕☕☕ $AppName..." -ForegroundColor Cyan
     
     # Method 1: Try MSI uninstall using Win32_Product
     try {
@@ -31,6 +32,7 @@ function Remove-Application {
         }
     } catch { # Continue to next method if this one fails
         #Write-Host "MSI uninstall failed or not found. Trying next method." -ForegroundColor Red
+        Write-Host "❌❌❌❌❌❌ $AppName..." -ForegroundColor Cyan
     }
     
     # Method 2: Try registry uninstall
@@ -61,7 +63,8 @@ function Remove-Application {
             }
         }
     } catch {
-        Write-Host "Registry uninstall failed. Trying next method." -ForegroundColor Red
+        #Write-Host "Registry uninstall failed. Trying next method." -ForegroundColor Red
+        Write-Host;
     }
     
     # Method 3: Remove files and folders
@@ -92,4 +95,5 @@ Show-Version
 
 # To remove an application, call the function like this:
 # Remove-Application -AppName "Mozilla Firefox"
+
 
