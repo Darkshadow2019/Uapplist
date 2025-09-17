@@ -12,25 +12,38 @@ function Show-Version {
     Write-Host "    release     :   16.9.2025" -ForegroundColor Cyan
 }
 
+function Show-ProgressBar {
+	Write-Host "`nProcessing..." -ForegroundColor Yellow
+	# $total = 15
+ 	$total = 35
+	for ($i = 0; $i -le $total; $i++) {
+	    $percent = [math]::Round(($i / $total) * 100)
+	    Write-Host "`rProgress: [$('#' * $i)$(' ' * ($total - $i))] $percent%" -NoNewline -ForegroundColor Yellow
+	    Start-Sleep -Milliseconds 50
+	}
+	Write-Host "`rProgress: [###################################] 100%   " -ForegroundColor Green
+}
+
 function Remove-Application {
+    Show-ProgressBar
     param(
         [string]$AppName
     )
     
-    Write-Host "Starting silent removal of $AppName..." -ForegroundColor Cyan
+    #Write-Host "Starting silent removal of $AppName..." -ForegroundColor Cyan
     
     # Method 1: Try MSI uninstall using Win32_Product
     try {
         $products = Get-WmiObject -Class Win32_Product | Where-Object { $_.Name -like "*$AppName*" }
         
         foreach ($product in $products) {
-            Write-Host "Uninstalling via MSI: $($product.Name)" -ForegroundColor Yellow
+            # Write-Host "Uninstalling via MSI: $($product.Name)" -ForegroundColor Yellow
             Start-Process -FilePath "msiexec.exe" `
                 -ArgumentList "/x `"$($product.IdentifyingNumber)`" /qn /norestart" `
                 -Wait -PassThru -WindowStyle Hidden
         }
     } catch { # Continue to next method if this one fails
-        Write-Host "MSI uninstall failed or not found. Trying next method." -ForegroundColor Red
+        #Write-Host "MSI uninstall failed or not found. Trying next method." -ForegroundColor Red
     }
     
     # Method 2: Try registry uninstall
@@ -45,7 +58,7 @@ function Remove-Application {
             
             foreach ($app in $apps) {
                 if ($app.UninstallString) {
-                    Write-Host "Uninstalling via registry: $($app.DisplayName)" -ForegroundColor Yellow
+                    # Write-Host "Uninstalling via registry: $($app.DisplayName)" -ForegroundColor Yellow
                     
                     $uninstallCmd = $app.UninstallString
                     if ($uninstallCmd -like "msiexec*") {
@@ -61,7 +74,7 @@ function Remove-Application {
             }
         }
     } catch {
-        Write-Host "Registry uninstall failed. Trying next method." -ForegroundColor Red
+        # Write-Host "Registry uninstall failed. Trying next method." -ForegroundColor Red
     }
     
     # Method 3: Remove files and folders
@@ -81,7 +94,7 @@ function Remove-Application {
             }
         }
     } catch {
-        Write-Host "File removal failed." -ForegroundColor Red
+        #Write-Host "File removal failed." -ForegroundColor Red
     }
     
     Write-Host "✅ Silent removal process completed for $AppName" -ForegroundColor Green
@@ -92,3 +105,4 @@ Show-Version
 
 # To remove an application, call the function like this:
 # Remove-Application -AppName "Mozilla Firefox"
+
