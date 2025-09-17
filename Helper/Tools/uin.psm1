@@ -8,7 +8,7 @@ function Show-Version {
     Write-Host " ~~~~~~~~~ Uni Tool ~~~~~~~~~" -ForegroundColor White
     Write-Host " Uninstaller Tool for windows" -ForegroundColor Yellow
     Write-Host "    Version     :   1.0.0.1" -ForegroundColor Cyan
-    Write-Host "    developer   :   D@rkshadow Myanmar" -ForegroundColor Cyan
+    Write-Host "    developer   :   D@rkshadow" -ForegroundColor Cyan
     Write-Host "    release     :   16.9.2025" -ForegroundColor Cyan
 }
 
@@ -30,7 +30,7 @@ function Remove-Application {
                 -Wait -PassThru -WindowStyle Hidden
         }
     } catch { # Continue to next method if this one fails
-        Write-Host "MSI uninstall failed or not found. Trying next method." -ForegroundColor Red
+        #Write-Host "MSI uninstall failed or not found. Trying next method." -ForegroundColor Red
     }
     
     # Method 2: Try registry uninstall
@@ -92,3 +92,4 @@ Show-Version
 
 # To remove an application, call the function like this:
 # Remove-Application -AppName "Mozilla Firefox"
+
