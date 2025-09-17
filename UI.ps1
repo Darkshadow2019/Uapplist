@@ -230,6 +230,7 @@ if ($null -ne $appsToProcess) {
 		if ($searchResult) {
 			$searchResult | Format-Table DisplayName, DisplayVersion, Publisher
    			#gni-start
+	  		Show-ProgressBar
 	  		Remove-Application($appName)
 
 	  		
