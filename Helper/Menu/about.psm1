@@ -1,3 +1,4 @@
+[Console]::OutputEncoding = [Text.UTF8Encoding]::UTF8
 $OutputEncoding = [Console]::InputEncoding = [Console]::OutputEncoding = New-Object System.Text.UTF8Encoding
 # Load the necessary .NET assemblies
 Add-Type -AssemblyName System.Windows.Forms
@@ -27,7 +28,7 @@ $button.Size = New-Object System.Drawing.Size(100, 30)
 # Add an event handler for the button click
 $button.Add_Click({
     # Change the label text when the button is clicked
-    $label.Text = "အဆင်မပြေလဲသုံးရမှာပါဘဲ ခင်ဗျာ :P 🤣🤣🤣"
+    $label.Text = "😊 အဆင်မပြေလဲသုံးရမှာပါဘဲ ခင်ဗျာ :P 🤣🤣🤣"
 })
 
 # Add the controls to the form
@@ -43,6 +44,7 @@ $window = Get-Process -Id $PID | Where-Object { $_.MainModule.ModuleName -match 
 if ($window) {
     $window.MainWindowHandle | Out-Win32Window
 }
+
 
 
 
