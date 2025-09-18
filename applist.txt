@@ -6,9 +6,13 @@ VLC media player
 360游戏大厅
 360AI办公
 360安全卫士极速2025
-Kingsoft Security -kxecenter
-Kingsoft Internet Security
-AliyunWrapExe.exe
+Kingsoft Internet Security (32 位)
+Kingsoft Security - kxecenter (32 位)
+Kingsoft Security - 金山毒霸 (32 位)
+Kingsoft Security - 在线升级程序 (32 位)
+金山毒霸 (32 位)
+在线升级程序 (32 位)
+Kingsoft Security - Kingsoft usb guard (32 位)
 金山毒霸PDF阅读器
 金山毒霸
 易歪歪 · 单机 · 免费版 1
