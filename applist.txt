@@ -1,4 +1,5 @@
 Cloudflare WARP
+TurboVPN
 Avast Update Helper
 Miscrosoft OneDrive
 VLC media player
