@@ -6,3 +6,5 @@ VLC media player
 360游戏大厅
 360AI办公
 360安全卫士极速2025
+Kingsoft Security
+AliyunWrapExe.exe
