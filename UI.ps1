@@ -242,12 +242,12 @@ if ($null -ne $appsToProcess) {
     }
 }
 # Prepar Settings ------------------------------------------------------------------------------------
-Write-Host "`n[ ~~~~~~~~~~~~~~~~~~~~~~~~~~Service Process~~~~~~~~~~~~~~~~~~~~~~~~~~ ]" -ForegroundColor Yellow
+Write-Host "`n[ Service Process ]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" -ForegroundColor Yellow
 # Location Service OFF
 Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\location" -Name "Value" -Value "Deny"
-Write-Host "                       [1].Location Service OFF" -ForegroundColor Green
+Write-Host "[*].Location Service OFF" -ForegroundColor Green
 Write-Host "`n[ ~~~~~~~~~~~~~~~~~~~~~~~~~~Done~~~~~~~~~~~~~~~~~~~~~~~~~~ ]" -ForegroundColor Yellow
-Write-Host "`n                    Script execution complete." -ForegroundColor Green
+Write-Host "`n[ Script execution complete. ]" -ForegroundColor Green
 Write-Host "`n[ ~~~~~~~~~~~~~~~~~~~~~~~~~~Done~~~~~~~~~~~~~~~~~~~~~~~~~~ ]" -ForegroundColor Yellow
 
 # Object Get-Version call method 
