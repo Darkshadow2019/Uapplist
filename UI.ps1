@@ -134,8 +134,7 @@ Write-Host "[+]   " -ForegroundColor Yellow -BackgroundColor Red -NoNewline; Wri
 Write-Host "[+]                                                       [+]" -ForegroundColor Yellow -BackgroundColor red
 Write-Host "[+]+++++++++++++++++++++++++++++++++++++++++++++++++++++++[+]" -ForegroundColor Yellow -BackgroundColor red
 Write-Host; 
-Write-Host Get-Date;
-Write-Host 🔍🔍🔍🔍🔍🔍🔍🔍🔍🔍🔍🔍🔍🔍🔍🔍🔍
+Get-Date;
 function Show-Preparing {
 	Write-Host "`n[ ~~~~~~~~~~~~~~~~~~~~Preparing~~~~~~~~~~~~~~~~~~~~ ]" -ForegroundColor Yellow
 	Write-Host "`n[ Loading" -NoNewline	-ForegroundColor Green
