@@ -83,7 +83,7 @@ function Uninstall-App {
         [string]$Name
     )
     
-    Write-Host "Searching for application '$Name'..." -ForegroundColor Cyan
+    Write-Host "🔍 Searching for application '$Name'..." -ForegroundColor Cyan
 
     try {
         # Check if the app exists using Get-Package
@@ -133,5 +133,6 @@ function gni-start{
 
 	Write-Host "`nScript execution complete." -ForegroundColor Green
 }
+
 
 
