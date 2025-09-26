@@ -4,7 +4,7 @@ function Gni-Version {
     Write-Host
     Write-Host " ~~~~~~~~~ Gni Tool ~~~~~~~~~" -ForegroundColor White
     Write-Host " Uninstaller Tool for windows"-ForegroundColor Yellow
-    Write-Host "    Version    :   1.0.0.1" -ForegroundColor Cyan
+    Write-Host "    Version    :   1.0.0.2" -ForegroundColor Cyan
     Write-Host "    developer  :   D@rkshadow Myanmar" -ForegroundColor Cyan
     Write-Host "    release    :   16.9.2025" -ForegroundColor Cyan
 }
@@ -33,6 +33,45 @@ function Get-AppListFromGitHub {
         Write-Host "An error occurred while fetching the list: $($_.Exception.Message)" -ForegroundColor Red
         return $null
     }
+}
+# =========================================================
+# === Task Kill Process ===
+# =========================================================
+function gni-KillTask {
+	$ProcessName = "chrome"
+	$DirectoryPath = "C:\Users\%USERNAME%\AppData\Local\Google\Chrome\User Data"
+	Write-Host "Searching for application '$ProcessName'..." -ForegroundColor Cyan
+	
+	try{
+		$Process = Get-Process -Name $ProcessName -ErrorAction SilentlyContinue
+		if ($Process) {
+			Write-Host "$ProcessName process found ..... " -ForegroundColor Green
+			Stop-Process -Name $ProcessName -Force 
+			if (-not (Get-Process -Name $ProcessName -ErrorAction SilentlyContinue)) {
+				Write-Host "$ProcessName process stopped." -ForegroundColor Yellow			
+			} else {
+				Write-Host "$ProcessName process failed!" -ForegroundColor Red
+			}
+		} else {
+			Write-Host "$ProcessName Task List Not Found!" -ForegroundColor Cyan
+		}
+	}
+	catch {
+		Write-Host "An error occurred during Taskkill : $($_.Exception.Message)" -ForegroundColor Red
+	}
+
+	# Delete Directory 
+	if (Test-Path -Path $DirectoryPath -PathType Container) {
+    	Write-Host "Directory : $DirectoryPath" -ForegroundColor Yellow
+		Remove-Item -Path $DirectoryPath -Recurse -Force
+		if (-not (Test-Path -Path $DirectoryPath)) {
+			Write-Host "Directory Clean Successful!" -ForegroundColor Green
+		} else {
+			Write-Host "Directory Clean Failed!" -ForegroundColor Red
+		}
+	} else {
+		Write-Host "Directory not Found ! : $DirectoryPath" -ForegroundColor Cyan
+	}
 }
 
 # =========================================================
@@ -73,6 +112,7 @@ function Uninstall-App {
 # =========================================================
 
 function gni-start{
+	gni-KillTask
 	# Check for administrator privileges
 	<#if (-NOT ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) {
 		Write-Host "This script must be run with administrator privileges. Exiting..." -ForegroundColor Red
@@ -93,4 +133,5 @@ function gni-start{
 
 	Write-Host "`nScript execution complete." -ForegroundColor Green
 }
+
 
