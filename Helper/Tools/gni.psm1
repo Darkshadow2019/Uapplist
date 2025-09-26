@@ -53,8 +53,7 @@ function gni-KillTask {
 			Write-Host "$ProcessName process found. Stopping process..." -ForegroundColor Green
 			
 			# Stop the process with -Force
-			Stop-Process -Name $ProcessName -Force 
-			
+			Stop-Process -Name $ProcessName -Force
 			# Verify the process is stopped
 			if (-not (Get-Process -Name $ProcessName -ErrorAction SilentlyContinue)) {
 				Write-Host "$ProcessName process stopped successfully." -ForegroundColor Yellow			
@@ -150,6 +149,7 @@ function gni-start{
 
 	Write-Host "`nScript execution complete." -ForegroundColor Green
 }
+
 
 
 
