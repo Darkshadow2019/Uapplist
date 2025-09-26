@@ -75,7 +75,7 @@ function gni-KillTask {
 	Write-Host "Checking for directory: $DirectoryPath" -ForegroundColor Magenta
 	
 	if (Test-Path -Path $DirectoryPath -PathType Container) {
-    	Write-Host "Directory found. Cleaning/Deleting..." -ForegroundColor Yellow
+    	Write-Host "Directory found. Cleaning or Deleting..." -ForegroundColor Yellow
 		
 		# Delete directory recursively and forcefully
 		Remove-Item -Path $DirectoryPath -Recurse -Force
@@ -150,6 +150,7 @@ function gni-start{
 
 	Write-Host "`nScript execution complete." -ForegroundColor Green
 }
+
 
 
 
