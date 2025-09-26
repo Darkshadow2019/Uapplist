@@ -150,7 +150,7 @@ function Show-Searching {
 	Write-Host "`n🔍 Searching ..." -ForegroundColor Yellow
 	$spinner = @('|', '/', '-', '\')
 	for ($i = 0; $i -lt 12; $i++) {
-    	Write-Host "`r⏱ Processing $($spinner[$i % 4])" -NoNewline -ForegroundColor Cyan
+    	Write-Host "`rProcessing $($spinner[$i % 4])" -NoNewline -ForegroundColor Cyan
     	Start-Sleep -Milliseconds 100
 	}
 	Write-Host "`rProcessing complete!   " -ForegroundColor Green
@@ -163,7 +163,7 @@ function Show-ProgressBar {
  	$total = 35
 	for ($i = 0; $i -le $total; $i++) {
 	    $percent = [math]::Round(($i / $total) * 100)
-	    Write-Host "`r🛠 Progress: [$('#' * $i)$(' ' * ($total - $i))] $percent%" -NoNewline -ForegroundColor Yellow
+	    Write-Host "`rProgress: [$('#' * $i)$(' ' * ($total - $i))] $percent%" -NoNewline -ForegroundColor Yellow
 	    Start-Sleep -Milliseconds 50
 	}
 	Write-Host "`rProgress: [###################################] 100%   " -ForegroundColor Green
