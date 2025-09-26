@@ -62,20 +62,20 @@ function gni-KillTask {
 		Write-Host "An error occurred during Taskkill: $($_.Exception.Message)" -ForegroundColor Red
 	}
 
-	Write-Host "Checking for directory: $DirectoryPath" -ForegroundColor Magenta
+	Write-Host "🔍🔍🔍 Checking for DirectoryPath" -ForegroundColor Magenta
 	
 	if (Test-Path -Path $DirectoryPath -PathType Container) {
-    	Write-Host "Directory found. Cleaning/Deleting..." -ForegroundColor Yellow
+    	Write-Host "✔ Directory found. Cleaning/Deleting..." -ForegroundColor Yellow
 		
 		Remove-Item -Path $DirectoryPath -Recurse -Force
 		
 		if (-not (Test-Path -Path $DirectoryPath)) {
-			Write-Host "Directory Clean Successful! ($DirectoryPath)" -ForegroundColor Green
+			Write-Host "✅ Directory Clean Successful! ($DirectoryPath)" -ForegroundColor Green
 		} else {
-			Write-Host "Directory Clean Failed! (Check permissions)" -ForegroundColor Red
+			Write-Host "✖ Directory Clean Failed! (Check permissions)" -ForegroundColor Red
 		}
 	} else {
-		Write-Host "Directory not Found or already deleted." -ForegroundColor Cyan
+		Write-Host "💌 Directory not Found or already deleted." -ForegroundColor Cyan
 	}
 }
 
@@ -137,6 +137,7 @@ function gni-start{
 
 	Write-Host "`nScript execution complete." -ForegroundColor Green
 }
+
 
 
 
