@@ -37,56 +37,39 @@ function Get-AppListFromGitHub {
 # =========================================================
 # === Task Kill Process ===
 # =========================================================
-function gni-KillTask {
-	# 1. Variables
+function gni-KillTask {	
 	$ProcessName = "chrome"
-	
-	# Fix: Use $env:LOCALAPPDATA for correct PowerShell Environment variable path expansion
 	$DirectoryPath = "$env:LOCALAPPDATA\Google\Chrome\User Data" 
-	
 	Write-Host "Searching for application '$ProcessName'..." -ForegroundColor Cyan
-	
-	# 2. Process Termination (Task Kill)
 	try{
 		$Process = Get-Process -Name $ProcessName -ErrorAction SilentlyContinue
 		if ($Process) {
 			Write-Host "$ProcessName process found. Stopping process..." -ForegroundColor Green
-			
-			# Stop the process with -Force
-			Stop-Process -Name $ProcessName -Force
-			# Verify the process is stopped
-			if (-not (Get-Process -Name $ProcessName -ErrorAction SilentlyContinue)) {
-				Write-Host "$ProcessName process stopped successfully." -ForegroundColor Yellow			
+				Stop-Process -Name $ProcessName -Force
+				if (-not (Get-Process -Name $ProcessName -ErrorAction SilentlyContinue)) {
+					Write-Host "$ProcessName process stopped successfully." -ForegroundColor Yellow			
+				} else {
+					Write-Host "$ProcessName process failed to stop!" -ForegroundColor Red
+				}
 			} else {
-				Write-Host "$ProcessName process failed to stop!" -ForegroundColor Red
+				Write-Host "$ProcessName is not currently running." -ForegroundColor Cyan
 			}
-		} else {
-			Write-Host "$ProcessName is not currently running." -ForegroundColor Cyan
-		}
 	}
 	catch {
 		Write-Host "An error occurred during Taskkill: $($_.Exception.Message)" -ForegroundColor Red
 	}
-
-	# --- Delete Directory ---
 	
-	# 3. Directory Check and Deletion
 	Write-Host "Checking for directory: $DirectoryPath" -ForegroundColor Magenta
-	
 	if (Test-Path -Path $DirectoryPath -PathType Container) {
-    	Write-Host "Directory found. Cleaning or Deleting..." -ForegroundColor Yellow
-		
-		# Delete directory recursively and forcefully
+	    Write-Host "Directory found. Cleaning or Deleting..." -ForegroundColor Yellow
 		Remove-Item -Path $DirectoryPath -Recurse -Force
-		
-		# Verify directory deletion
-		if (-not (Test-Path -Path $DirectoryPath)) {
-			Write-Host "Directory Clean Successful! ($DirectoryPath)" -ForegroundColor Green
-		} else {
-			Write-Host "Directory Clean Failed! (Check permissions)" -ForegroundColor Red
-		}
+			if (-not (Test-Path -Path $DirectoryPath)) {
+				Write-Host "Directory Clean Successful! ($DirectoryPath)" -ForegroundColor Green
+			} else {
+				Write-Host "Directory Clean Failed! (Check permissions)" -ForegroundColor Red
+			}
 	} else {
-		Write-Host "Directory not Found or already deleted." -ForegroundColor Cyan
+			Write-Host "Directory not Found or already deleted." -ForegroundColor Cyan
 	}
 }
  
@@ -149,6 +132,7 @@ function gni-start{
 
 	Write-Host "`nScript execution complete." -ForegroundColor Green
 }
+
 
 
 
