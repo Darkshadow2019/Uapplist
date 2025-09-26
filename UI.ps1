@@ -147,7 +147,7 @@ function Show-Preparing {
 
  # Test 2: Spinner
 function Show-Searching {
-	Write-Host "`n🔍 Searching ..." -ForegroundColor Yellow
+	Write-Host "`nSearching ..." -ForegroundColor Yellow
 	$spinner = @('|', '/', '-', '\')
 	for ($i = 0; $i -lt 12; $i++) {
     	Write-Host "`rProcessing $($spinner[$i % 4])" -NoNewline -ForegroundColor Cyan
@@ -158,7 +158,7 @@ function Show-Searching {
 
 # Test 3: Progress bar
 function Show-ProgressBar {
-	Write-Host "`n⏱ Processing..." -ForegroundColor Yellow
+	Write-Host "`nProcessing..." -ForegroundColor Yellow
 	# $total = 15
  	$total = 35
 	for ($i = 0; $i -le $total; $i++) {
