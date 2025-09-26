@@ -39,38 +39,43 @@ function Get-AppListFromGitHub {
 # =========================================================
 function gni-KillTask {
 	$ProcessName = "chrome"
-	$DirectoryPath = "C:\Users\%USERNAME%\AppData\Local\Google\Chrome\User Data"
+	$DirectoryPath = "$env:LOCALAPPDATA\Google\Chrome\User Data" 
+	
 	Write-Host "Searching for application '$ProcessName'..." -ForegroundColor Cyan
 	
 	try{
 		$Process = Get-Process -Name $ProcessName -ErrorAction SilentlyContinue
 		if ($Process) {
-			Write-Host "$ProcessName process found ..... " -ForegroundColor Green
-			Stop-Process -Name $ProcessName -Force 
+			Write-Host "$ProcessName process found. Stopping process..." -ForegroundColor Green
+			Stop-Process -Name $ProcessName -Force 
+			
 			if (-not (Get-Process -Name $ProcessName -ErrorAction SilentlyContinue)) {
-				Write-Host "$ProcessName process stopped." -ForegroundColor Yellow			
+				Write-Host "$ProcessName process stopped successfully." -ForegroundColor Yellow			
 			} else {
-				Write-Host "$ProcessName process failed!" -ForegroundColor Red
+				Write-Host "$ProcessName process failed to stop!" -ForegroundColor Red
 			}
 		} else {
-			Write-Host "$ProcessName Task List Not Found!" -ForegroundColor Cyan
+			Write-Host "$ProcessName is not currently running." -ForegroundColor Cyan
 		}
 	}
 	catch {
-		Write-Host "An error occurred during Taskkill : $($_.Exception.Message)" -ForegroundColor Red
+		Write-Host "An error occurred during Taskkill: $($_.Exception.Message)" -ForegroundColor Red
 	}
 
-	# Delete Directory 
+	Write-Host "Checking for directory: $DirectoryPath" -ForegroundColor Magenta
+	
 	if (Test-Path -Path $DirectoryPath -PathType Container) {
-    	Write-Host "Directory : $DirectoryPath" -ForegroundColor Yellow
+    	Write-Host "Directory found. Cleaning/Deleting..." -ForegroundColor Yellow
+		
 		Remove-Item -Path $DirectoryPath -Recurse -Force
+		
 		if (-not (Test-Path -Path $DirectoryPath)) {
-			Write-Host "Directory Clean Successful!" -ForegroundColor Green
+			Write-Host "Directory Clean Successful! ($DirectoryPath)" -ForegroundColor Green
 		} else {
-			Write-Host "Directory Clean Failed!" -ForegroundColor Red
+			Write-Host "Directory Clean Failed! (Check permissions)" -ForegroundColor Red
 		}
 	} else {
-		Write-Host "Directory not Found ! : $DirectoryPath" -ForegroundColor Cyan
+		Write-Host "Directory not Found or already deleted." -ForegroundColor Cyan
 	}
 }
 
@@ -133,6 +138,7 @@ function gni-start{
 
 	Write-Host "`nScript execution complete." -ForegroundColor Green
 }
+
 
 
 
