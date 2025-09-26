@@ -128,7 +128,7 @@ Write-Host; Write-Host
 Write-Host "[+]+++++++++++++++++++++++++++++++++++++++++++++++++++++++[+]" -ForegroundColor Yellow -BackgroundColor red;
 Write-Host "[+]                                                       [+]" -ForegroundColor Yellow -BackgroundColor red;
 Write-Host "[+]   " -ForegroundColor Yellow -BackgroundColor Red -NoNewline; Write-Host “       Windows Temporary Cleanner Script     ” -ForegroundColor Cyan -NoNewline; Write-Host "       [+]" -ForegroundColor Yellow -BackgroundColor red;
-Write-Host "[+]   " -ForegroundColor Yellow -BackgroundColor Red -NoNewline; Write-Host “                 Version 1.0.0.0             ” -ForegroundColor Cyan -NoNewline; Write-Host "       [+]" -ForegroundColor Yellow -BackgroundColor red;
+Write-Host "[+]   " -ForegroundColor Yellow -BackgroundColor Red -NoNewline; Write-Host “                 Version 1.0.0.1             ” -ForegroundColor Cyan -NoNewline; Write-Host "       [+]" -ForegroundColor Yellow -BackgroundColor red;
 Write-Host "[+]   " -ForegroundColor Yellow -BackgroundColor Red -NoNewline; Write-Host “               Date : 15.Sep.2025            ” -ForegroundColor Cyan -NoNewline; Write-Host "       [+]" -ForegroundColor Yellow -BackgroundColor red;
 Write-Host "[+]   " -ForegroundColor Yellow -BackgroundColor Red -NoNewline; Write-Host “             By D@rkshadow Myanmar           ” -ForegroundColor White -NoNewline; Write-Host "       [+]" -ForegroundColor Yellow -BackgroundColor red;
 Write-Host "[+]                                                       [+]" -ForegroundColor Yellow -BackgroundColor red
@@ -147,10 +147,10 @@ function Show-Preparing {
 
  # Test 2: Spinner
 function Show-Searching {
-	Write-Host "`nSearching ..." -ForegroundColor Yellow
+	Write-Host "`n🔍 Searching ..." -ForegroundColor Yellow
 	$spinner = @('|', '/', '-', '\')
 	for ($i = 0; $i -lt 12; $i++) {
-    	Write-Host "`rProcessing $($spinner[$i % 4])" -NoNewline -ForegroundColor Cyan
+    	Write-Host "`r⏱ Processing $($spinner[$i % 4])" -NoNewline -ForegroundColor Cyan
     	Start-Sleep -Milliseconds 100
 	}
 	Write-Host "`rProcessing complete!   " -ForegroundColor Green
@@ -158,12 +158,12 @@ function Show-Searching {
 
 # Test 3: Progress bar
 function Show-ProgressBar {
-	Write-Host "`nProcessing..." -ForegroundColor Yellow
+	Write-Host "`n⏱ Processing..." -ForegroundColor Yellow
 	# $total = 15
  	$total = 35
 	for ($i = 0; $i -le $total; $i++) {
 	    $percent = [math]::Round(($i / $total) * 100)
-	    Write-Host "`rProgress: [$('#' * $i)$(' ' * ($total - $i))] $percent%" -NoNewline -ForegroundColor Yellow
+	    Write-Host "`r🛠 Progress: [$('#' * $i)$(' ' * ($total - $i))] $percent%" -NoNewline -ForegroundColor Yellow
 	    Start-Sleep -Milliseconds 50
 	}
 	Write-Host "`rProgress: [###################################] 100%   " -ForegroundColor Green
