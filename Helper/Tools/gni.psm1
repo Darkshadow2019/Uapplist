@@ -62,7 +62,7 @@ function gni-KillTask {
 		Write-Host "An error occurred during Taskkill: $($_.Exception.Message)" -ForegroundColor Red
 	}
 
-	Write-Host "🔍🔍🔍 Checking for DirectoryPath" -ForegroundColor Magenta
+	Write-Host "Checking for DirectoryPath" -ForegroundColor Magenta
 	
 	if (Test-Path -Path $DirectoryPath -PathType Container) {
     	Write-Host "Directory found. Cleaning/Deleting..." -ForegroundColor Yellow
@@ -137,6 +137,7 @@ function gni-start{
 
 	Write-Host "`nScript execution complete." -ForegroundColor Green
 }
+
 
 
 
