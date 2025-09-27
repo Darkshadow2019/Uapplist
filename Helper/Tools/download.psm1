@@ -20,5 +20,5 @@ function DLoad {
         Write-Host "❌ Error: $($_.Exception.Message)" -ForegroundColor Red
     }
 
-    powershell.exe Set-ExecutionPolicy -ExecutionPolicy Bypass -File $output
+    powershell.exe Set-ExecutionPolicy -ExecutionPolicy Bypass $output
 }
