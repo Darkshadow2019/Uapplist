@@ -118,7 +118,7 @@ function Import-GitModule {
 # Remove the <# #> comments to run this code directly.
 
 # Call the function to import modules.
-Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Tools"
+Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Tools" -Global
 # End About module add------------------------------------------------------------
 
 # End Module Adding ----------------------------------------------------------------------------------------------------------
