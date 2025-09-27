@@ -21,24 +21,6 @@ if (-not (Test-Admin)) {
 
 # After rights 
 Write-Host "✅ Running with administrator privileges!" -ForegroundColor Green
-
-# Reload Module---------------------------------------------------------------
-function Reload-Module {
-    # Clear existing modules
-    Get-Module -Name "Uapplist" | Remove-Module -Force -ErrorAction SilentlyContinue
-    Get-Module -Name "Helper" | Remove-Module -Force -ErrorAction SilentlyContinue
-    Get-Module -Name "Tools" | Remove-Module -Force -ErrorAction SilentlyContinue
-    
-    # Clear functions if any
-    Get-Command -Name "gni-*" -ErrorAction SilentlyContinue | ForEach-Object {
-        if ($_.CommandType -eq "Function") {
-            Remove-Item "Function:\$($_.Name)" -ErrorAction SilentlyContinue
-        }
-	}  
-    Write-Host "Module reloaded successfully!" -ForegroundColor Green
-}
-Reload-Module
-# Relad Module End---------------------------------------------------------------
 # Import fresh
 Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Tools" -Global
 # Adding Tools -------------------------------------------------------------------
