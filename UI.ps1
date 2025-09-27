@@ -34,8 +34,7 @@ function Reload-Module {
         if ($_.CommandType -eq "Function") {
             Remove-Item "Function:\$($_.Name)" -ErrorAction SilentlyContinue
         }
-	}
-    Reload-Module  
+	}  
     Write-Host "Module reloaded successfully!" -ForegroundColor Green
 }
 Reload-Module
