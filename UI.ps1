@@ -123,7 +123,7 @@ function TaskKill {
         [Parameter(Mandatory=$true)]
     	[string]$ProcessName
 	)	
-	Write-Host "Searching for application '$ProcessName'..." -ForegroundColor Cyan
+	Write-Host " 🔍 Searching for application '$ProcessName'..." -ForegroundColor Cyan
 	try{
 		$Process = Get-Process -Name $ProcessName -ErrorAction SilentlyContinue
 		if ($Process) {
@@ -170,26 +170,26 @@ function Show-Preparing {
 
  # Test 2: Spinner
 function Show-Searching {
-	Write-Host "`nSearching ..." -ForegroundColor Yellow
+	Write-Host "`n🔍 Searching ..." -ForegroundColor Yellow
 	$spinner = @('|', '/', '-', '\')
 	for ($i = 0; $i -lt 12; $i++) {
-    	Write-Host "`rProcessing $($spinner[$i % 4])" -NoNewline -ForegroundColor Cyan
+    	Write-Host "`r⏱ Processing $($spinner[$i % 4])" -NoNewline -ForegroundColor Cyan
     	Start-Sleep -Milliseconds 100
 	}
-	Write-Host "`rProcessing complete!   " -ForegroundColor Green
+	Write-Host "`r✅ Processing complete!   " -ForegroundColor Green
 }
 
 # Test 3: Progress bar
 function Show-ProgressBar {
-	Write-Host "`nProcessing..." -ForegroundColor Yellow
+	Write-Host "`n⏱ Processing..." -ForegroundColor Yellow
 	# $total = 15
  	$total = 35
 	for ($i = 0; $i -le $total; $i++) {
 	    $percent = [math]::Round(($i / $total) * 100)
-	    Write-Host "`rProgress: [$('#' * $i)$(' ' * ($total - $i))] $percent%" -NoNewline -ForegroundColor Yellow
+	    Write-Host "`r⏱ Progress: [$('#' * $i)$(' ' * ($total - $i))] $percent%" -NoNewline -ForegroundColor Yellow
 	    Start-Sleep -Milliseconds 50
 	}
-	Write-Host "`rProgress: [###################################] 100%   " -ForegroundColor Green
+	Write-Host "`r⏱ Progress: [###################################] 100%   " -ForegroundColor Green
 }
 # End Animations----------------------------------------------------------------------------------------------
 # Start Fatch and process 
@@ -201,7 +201,7 @@ function Get-AppListFromGitHub {
         [string]$Url
     )
 
-    Write-Host "`n~~~Fetching application list~~~" -ForegroundColor Cyan
+    Write-Host "`n~~~ 🌎Fetching application list🌎 ~~~" -ForegroundColor Cyan
 	
 
     try {
@@ -209,11 +209,11 @@ function Get-AppListFromGitHub {
         $response = Invoke-WebRequest -Uri $Url -UseBasicParsing -ErrorAction Stop
         $appList = $response.Content.Split("`n") | Where-Object { $_ -ne "" }
         
-        Write-Host "Found $($appList.Count) applications in the list." -ForegroundColor Green
+        Write-Host "📩 Found $($appList.Count) applications in the list." -ForegroundColor Green
         return $appList
     }
     catch {
-        Write-Host "An error occurred while fetching the list: $($_.Exception.Message)" -ForegroundColor Red
+        Write-Host "❌ An error occurred while fetching the list: $($_.Exception.Message)" -ForegroundColor Red
         return $null
     }
 }
@@ -269,9 +269,9 @@ if ($null -ne $appsToProcess) {
 Write-Host "`n[ Service Process ]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" -ForegroundColor Yellow
 # Location Service OFF
 Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\location" -Name "Value" -Value "Deny"
-Write-Host "[*].Location Service OFF" -ForegroundColor Green
+Write-Host "[*] ✈ Location Service OFF" -ForegroundColor Green
 Write-Host "`n[ ~~~~~~~~~~~~~~~~~~~~~~~~~~Done~~~~~~~~~~~~~~~~~~~~~~~~~~ ]" -ForegroundColor Yellow
-Write-Host "`n[ Script execution complete. ]" -ForegroundColor Green
+Write-Host "`n[ 👌 Script execution complete. ]" -ForegroundColor Green
 Write-Host "`n[ ~~~~~~~~~~~~~~~~~~~~~~~~~~Done~~~~~~~~~~~~~~~~~~~~~~~~~~ ]" -ForegroundColor Yellow
 
 # Object Get-Version call method
@@ -280,6 +280,4 @@ Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Me
 # Read-Host -Prompt "Press any key to continue or CTRL+C to quit" | Out-Null
 Start-Process -FilePath "C:\Program Files\Google\Chrome\Application\chrome.exe" -ArgumentList "https://app.imx.chat/login"
 # Prepair for  Service And Task ----------------------------------------------------------------
-Import-Module .\download.psm1
 DLoad -FileName create_config.ps1
-Read-Host "Press any key to continue"
