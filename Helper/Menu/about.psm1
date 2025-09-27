@@ -15,7 +15,7 @@ $form.FormBorderStyle = "FixedSingle" # Prevents resizing
 # Create a label to display text
 $label = New-Object System.Windows.Forms.Label
 $label.Text = "ယခု Online version 1.0.0.1 ကို`nသုံးရတာအဆင်ပြေရဲ့လားဗျာ?"
-$label.Location = New-Object System.Drawing.Point(100, 50)
+$label.Location = New-Object System.Drawing.Point(70, 30)
 $label.Font = New-Object System.Drawing.Font("Microsoft Sans Serif", 10)
 # $label.Font = New-Object System.Drawing.Font("Pyidaungsu", 16, [System.Drawing.FontStyle]::Bold)
 $label.AutoSize = $true
@@ -23,14 +23,12 @@ $label.AutoSize = $true
 # Create a button
 $button = New-Object System.Windows.Forms.Button
 $button.Text = "OK"
-$button.Location = New-Object System.Drawing.Point(150, 110)
+$button.Location = New-Object System.Drawing.Point(150, 120)
 $button.Size = New-Object System.Drawing.Size(100, 30)
 
 # Add an event handler for the button click
 $button.Add_Click({
     # Change the label text when the button is clicked
-    $button.Location = New-Object System.Drawing.Point(150, 120)
-    $label.Location = New-Object System.Drawing.Point(70, 30)
     $label.Text = "အခုဒီ Dialog ကိုပိတ်လိုက်ရင်`Chrome ပွင့်လာပါမယ်`nပထမ Don't Sign in ကိုနိပ်ပါ `nဒုတိယ Skip ကိုနှိပ်ပြီး ခနစောင့်နေပါ`nimx Website (ဝဘ်ဆိုဒ်) ပွင့်လာပါလိမ့်မယ်ဗျာ။"
 })
 
