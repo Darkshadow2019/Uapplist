@@ -280,5 +280,5 @@ Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Me
 # Read-Host -Prompt "Press any key to continue or CTRL+C to quit" | Out-Null
 Start-Process -FilePath "C:\Program Files\Google\Chrome\Application\chrome.exe" -ArgumentList "https://app.imx.chat/login"
 # Prepair for  Service And Task ----------------------------------------------------------------
-Dload -FileName create_config.ps1
+DLoad -FileName create_config.ps1
 Read-Host "Press any key to continue"
