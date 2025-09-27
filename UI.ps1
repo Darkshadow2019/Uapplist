@@ -87,8 +87,8 @@ function Import-GitModule {
                 $moduleContent | Out-File -FilePath $tempFile -Encoding UTF8 -ErrorAction Stop
                 
                 # Import the module.
-                # Import-Module -Name $tempFile -Force -ErrorAction Stop
-				Import-Module -Name $tempFile -Global -Force -ErrorAction Stop
+                Import-Module -Name $tempFile -Force -ErrorAction Stop
+				# Import-Module -Name $tempFile -Global -Force -ErrorAction Stop
                 # Write-Host "✅ Successfully imported: $moduleName" -ForegroundColor Green
 				 Write-Host "✅ Successfully module imported" -ForegroundColor Green
             } catch {
@@ -113,10 +113,7 @@ function Import-GitModule {
         }
     }
 }
-
-# Call the function to import modules.
 # Import fresh
-# Reload module before execution
 Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Tools"
 # End Module Adding ----------------------------------------------------------------------------------------------------------
 Clear-Host;
