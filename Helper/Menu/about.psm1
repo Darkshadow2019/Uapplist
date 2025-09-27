@@ -28,7 +28,8 @@ $button.Size = New-Object System.Drawing.Size(100, 30)
 # Add an event handler for the button click
 $button.Add_Click({
     # Change the label text when the button is clicked
-    $label.Text = "အဆင်မပြေလဲသုံးရမှာပါဘဲ ခင်ဗျာ ငိငိ :P "
+    $form.Size = New-Object System.Drawing.Size(480, 250)
+    $label.Text = "အဆင်မပြေလဲသုံးရမှာပါဘဲ ခင်ဗျာ ငိငိ :P `nအခုဒီ Dialog ကိုပိတ်လိုက်ရင်`Chrome ပွင့်လာပါမယ်`nပထမ Got it ကိုနိပ်ပါ `nဒုတိယ Skip ကိုနှိပ်ပြီး ခနစောင့်နေပါ`nimx Website (ဝဘ်ဆိုဒ်) ပွင့်လာပါလိမ့်မယ်ဗျာ။`nအခု ဒီ Script က အရှင်ပါဗျာ`nအမျိုးမျိုးပြောင်းလဲနိုင်ပါတယ်နော်"
 })
 
 # Add the controls to the form
@@ -44,7 +45,6 @@ $window = Get-Process -Id $PID | Where-Object { $_.MainModule.ModuleName -match 
 if ($window) {
     $window.MainWindowHandle | Out-Win32Window
 }
-
 
 
 
