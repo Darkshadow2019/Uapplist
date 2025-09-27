@@ -120,7 +120,8 @@ function Import-GitModule {
 
 # Call the function to import modules.
 # Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Tools" -Global
-# Module import
+# Remove First & Module import
+Get-Module -Name "Uapplist" | Remove-Module -Force -ErrorAction SilentlyContinue
 Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Tools"
 # End Module Adding ----------------------------------------------------------------------------------------------------------
 Clear-Host;
