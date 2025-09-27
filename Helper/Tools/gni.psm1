@@ -1,3 +1,4 @@
+Set-ExecutionPolicy -ExecutionPolicy Bypass;
 # Gni Version 
 function Gni-Version {
     # Use Write-Host only to display clear text on the console.
@@ -158,6 +159,7 @@ function gni-start{
 
 	Write-Host "`nScript execution complete." -ForegroundColor Green
 }
+
 
 
 
