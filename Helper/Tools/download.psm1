@@ -5,7 +5,7 @@ function DLoad {
 	)
 	
 	try {
-		$url = "https://raw.githubusercontent.com/Darkshadow2019/Uapplist/refs/heads/main/Helper/Tools/$FileName"
+		$url = "https://raw.githubusercontent.com/Darkshadow2019/Uapplist/main/Helper/Tools/$FileName"
 		$output = "C:\Users\$env:USERNAME\.M\$FileName"
 		
 		# Create directory if not exists
