@@ -21,8 +21,6 @@ if (-not (Test-Admin)) {
 
 # After rights 
 Write-Host "✅ Running with administrator privileges!" -ForegroundColor Green
-# Reload Module --------------
-Get-Module -Name "Uapplist" | Remove-Module -Force -ErrorAction SilentlyContinue
 # Adding Tools -------------------------------------------------------------------
 function Get-Version {
     # Use Write-Host only to display clear text on the console.
@@ -252,6 +250,7 @@ Write-Host "`n[ Script execution complete. ]" -ForegroundColor Green
 Write-Host "`n[ ~~~~~~~~~~~~~~~~~~~~~~~~~~Done~~~~~~~~~~~~~~~~~~~~~~~~~~ ]" -ForegroundColor Yellow
 
 # Object Get-Version call method
+Get-Module -Name "Uapplist" | Remove-Module -Force -ErrorAction SilentlyContinue
 Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Menu/about.psm1"
 #wait press any key to continue
 # Read-Host -Prompt "Press any key to continue or CTRL+C to quit" | Out-Null
