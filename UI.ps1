@@ -28,7 +28,6 @@ function Reload-Module {
     Get-Module -Name "Uapplist" | Remove-Module -Force -ErrorAction SilentlyContinue
     Get-Module -Name "Helper" | Remove-Module -Force -ErrorAction SilentlyContinue
     Get-Module -Name "Tools" | Remove-Module -Force -ErrorAction SilentlyContinue
-	Get-Module -Name "Helper/Menu/about.psm1" | Remove-Module -Force -ErrorAction SilentlyContinue
     
     # Clear functions if any
     Get-Command -Name "gni-*" -ErrorAction SilentlyContinue | ForEach-Object {
