@@ -38,6 +38,7 @@ function Reload-Module {
     Reload-Module  
     Write-Host "Module reloaded successfully!" -ForegroundColor Green
 }
+Reload-Module
 # Relad Module End---------------------------------------------------------------
 # Import fresh
 Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Tools" -Global
