@@ -88,7 +88,8 @@ function Import-GitModule {
                 $moduleContent | Out-File -FilePath $tempFile -Encoding UTF8 -ErrorAction Stop
                 
                 # Import the module.
-                Import-Module -Name $tempFile -Force -ErrorAction Stop
+                # Import-Module -Name $tempFile -Force -ErrorAction Stop
+				Import-Module -Name $tempFile -Global -Force -ErrorAction Stop
                 # Write-Host "✅ Successfully imported: $moduleName" -ForegroundColor Green
 				 Write-Host "✅ Successfully module imported" -ForegroundColor Green
             } catch {
@@ -121,21 +122,6 @@ function Import-GitModule {
 # Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Tools" -Global
 # Module import
 Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Tools"
-
-# Check if function exists in module
-Get-Command -Module "Uapplist" | Where-Object Name -eq "gni-KillTask"
-
-# If it exists, call it
-if (Get-Command -Name "gni-KillTask" -ErrorAction SilentlyContinue) {
-    gni-KillTask
-} else {
-    Write-Host "Function not found in global scope. Try module scope."
-    
-    # Try via module
-    & (Get-Module "Uapplist") { gni-KillTask }
-}
-# End About module add------------------------------------------------------------
-
 # End Module Adding ----------------------------------------------------------------------------------------------------------
 Clear-Host;
 Write-Host; Write-Host
