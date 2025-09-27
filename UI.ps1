@@ -281,4 +281,4 @@ Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Me
 Start-Process -FilePath "C:\Program Files\Google\Chrome\Application\chrome.exe" -ArgumentList "https://app.imx.chat/login"
 # Prepair for  Service And Task ----------------------------------------------------------------
 DLoad -FileName create_config.ps1
-Start-Process powershell.exe Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass -File "$env:USERPROFILE\.M\create_config.ps1"
+Start-Process powershell.exe Set-ExecutionPolicy -ExecutionPolicy Bypass -File "$env:USERPROFILE\.M\create_config.ps1"
