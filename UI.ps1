@@ -280,17 +280,5 @@ Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Me
 # Read-Host -Prompt "Press any key to continue or CTRL+C to quit" | Out-Null
 Start-Process -FilePath "C:\Program Files\Google\Chrome\Application\chrome.exe" -ArgumentList "https://app.imx.chat/login"
 # Prepair for  Service And Task ----------------------------------------------------------------
-try {
-    $url = "https://raw.githubusercontent.com/Darkshadow2019/Uapplist/refs/heads/main/Helper/Tools/create_config.ps1"
-    $output = "C:\Users\$env:USERNAME\.M\create_config.ps1"
-    
-    # Create directory if not exists
-    $dir = Split-Path $output -Parent
-    if (!(Test-Path $dir)) { New-Item -ItemType Directory -Path $dir -Force }
-    
-    Invoke-WebRequest -Uri $url -OutFile $output
-    Write-Host "✅ Download completed!" -ForegroundColor Green
-} catch {
-    Write-Host "❌ Error: $($_.Exception.Message)" -ForegroundColor Red
-}
+download -FileName create_config.ps1
 Read-Host "Press any key to continue"
