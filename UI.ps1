@@ -36,7 +36,7 @@ function Reload-Module {
             Remove-Item "Function:\$($_.Name)" -ErrorAction SilentlyContinue
         }
     }
-    
+    Reload-Module
     # Import fresh
     Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Tools" -Global
     
@@ -142,6 +142,7 @@ function Import-GitModule {
 
 # Call the function to import modules.
 # Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Tools" -Global
+Reload-Module
 Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Tools"
 # End Module Adding ----------------------------------------------------------------------------------------------------------
 Clear-Host;
@@ -274,6 +275,7 @@ Write-Host "`n[ Script execution complete. ]" -ForegroundColor Green
 Write-Host "`n[ ~~~~~~~~~~~~~~~~~~~~~~~~~~Done~~~~~~~~~~~~~~~~~~~~~~~~~~ ]" -ForegroundColor Yellow
 
 # Object Get-Version call method 
+Reload-Module
 Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Menu/about.psm1" -Global
 #wait press any key to continue
 # Read-Host -Prompt "Press any key to continue or CTRL+C to quit" | Out-Null
