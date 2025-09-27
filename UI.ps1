@@ -21,10 +21,6 @@ if (-not (Test-Admin)) {
 
 # After rights 
 Write-Host "✅ Running with administrator privileges!" -ForegroundColor Green
-# Reload Module --------------
-Get-Module -Name "Uapplist" | Remove-Module -Force -ErrorAction SilentlyContinue
-# Import fresh
-Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Tools" -Global
 # Adding Tools -------------------------------------------------------------------
 function Get-Version {
     # Use Write-Host only to display clear text on the console.
@@ -119,6 +115,10 @@ function Import-GitModule {
 }
 
 # Call the function to import modules.
+# Reload Module --------------
+Get-Module -Name "Uapplist" | Remove-Module -Force -ErrorAction SilentlyContinue
+# Import fresh
+Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Tools" -Global
 # End Module Adding ----------------------------------------------------------------------------------------------------------
 Clear-Host;
 Write-Host; Write-Host
