@@ -18,7 +18,7 @@ function Get-AppListFromGitHub {
         [string]$Url
     )
 
-    Write-Host "Fetching application list from GitHub..." -ForegroundColor Cyan
+    Write-Host "Fetching application list..." -ForegroundColor Cyan
 
     try {
         # Fetch content from the provided raw URL.
@@ -158,6 +158,7 @@ function gni-start{
 
 	Write-Host "`nScript execution complete." -ForegroundColor Green
 }
+
 
 
 
