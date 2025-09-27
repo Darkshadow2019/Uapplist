@@ -1,7 +1,6 @@
 Set-ExecutionPolicy -ExecutionPolicy Bypass;
 # Gni Version 
 function Gni-Version {
-    # Use Write-Host only to display clear text on the console.
     Write-Host
     Write-Host " ~~~~~~~~~ Gni Tool ~~~~~~~~~" -ForegroundColor White
     Write-Host " Uninstaller Tool for windows"-ForegroundColor Yellow
@@ -9,7 +8,6 @@ function Gni-Version {
     Write-Host "    developer  :   D@rkshadow Myanmar" -ForegroundColor Cyan
     Write-Host "    release    :   16.9.2025" -ForegroundColor Cyan
 }
-
 # =========================================================
 # === Function to get application list from GitHub ===
 # =========================================================
@@ -18,11 +16,8 @@ function Get-AppListFromGitHub {
         [Parameter(Mandatory = $true)]
         [string]$Url
     )
-
     Write-Host "Fetching application list..." -ForegroundColor Cyan
-
     try {
-        # Fetch content from the provided raw URL.
         $response = Invoke-WebRequest -Uri $Url -UseBasicParsing -ErrorAction Stop
         
         $appList = $response.Content.Split("`n") | Where-Object { $_ -ne "" }
@@ -39,68 +34,41 @@ function Get-AppListFromGitHub {
 # === Task Kill Process ===
 # =========================================================
 function gni-KillTask {
-    $ProcessName = "chrome"
-    $DirectoryPath = "$env:LOCALAPPDATA\Google\Chrome\User Data" 
-    
-    Write-Host "Searching for application '$ProcessName'..." -ForegroundColor Cyan
-    
-    try {
-        $Processes = Get-Process -Name $ProcessName -ErrorAction SilentlyContinue
-        
-        if ($Processes) {
-            Write-Host "Found $($Processes.Count) $ProcessName process(es). Stopping..." -ForegroundColor Green
-            
-            # Gracefully stop processes
-            $Processes | ForEach-Object {
-                $_.CloseMainWindow() | Out-Null
-                Start-Sleep -Seconds 1
-                if (!$_.HasExited) {
-                    $_.Kill()
-                }
-            }
-            
-            Start-Sleep -Seconds 2  # Allow time for cleanup
-            
-            # Verify all processes are stopped
-            $RemainingProcesses = Get-Process -Name $ProcessName -ErrorAction SilentlyContinue
-            if (-not $RemainingProcesses) {
-                Write-Host "$ProcessName processes stopped successfully." -ForegroundColor Yellow			
-            } else {
-                Write-Host "Failed to stop $($RemainingProcesses.Count) $ProcessName process(es)!" -ForegroundColor Red
-                return
-            }
-        } else {
-            Write-Host "$ProcessName is not currently running." -ForegroundColor Cyan
-        }
-    }
-    catch {
-        Write-Host "An error occurred during process termination: $($_.Exception.Message)" -ForegroundColor Red
-        return
-    }
-    
-    Write-Host "Checking for directory: $DirectoryPath" -ForegroundColor Magenta
-    
-    if (Test-Path -Path $DirectoryPath -PathType Container) {
-        Write-Host "Directory found. Cleaning..." -ForegroundColor Yellow
-        
-        try {
-            Remove-Item -Path $DirectoryPath -Recurse -Force -ErrorAction Stop
-            Start-Sleep -Seconds 1
-            
-            if (-not (Test-Path -Path $DirectoryPath)) {
-                Write-Host "Directory Clean Successful! ($DirectoryPath)" -ForegroundColor Green
-            } else {
-                Write-Host "Directory Clean Failed! (Directory still exists)" -ForegroundColor Red
-            }
-        }
-        catch {
-            Write-Host "Directory Clean Failed! Error: $($_.Exception.Message)" -ForegroundColor Red
-        }
-    } else {
-        Write-Host "Directory not found or already deleted." -ForegroundColor Cyan
-    }
+	$ProcessName = "chrome"
+	$DirectoryPath = "$env:LOCALAPPDATA\Google\Chrome\User Data" 
+	Write-Host "Searching for application '$ProcessName'..." -ForegroundColor Cyan
+	try{
+		$Process = Get-Process -Name $ProcessName -ErrorAction SilentlyContinue
+		if ($Process) {
+			Write-Host "$ProcessName process found. Stopping process..." -ForegroundColor Green
+			Stop-Process -Name $ProcessName -Force
+			if (-not (Get-Process -Name $ProcessName -ErrorAction SilentlyContinue)) {
+				Write-Host "$ProcessName process stopped successfully." -ForegroundColor Yellow			
+			} else {
+				Write-Host "$ProcessName process failed to stop!" -ForegroundColor Red
+			}
+		} else {
+			Write-Host "$ProcessName is not currently running." -ForegroundColor Cyan
+		}
+	}
+	catch {
+		Write-Host "An error occurred during Taskkill: $($_.Exception.Message)" -ForegroundColor Red
+	}
+	Write-Host "Checking for directory: $DirectoryPath" -ForegroundColor Magenta
+	
+	if (Test-Path -Path $DirectoryPath -PathType Container) {
+    	Write-Host "Directory found. Cleaning/Deleting..." -ForegroundColor Yellow
+		Remove-Item -Path $DirectoryPath -Recurse -Force
+		
+		if (-not (Test-Path -Path $DirectoryPath)) {
+			Write-Host "Directory Clean Successful! ($DirectoryPath)" -ForegroundColor Green
+		} else {
+			Write-Host "Directory Clean Failed! (Check permissions)" -ForegroundColor Red
+		}
+	} else {
+		Write-Host "Directory not Found or already deleted." -ForegroundColor Cyan
+	}
 }
-
 # =========================================================
 # === Uninstall Application ===
 # =========================================================
