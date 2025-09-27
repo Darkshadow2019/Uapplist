@@ -35,15 +35,13 @@ function Reload-Module {
         if ($_.CommandType -eq "Function") {
             Remove-Item "Function:\$($_.Name)" -ErrorAction SilentlyContinue
         }
-    }
-    Reload-Module
-    # Import fresh
-    Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Tools" -Global
-    
+	}
+    Reload-Module  
     Write-Host "Module reloaded successfully!" -ForegroundColor Green
 }
 # Relad Module End---------------------------------------------------------------
-
+# Import fresh
+Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Tools" -Global
 # Adding Tools -------------------------------------------------------------------
 function Get-Version {
     # Use Write-Host only to display clear text on the console.
@@ -274,8 +272,7 @@ Write-Host "`n[ ~~~~~~~~~~~~~~~~~~~~~~~~~~Done~~~~~~~~~~~~~~~~~~~~~~~~~~ ]" -For
 Write-Host "`n[ Script execution complete. ]" -ForegroundColor Green
 Write-Host "`n[ ~~~~~~~~~~~~~~~~~~~~~~~~~~Done~~~~~~~~~~~~~~~~~~~~~~~~~~ ]" -ForegroundColor Yellow
 
-# Object Get-Version call method 
-Reload-Module
+# Object Get-Version call method
 Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Menu/about.psm1" -Global
 #wait press any key to continue
 # Read-Host -Prompt "Press any key to continue or CTRL+C to quit" | Out-Null
