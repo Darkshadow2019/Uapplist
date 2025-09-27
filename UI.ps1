@@ -228,8 +228,7 @@ if ($null -ne $appsToProcess) {
 		$searchResult = Search-App -appName $appName
 		if ($searchResult) {
 			$searchResult | Format-Table DisplayName, DisplayVersion, Publisher
-			gni-KillTask
-			# Invoke-Expression "gni-KillTask"
+			Invoke-Expression "gni-KillTask"
    			gni-start
 	  		Show-ProgressBar
 	  		Remove-Application($appName)
@@ -251,7 +250,6 @@ Write-Host "`n[ Script execution complete. ]" -ForegroundColor Green
 Write-Host "`n[ ~~~~~~~~~~~~~~~~~~~~~~~~~~Done~~~~~~~~~~~~~~~~~~~~~~~~~~ ]" -ForegroundColor Yellow
 
 # Object Get-Version call method
-Get-Module -Name "Uapplist" | Remove-Module -Force -ErrorAction SilentlyContinue
 Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Menu/about.psm1"
 #wait press any key to continue
 # Read-Host -Prompt "Press any key to continue or CTRL+C to quit" | Out-Null
