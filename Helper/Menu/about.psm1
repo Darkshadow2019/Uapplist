@@ -45,8 +45,11 @@ $window = Get-Process -Id $PID | Where-Object { $_.MainModule.ModuleName -match 
 if ($window) {
     $window.MainWindowHandle | Out-Win32Window
 }
-# Cleanup code (optional)
-Get-Module -Name "about.psm1" | Remove-Module -Force -ErrorAction SilentlyContinue
+$form.Add_FormClosing({
+    # Cleanup code (optional)
+    Get-Module -Name "Menu\about.psm1" | Remove-Module -Force -ErrorAction SilentlyContinue
+})
+
 
 
 
