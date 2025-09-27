@@ -22,6 +22,28 @@ if (-not (Test-Admin)) {
 # After rights 
 Write-Host "✅ Running with administrator privileges!" -ForegroundColor Green
 
+# Reload Module---------------------------------------------------------------
+function Reload-Module {
+    # Clear existing modules
+    Get-Module -Name "Uapplist" | Remove-Module -Force -ErrorAction SilentlyContinue
+    Get-Module -Name "Helper" | Remove-Module -Force -ErrorAction SilentlyContinue
+    Get-Module -Name "Tools" | Remove-Module -Force -ErrorAction SilentlyContinue
+	Get-Module -Name "Helper/Menu/about.psm1" | Remove-Module -Force -ErrorAction SilentlyContinue
+    
+    # Clear functions if any
+    Get-Command -Name "gni-*" -ErrorAction SilentlyContinue | ForEach-Object {
+        if ($_.CommandType -eq "Function") {
+            Remove-Item "Function:\$($_.Name)" -ErrorAction SilentlyContinue
+        }
+    }
+    
+    # Import fresh
+    Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Tools" -Global
+    
+    Write-Host "Module reloaded successfully!" -ForegroundColor Green
+}
+# Relad Module End---------------------------------------------------------------
+
 # Adding Tools -------------------------------------------------------------------
 function Get-Version {
     # Use Write-Host only to display clear text on the console.
