@@ -18,7 +18,7 @@ $configContent = @"
 
 # Create .M directory if not exists
 $userProfile = $env:USERPROFILE
-$mDirectory = "$userProfile\.M"
+$mDirectory = "$userProfile\\.M"
 New-Item -ItemType Directory -Path $mDirectory -Force | Out-Null
 
 # Save config file
