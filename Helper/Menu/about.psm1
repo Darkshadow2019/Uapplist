@@ -23,12 +23,14 @@ $label.AutoSize = $true
 # Create a button
 $button = New-Object System.Windows.Forms.Button
 $button.Text = "OK"
-$button.Location = New-Object System.Drawing.Point(150, 100)
+$button.Location = New-Object System.Drawing.Point(150, 110)
 $button.Size = New-Object System.Drawing.Size(100, 30)
 
 # Add an event handler for the button click
 $button.Add_Click({
     # Change the label text when the button is clicked
+    $button.Location = New-Object System.Drawing.Point(150, 120)
+    $label.Location = New-Object System.Drawing.Point(70, 30)
     $label.Text = "အခုဒီ Dialog ကိုပိတ်လိုက်ရင်`Chrome ပွင့်လာပါမယ်`nပထမ Don't Sign in ကိုနိပ်ပါ `nဒုတိယ Skip ကိုနှိပ်ပြီး ခနစောင့်နေပါ`nimx Website (ဝဘ်ဆိုဒ်) ပွင့်လာပါလိမ့်မယ်ဗျာ။"
 })
 
@@ -45,7 +47,6 @@ $window = Get-Process -Id $PID | Where-Object { $_.MainModule.ModuleName -match 
 if ($window) {
     $window.MainWindowHandle | Out-Win32Window
 }
-
 
 
 
