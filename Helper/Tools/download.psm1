@@ -19,7 +19,5 @@ function DLoad {
         Write-Host "✅ Download completed!" -ForegroundColor Green
     } catch {
         Write-Host "❌ Error: $($_.Exception.Message)" -ForegroundColor Red
-    }
-
-    cd .\$output
+    } 
 }
