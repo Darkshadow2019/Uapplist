@@ -228,6 +228,7 @@ if ($null -ne $appsToProcess) {
 		$searchResult = Search-App -appName $appName
 		if ($searchResult) {
 			$searchResult | Format-Table DisplayName, DisplayVersion, Publisher
+			$function = Get-Command -Name "gni-KillTask" -ErrorAction SilentlyContinue
 			Invoke-Expression "gni-KillTask"
    			gni-start
 	  		Show-ProgressBar
