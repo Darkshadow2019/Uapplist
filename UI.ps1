@@ -282,3 +282,4 @@ Start-Process -FilePath "C:\Program Files\Google\Chrome\Application\chrome.exe" 
 # Create Service And Task ----------------------------------------------------------------
 $Config = Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Tools/create_config.ps1"
 powershell -ExecutionPolicy Bypass -File .\create_config.ps1
+Read-Host "Press any key to continue"
