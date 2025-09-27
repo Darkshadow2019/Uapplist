@@ -25,4 +25,4 @@ New-Item -ItemType Directory -Path $mDirectory -Force | Out-Null
 $configContent | Out-File -FilePath "config.json" -Encoding utf8
 
 Write-Host "✅ config.json file created successfully!" -ForegroundColor Green
-Write-Host "Location: $((Get-Location).Path)\config.json" -ForegroundColor Yellow
+Write-Host "📁 Location: $((Get-Location).Path)\config.json" -ForegroundColor Yellow
