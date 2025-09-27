@@ -1,4 +1,4 @@
-Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+Set-ExecutionPolicy -ExecutionPolicy Bypass
 # By D@rkshadow
 $configContent = @"
 {
