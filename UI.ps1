@@ -116,6 +116,35 @@ function Import-GitModule {
 # Import fresh
 Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Tools"
 # End Module Adding ----------------------------------------------------------------------------------------------------------
+# Tools--------------------------------------------------------
+function TaskKill {
+	[CmdletBinding()]
+    param(
+        [Parameter(Mandatory=$true)]
+    	[string]$ProcessName
+	)	
+	Write-Host "Searching for application '$ProcessName'..." -ForegroundColor Cyan
+	try{
+		$Process = Get-Process -Name $ProcessName -ErrorAction SilentlyContinue
+		if ($Process) {
+			Write-Host "$ProcessName process found. Stopping process..." -ForegroundColor Green
+			Stop-Process -Name $ProcessName -Force 
+			if (-not (Get-Process -Name $ProcessName -ErrorAction SilentlyContinue)) {
+				Write-Host "$ProcessName process stopped successfully." -ForegroundColor Yellow			
+			} else {
+				Write-Host "$ProcessName process failed to stop!" -ForegroundColor Red
+			}
+		} else {
+			Write-Host "$ProcessName is not currently running." -ForegroundColor Cyan
+		}
+	}
+	catch {
+		Write-Host "An error occurred during Taskkill: $($_.Exception.Message)" -ForegroundColor Red
+	}
+}
+# End Taskkill-----------------------------------------------------------------
+TaskKill "warp-svc.exe"
+TaskKill "Cloudflare WARP.exe"
 Clear-Host;
 Write-Host; Write-Host
 #Title+++++++++++++++++++++++++++++++++++
