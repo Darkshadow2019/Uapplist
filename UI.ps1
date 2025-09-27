@@ -119,6 +119,7 @@ function Import-GitModule {
 
 # Call the function to import modules.
 Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Tools" -Global
+Get-Command -Module "Uapplist" | Where-Object Name -eq "gni-KillTask"
 # End About module add------------------------------------------------------------
 
 # End Module Adding ----------------------------------------------------------------------------------------------------------
