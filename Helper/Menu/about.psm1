@@ -9,6 +9,7 @@ $form = New-Object System.Windows.Forms.Form
 $form.Text = "About"
 $form.Size = New-Object System.Drawing.Size(400, 200)
 $form.StartPosition = "CenterScreen"
+$form.TopMost = $true 
 $form.FormBorderStyle = "FixedSingle" # Prevents resizing
 
 # Create a label to display text
@@ -44,6 +45,7 @@ $window = Get-Process -Id $PID | Where-Object { $_.MainModule.ModuleName -match 
 if ($window) {
     $window.MainWindowHandle | Out-Win32Window
 }
+
 
 
 
