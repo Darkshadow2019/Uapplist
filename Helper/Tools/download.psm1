@@ -1,5 +1,4 @@
 # By D@rkshadow
-Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 function DLoad {
     param(
         [string]$FileName
