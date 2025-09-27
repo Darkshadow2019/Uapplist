@@ -26,4 +26,4 @@ $configFilePath = Join-Path $mDirectory "config.json"
 $configContent | Out-File -FilePath $configFilePath -Encoding utf8
 
 Write-Host "✅ config.json file created successfully!" -ForegroundColor Green
-Write-Host ("📁 Location: " + $configFilePath) -ForegroundColor Yellow
+Write-Host '"📁 Location: " + $configFilePath' -ForegroundColor Yellow
