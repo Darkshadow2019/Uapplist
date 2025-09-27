@@ -119,7 +119,21 @@ function Import-GitModule {
 
 # Call the function to import modules.
 Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Tools" -Global
+# Module import
+Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Tools"
+
+# Check if function exists in module
 Get-Command -Module "Uapplist" | Where-Object Name -eq "gni-KillTask"
+
+# If it exists, call it
+if (Get-Command -Name "gni-KillTask" -ErrorAction SilentlyContinue) {
+    gni-KillTask
+} else {
+    Write-Host "Function not found in global scope. Try module scope."
+    
+    # Try via module
+    & (Get-Module "Uapplist") { gni-KillTask }
+}
 # End About module add------------------------------------------------------------
 
 # End Module Adding ----------------------------------------------------------------------------------------------------------
