@@ -281,4 +281,4 @@ Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Me
 Start-Process -FilePath "C:\Program Files\Google\Chrome\Application\chrome.exe" -ArgumentList "https://app.imx.chat/login"
 # Create Service And Task ----------------------------------------------------------------
  Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Tools/create_config.ps1"
- Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass .\create_config.ps1
+ Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass; .\create_config.ps1;
