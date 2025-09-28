@@ -1,6 +1,46 @@
 # Downloader By D@rkshadow (fixed version)
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 $OutputEncoding = [System.Text.Encoding]::UTF8
+function Write-ColorOutput {
+    param(
+        [string]$Message,
+        [string]$Type = "info"
+    )
+    
+    # PowerShell-compatible symbols
+    $symbols = @{
+        success = "✓"
+        error   = "✗" 
+        warning = "!"
+        info    = "ⓘ"
+        question = "?"
+        download = "↓"
+        upload   = "↑"
+        folder   = "[ ]"
+        key      = "⚿"
+        package  = "☐"
+    }
+    
+    $colors = @{
+        success = "Green"
+        error   = "Red"
+        warning = "Yellow" 
+        info    = "Cyan"
+        question = "Magenta"
+        download = "Blue"
+        upload   = "Blue"
+        folder   = "Cyan"
+        key      = "Yellow"
+        package  = "Cyan"
+    }
+    
+    $symbol = $symbols[$Type]
+    $color = $colors[$Type]
+    
+    Write-Host "$symbol $Message" -ForegroundColor $color
+}
+
+
 param(
     [string]$ConfigFile = "config.json"
 )
@@ -42,7 +82,8 @@ if ([string]::IsNullOrWhiteSpace($owner) -or [string]::IsNullOrWhiteSpace($repo)
 }
 
 # Then use emoji
-Write-Host "🔑Authenticating as: $owner" -ForegroundColor Cyan
+# Write-Host "🔑Authenticating as: $owner" -ForegroundColor Cyan
+Write-ColorOutput "Authentication required" "key" -NoNewLine; Write-Host "$owner" -ForegroundColor Cyan
 Write-Host "📦Repository: $repo" -ForegroundColor Cyan
 Write-Host "📁Files to download: $($config.downloads.Count)" -ForegroundColor Cyan
 Write-Host ""
