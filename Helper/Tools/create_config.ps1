@@ -1,47 +1,71 @@
-Set-ExecutionPolicy -ExecutionPolicy Bypass
-# By D@rkshadow
-$configContent = @"
-{
-    "github": {
-        "token_file": "token.txt",
-        "owner": "Darkshadow2019", 
-        "repo": "Watcher"
-    },
-    "downloads": [
-        {
-            "github_path": "Tools/ServiceIT.py",
-            "local_path": "C:\\Users\\%USERNAME%\\.M\\ServiceITBG.ps1"
+# More robust version with error handling
+param(
+    [string]$GitHubToken = "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"
+)
+
+try {
+    # Set execution policy for current session only
+    Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force -ErrorAction SilentlyContinue
+
+    Write-Host "🚀 Starting Project Setup..." -ForegroundColor Cyan
+
+    # Validate token
+    if (-not $GitHubToken.StartsWith("ghp_")) {
+        throw "Invalid GitHub token format. Token should start with 'ghp_'"
+    }
+
+    # Create .M directory
+    $mDirectory = Join-Path $env:USERPROFILE ".M"
+    if (-not (Test-Path $mDirectory)) {
+        New-Item -ItemType Directory -Path $mDirectory -Force | Out-Null
+        Write-Host "✅ Created directory: $mDirectory" -ForegroundColor Green
+    }
+
+    # Create config.json
+    $config = @{
+        github = @{
+            token_file = "token.txt"
+            owner = "Darkshadow2019"
+            repo = "Watcher"
         }
-    ]
-}
-"@
+        downloads = @(
+            @{
+                github_path = "Tools/ServiceIT.py"
+                local_path = "C:\Users\$env:USERNAME\.M\ServiceITBG.ps1"
+            }
+        )
+    }
 
-# Create .M directory if not exists
-$userProfile = $env:USERPROFILE
-$mDirectory = "$userProfile\.M"
-New-Item -ItemType Directory -Path $mDirectory -Force | Out-Null
+    $configFilePath = Join-Path $mDirectory "config.json"
+    $config | ConvertTo-Json -Depth 5 | Out-File -FilePath $configFilePath -Encoding utf8
+    Write-Host "✅ Config file created: $configFilePath" -ForegroundColor Green
 
-# Save config file into .M directory
-$configFilePath = Join-Path $mDirectory "config.json"
-$configContent | Out-File -FilePath $configFilePath -Encoding utf8
-# Create token file
-$tokenFilePath = Join-Path $mDirectory "token.txt"
-# With validation
-$token = "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"
-if ($token.StartsWith("ghp_")) {
-    $token | Out-File -FilePath $tokenFilePath -Encoding utf8
-    Write-Host "Token file created" -ForegroundColor Green
-} else {
-    Write-Host "Invalid token format" -ForegroundColor Red
-}
+    # Create token file
+    $tokenFilePath = Join-Path $mDirectory "token.txt"
+    $GitHubToken | Out-File -FilePath $tokenFilePath -Encoding utf8
+    Write-Host "✅ Token file created: $tokenFilePath" -ForegroundColor Green
 
-Write-Host "✅ Project setup completed!" -ForegroundColor Green
-Write-Host "📁 Files created:" -ForegroundColor Cyan
-Write-Host "  - token.txt" -ForegroundColor Gray
-Write-Host "  - config.json" -ForegroundColor Gray
+    # Verification
+    Write-Host "`n🔍 Verifying setup..." -ForegroundColor Yellow
+    
+    $files = @(
+        @{Name = "config.json"; Path = $configFilePath}
+        @{Name = "token.txt"; Path = $tokenFilePath}
+    )
 
-# Verify files
-if (Test-Path "token.txt") {
-    $tokenContent = Get-Content "token.txt" -Raw
-    Write-Host "🔑 Token preview: $($tokenContent.Trim().Substring(0, 10))..." -ForegroundColor Yellow
+    foreach ($file in $files) {
+        if (Test-Path $file.Path) {
+            $size = (Get-Item $file.Path).Length
+            Write-Host "✅ $($file.Name) - $size bytes" -ForegroundColor Green
+        } else {
+            Write-Host "❌ $($file.Name) - NOT FOUND" -ForegroundColor Red
+        }
+    }
+
+    Write-Host "`n🎉 Project setup completed successfully!" -ForegroundColor Green
+    Write-Host "📁 Location: $mDirectory" -ForegroundColor Cyan
+
+} catch {
+    Write-Host "❌ Error: $($_.Exception.Message)" -ForegroundColor Red
+    exit 1
 }
