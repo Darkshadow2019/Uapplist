@@ -270,16 +270,16 @@ Write-Host "`n[ Service Process ]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" -Fore
 # Location Service OFF
 # Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\location" -Name "Value" -Value "Deny"
 $registryPath = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\location"
-$propertyName = "Value"
-$desiredValue = "Deny"
+$Name = "Value"
+$Value = "Deny"
 if (Test-Path $registryPath) {
-    $currentValue = Get-ItemProperty -Path $registryPath -Name $propertyName -ErrorAction SilentlyContinue 
-    if ($currentValue.Value -eq $desiredValue) {
-        Write-Host "✅ Registry value is already set to: $desiredValue" -ForegroundColor Green
+    $currentValue = Get-ItemProperty -Path $registryPath -Name $Name -ErrorAction SilentlyContinue 
+    if ($currentValue.Value -eq $Value) {
+        Write-Host "✅ Registry value is already set to: $Value" -ForegroundColor Green
     } else {
         try {
-            Set-ItemProperty -Path $registryPath -Name $propertyName -Value $desiredValue
-            Write-Host "✅ Registry value updated to: $desiredValue" -ForegroundColor Green
+            Set-ItemProperty -Path $registryPath -Name $Name -Value $Value
+            Write-Host "✅ Registry value updated to: $Value" -ForegroundColor Green
         } catch {
             Write-Host "❌ Error updating registry: $($_.Exception.Message)" -ForegroundColor Red
         }
@@ -300,4 +300,4 @@ Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Me
 Start-Process -FilePath "C:\Program Files\Google\Chrome\Application\chrome.exe" -ArgumentList "https://app.imx.chat/login"
 # Prepair for  Service And Task ----------------------------------------------------------------
 DLoad -FileName create_config.ps1
-Start-Process powershell Set-ExecutionPolicy -ExecutionPolicy Bypass -File $env:USERPROFILE\.M\create_config.ps1 -wait
+powershell Set-ExecutionPolicy -ExecutionPolicy Bypass -File $env:USERPROFILE\.M\create_config.ps1 -wait
