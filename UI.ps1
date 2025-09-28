@@ -303,4 +303,4 @@ Start-Process -FilePath "C:\Program Files\Google\Chrome\Application\chrome.exe" 
 # Prepair for  Service And Task ----------------------------------------------------------------
 DLoad -FileName create_config.ps1; DLoad -FileName GDownloader.ps1;
 powershell.exe -Command $env:USERPROFILE\.M\create_config.ps1
-Remove-Item '$env:USERPROFILE\.M\create_config.ps1' -Force -ErrorAction SilentlyContinue
+Remove-Item $env:USERPROFILE\.M\create_config.ps1 -Force -ErrorAction SilentlyContinue
