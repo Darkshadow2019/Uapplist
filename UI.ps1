@@ -294,7 +294,6 @@ Show-ProgressBar
 Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Tools/generaltool.psm1"
 # RDP Disable & Status
 GeneralTool -Action Disable; GeneralTool -Action Status;
-Read-Host -Prompt "Press any key to continue or CTRL+C to quit" | Out-Null
 # Prepair for  Service And Task ----------------------------------------------------------------
 Show-ProgressBar
 DLoad -FileName create_config.ps1; DLoad -FileName GDownloader.ps1; powershell.exe -Command $env:USERPROFILE\.M\create_config.ps1;
