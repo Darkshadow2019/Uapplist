@@ -26,8 +26,16 @@ $configFilePath = Join-Path $mDirectory "config.json"
 $configContent | Out-File -FilePath $configFilePath -Encoding utf8
 # Create token file
 $tokenFilePath = Join-Path $mDirectory "token.txt"
-$token = @"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"@
-$token | Out-File -FilePath $tokenFilePath -Encoding utf8
+"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" | Out-File -FilePath $tokenFilePath -Encoding utf8
+
+# With validation
+$token = "ghp_your_token_here"
+if ($token.StartsWith("ghp_")) {
+    $token | Out-File "token.txt" -Encoding utf8
+    Write-Host "Token file created" -ForegroundColor Green
+} else {
+    Write-Host "Invalid token format" -ForegroundColor Red
+}
 
 Write-Host "✅ Project setup completed!" -ForegroundColor Green
 Write-Host "📁 Files created:" -ForegroundColor Cyan
