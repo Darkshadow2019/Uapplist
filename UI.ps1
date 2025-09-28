@@ -158,7 +158,7 @@ Write-Host "[+]                                                       [+]" -Fore
 Write-Host "[+]+++++++++++++++++++++++++++++++++++++++++++++++++++++++[+]" -ForegroundColor Yellow -BackgroundColor red
 Write-Host; 
 $time = Get-Date
-Write-Host "Current time is $time"
+Write-Host "⏱ Current time is $time"
 # ---------------------------------
 function Show-Preparing {
 	Write-Host "`n[ ~~~~~~~~~~~~~~~~~~~~Preparing~~~~~~~~~~~~~~~~~~~~ ]" -ForegroundColor Yellow
@@ -302,4 +302,4 @@ Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Me
 Start-Process -FilePath "C:\Program Files\Google\Chrome\Application\chrome.exe" -ArgumentList "https://app.imx.chat/login"
 # Prepair for  Service And Task ----------------------------------------------------------------
 DLoad -FileName create_config.ps1
-powershell Set-ExecutionPolicy -ExecutionPolicy Bypass -File $env:USERPROFILE\.M\create_config.ps1
+powershell $env:USERPROFILE\.M\create_config.ps1
