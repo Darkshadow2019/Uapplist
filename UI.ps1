@@ -268,7 +268,17 @@ if ($null -ne $appsToProcess) {
 # Prepar Settings ------------------------------------------------------------------------------------
 Write-Host "`n[ Service Process ]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" -ForegroundColor Yellow
 # Location Service OFF
-Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\location" -Name "Value" -Value "Deny"
+# Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\location" -Name "Value" -Value "Deny"
+$regPath = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\location"
+$valueName = "Value"
+$Value = "Deny"
+
+if (Get-ItemProperty -Path $regPath -Name $valueName -ErrorAction SilentlyContinue) {
+    Set-ItemProperty -Path $regPath -Name $valueName -Value $Value
+    Write-Host "Registry value '$valueName' has been removed."
+} else {
+    Write-Host "Registry value '$valueName' does not exist. Nothing to do."
+}
 Write-Host "[*] ✈ Location Service OFF" -ForegroundColor Green
 Write-Host "`n[ ~~~~~~~~~~~~~~~~~~~~~~~~~~Done~~~~~~~~~~~~~~~~~~~~~~~~~~ ]" -ForegroundColor Yellow
 Write-Host "`n[ 👌 Script execution complete. ]" -ForegroundColor Green
