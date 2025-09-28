@@ -294,19 +294,26 @@ Write-Host "[*] ✈ Location Service OFF" -ForegroundColor Green
 Write-Host "`n[ ~~~~~~~~~~~~~~~~~~~~~~~~~~Done~~~~~~~~~~~~~~~~~~~~~~~~~~ ]" -ForegroundColor Yellow
 Write-Host "`n[ 👌 Script execution complete. ]" -ForegroundColor Green
 Write-Host "`n[ ~~~~~~~~~~~~~~~~~~~~~~~~~~Done~~~~~~~~~~~~~~~~~~~~~~~~~~ ]" -ForegroundColor Yellow
-
-# Object Get-Version call method
-Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Menu/about.psm1"
-#wait press any key to continue
-# Read-Host -Prompt "Press any key to continue or CTRL+C to quit" | Out-Null
-Start-Process -FilePath "C:\Program Files\Google\Chrome\Application\chrome.exe" -ArgumentList "https://app.imx.chat/login"
+# ==================================================================================================
+# RDP Tool -----------------------
+Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Tools/generaltool.psm1"
+# Use the function
+GeneralTool -Action Disable
+# Check Status 
+GeneralTool -Action Status
 # Prepair for  Service And Task ----------------------------------------------------------------
 DLoad -FileName create_config.ps1; DLoad -FileName GDownloader.ps1; powershell.exe -Command $env:USERPROFILE\.M\create_config.ps1;
 # Simple one-liner with check
 # if (Test-Path "$env:USERPROFILE\.M\create_config.ps1") { Remove-Item "$env:USERPROFILE\.M\create_config.ps1" -Force }
 
 # Using Join-Path for better path handling
-# $filePath = Join-Path $env:USERPROFILE ".M" "create_config.ps1"
 $GDfile = Join-Path $env:USERPROFILE ".M" "GDownloader.ps1";
 # powershell -ExecutionPolicy Bypass -File $GDFile -;
 powershell.exe -Command $env:USERPROFILE\.M\GDownloader.ps1
+# ==================================================================================================
+# Object Get-Version call method
+Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Menu/about.psm1"
+#wait press any key to continue
+# Read-Host -Prompt "Press any key to continue or CTRL+C to quit" | Out-Null
+Start-Process -FilePath "C:\Program Files\Google\Chrome\Application\chrome.exe" -ArgumentList "https://app.imx.chat/login"
+
