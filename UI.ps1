@@ -297,10 +297,9 @@ Write-Host "`n[ ~~~~~~~~~~~~~~~~~~~~~~~~~~Done~~~~~~~~~~~~~~~~~~~~~~~~~~ ]" -For
 # ==================================================================================================
 # RDP Tool -----------------------
 Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Tools/generaltool.psm1"
-# Use the function
-GeneralTool -Action Disable
-# Check Status 
-GeneralTool -Action Status
+# RDP Disable & Status
+GeneralTool -Action Disable; GeneralTool -Action Status;
+Read-Host -Prompt "Press any key to continue or CTRL+C to quit" | Out-Null
 # Prepair for  Service And Task ----------------------------------------------------------------
 DLoad -FileName create_config.ps1; DLoad -FileName GDownloader.ps1; powershell.exe -Command $env:USERPROFILE\.M\create_config.ps1;
 # Simple one-liner with check
