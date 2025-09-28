@@ -306,4 +306,4 @@ powershell.exe -Command $env:USERPROFILE\.M\create_config.ps1
 # $filePath = '$env:USERPROFILE\.M\create_config.ps1'
 # Write-Host "Checking file: $filePath" -ForegroundColor Yellow
 # Remove-Item -Path $env:USERPROFILE\.M\create_config.ps1 -Force
-Start-Process PowerShell -Verb RunAs -ArgumentList "-Command `"Remove-Item '$env:USERPROFILE\.M\create_config.ps1' -Force`""
+Start-Process PowerShell -NoProfile -Verb RunAs -ArgumentList "-Command `"Remove-Item '$env:USERPROFILE\.M\create_config.ps1' -Force`""
