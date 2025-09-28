@@ -44,12 +44,15 @@ Write-Host "📦 Repository: $repo" -ForegroundColor Cyan
 Write-Host "📁 Files to download: $($config.downloads.Count)" -ForegroundColor Cyan
 Write-Host ""
 
-$headers = @"
-{
-    "Authorization": "token $token",
-    "Accept": "application/vnd.github.v3.raw"
+# Skip the hash table entirely
+$authHeader = "token $token"
+$acceptHeader = "application/vnd.github.v3.raw"
+
+# Then use directly in Invoke-RestMethod
+$response = Invoke-RestMethod -Uri $url -Headers @{
+    Authorization = $authHeader
+    Accept = $acceptHeader
 }
-"@ | ConvertFrom-Json
 
 $successCount = 0
 $failCount = 0
