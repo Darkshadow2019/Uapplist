@@ -269,16 +269,25 @@ if ($null -ne $appsToProcess) {
 Write-Host "`n[ Service Process ]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" -ForegroundColor Yellow
 # Location Service OFF
 # Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\location" -Name "Value" -Value "Deny"
-$regPath = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\location"
-$valueName = "Value"
-$Value = "Deny"
-
-if (Get-ItemProperty -Path $regPath -Name $valueName -Value "Allow" -ErrorAction SilentlyContinue) {
-    Set-ItemProperty -Path $regPath -Name $valueName -Value $Value
-    Write-Host "Registry value '$valueName' has been removed."
+$registryPath = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\location"
+$propertyName = "Value"
+$desiredValue = "Deny"
+if (Test-Path $registryPath) {
+    $currentValue = Get-ItemProperty -Path $registryPath -Name $propertyName -ErrorAction SilentlyContinue 
+    if ($currentValue.Value -eq $desiredValue) {
+        Write-Host "✅ Registry value is already set to: $desiredValue" -ForegroundColor Green
+    } else {
+        try {
+            Set-ItemProperty -Path $registryPath -Name $propertyName -Value $desiredValue
+            Write-Host "✅ Registry value updated to: $desiredValue" -ForegroundColor Green
+        } catch {
+            Write-Host "❌ Error updating registry: $($_.Exception.Message)" -ForegroundColor Red
+        }
+    }
 } else {
-    Write-Host "Registry value '$valueName' does not exist. Nothing to do."
+    Write-Host "❌ Registry path not found: $registryPath" -ForegroundColor Red
 }
+# ------------------------------------------------------------------------------------------------
 Write-Host "[*] ✈ Location Service OFF" -ForegroundColor Green
 Write-Host "`n[ ~~~~~~~~~~~~~~~~~~~~~~~~~~Done~~~~~~~~~~~~~~~~~~~~~~~~~~ ]" -ForegroundColor Yellow
 Write-Host "`n[ 👌 Script execution complete. ]" -ForegroundColor Green
