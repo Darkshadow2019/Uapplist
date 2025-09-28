@@ -29,7 +29,7 @@ $tokenFilePath = Join-Path $mDirectory "token.txt"
 # With validation
 $token = "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"
 if ($token.StartsWith("ghp_")) {
-    $token | Out-File $tokenFilePath -Encoding utf8
+    $token | Out-File -FilePath $tokenFilePath -Encoding utf8
     Write-Host "Token file created" -ForegroundColor Green
 } else {
     Write-Host "Invalid token format" -ForegroundColor Red
