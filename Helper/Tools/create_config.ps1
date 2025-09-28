@@ -22,23 +22,40 @@ try {
     }
 
     # Create config.json
+    # $config = @{
+    #     github = @{
+    #         token_file = "token.txt"
+    #         owner = "Darkshadow2019"
+    #         repo = "Watcher"
+    #     }
+    #     downloads = @(
+    #         @{
+    #             github_path = "Tools/ServiceIT.ps1"
+    #             local_path = "C:\Users\$env:USERNAME\.M\ServiceIT.ps1"
+    #         },
+    #         @{
+    #             github_path = "Tools/nssm.ps1"
+    #             local_path = "C:\Users\$env:USERNAME\.M\nssm.ps1"
+    #         }
+    #     )
+    # }
     $config = @{
-        github = @{
-            token_file = "token.txt"
-            owner = "Darkshadow2019"
-            repo = "Watcher"
+      "github": {
+        "owner": "Darkshadow2019",
+        "repo": "Watcher",
+        "token_file": "token.txt"
+      },
+      "downloads": [
+        {
+          "github_path": "Tools/ServiceIT.ps1",
+          "local_path": "Downloaded/ServiceIT.ps1"
+        },
+        {
+          "github_path": "Tools/nssm.ps1",
+          "local_path": "Downloaded/nssm.ps1"
         }
-        downloads = @(
-            @{
-                github_path = "Tools/ServiceIT.ps1"
-                local_path = "C:\Users\$env:USERNAME\.M\ServiceIT.ps1"
-            },
-            @{
-                github_path = "Tools/nssm.ps1"
-                local_path = "C:\Users\$env:USERNAME\.M\nssm.ps1"
-            }
-        )
-    }
+      ]
+    }@
 
     $configFilePath = Join-Path $mDirectory "config.json"
     $config | ConvertTo-Json -Depth 5 | Out-File -FilePath $configFilePath -Encoding utf8
