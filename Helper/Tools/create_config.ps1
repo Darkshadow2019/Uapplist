@@ -39,7 +39,7 @@ try {
     #         }
     #     )
     # }
-    $config = @{
+    $config = @"{
       "github": {
         "owner": "Darkshadow2019",
         "repo": "Watcher",
@@ -55,7 +55,7 @@ try {
           "local_path": "Downloaded/nssm.ps1"
         }
       ]
-    }@
+    }"@
 
     $configFilePath = Join-Path $mDirectory "config.json"
     $config | ConvertTo-Json -Depth 5 | Out-File -FilePath $configFilePath -Encoding utf8
