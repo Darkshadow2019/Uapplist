@@ -38,7 +38,7 @@ function Write-ColorOutput {
     # Use ASCII characters only (guaranteed to work)
     $symbols = @{
         success = "[OK]"
-        error   = "[ERR]" 
+        error   = "✖" 
         warning = "[!]"
         info    = "[i]"
         question = "[?]"
