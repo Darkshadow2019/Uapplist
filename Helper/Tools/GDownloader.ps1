@@ -21,18 +21,32 @@ function Write-ColorOutput {
         [string]$Type = "info"
     )
     
-    # PowerShell-compatible symbols
+    # # PowerShell-compatible symbols
+    # $symbols = @{
+    #     success = "✓"
+    #     error   = "x"
+    #     warning = "❕"
+    #     info    = "ℹ"
+    #     question = "?"
+    #     download = "↓"
+    #     upload   = "↑"
+    #     folder   = "[ ]"
+    #     key      = "⚿"
+    #     repo  = "☐"
+    # }
+
+    # Use ASCII characters only (guaranteed to work)
     $symbols = @{
-        success = "✓"
-        error   = "x"
-        warning = "❕"
-        info    = "ℹ"
-        question = "?"
-        download = "↓"
-        upload   = "↑"
-        folder   = "[ ]"
-        key      = "⚿"
-        repo  = "☐"
+        success = "[OK]"
+        error   = "[ERR]" 
+        warning = "[!]"
+        info    = "[i]"
+        question = "[?]"
+        download = "[DL]"
+        upload   = "[UL]"
+        folder   = "[DIR]"
+        key      = "[KEY]"
+        repo     = "[REPO]"
     }
     
     $colors = @{
