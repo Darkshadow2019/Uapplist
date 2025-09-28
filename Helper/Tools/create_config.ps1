@@ -1,6 +1,6 @@
 # More robust version with error handling
 param(
-    [string]$GitHubToken = "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"
+    [string]$GitHubToken = "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"
 )
 
 try {
