@@ -39,9 +39,9 @@ if ([string]::IsNullOrWhiteSpace($owner) -or [string]::IsNullOrWhiteSpace($repo)
     exit 1
 }
 
-Write-Host '🔑 Authenticating as: ' + '$owner' -ForegroundColor Cyan
-Write-Host '📦 Repository: ' + '$repo' -ForegroundColor Cyan
-Write-Host '📁 Files to download: ' + '$($config.downloads.Count)' -ForegroundColor Cyan
+Write-Host ('🔑 Authenticating as: ' + $owner) -ForegroundColor Cyan
+Write-Host ('📦 Repository: ' + $repo) -ForegroundColor Cyan
+Write-Host ('📁 Files to download: ' + $config.downloads.Count) -ForegroundColor Cyan
 Write-Host ""
 
 $headers = @{
