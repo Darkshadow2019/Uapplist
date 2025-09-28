@@ -18,7 +18,7 @@ $config = Get-Content $ConfigFile -Raw | ConvertFrom-Json
 $token = $config.github.token
 if ($config.github.token_file) {
     if (Test-Path $config.github.token_file) {
-        $token = Get-Content $config.github.token_file -Raw
+        $token = (Get-Content $config.github.token_file -Raw).Trim()
     } else {
         Write-Host "❌ Token file not found: $($config.github.token_file)" -ForegroundColor Red
         exit 1
@@ -44,8 +44,9 @@ Write-Host "📦 Repository: $repo" -ForegroundColor Cyan
 Write-Host "📁 Files to download: $($config.downloads.Count)" -ForegroundColor Cyan
 Write-Host ""
 
+# FIX 1: Remove comma and fix variable expansion
 $headers = @{
-    'Authorization' = 'token $token',
+    'Authorization' = "token $token"
     'Accept' = 'application/vnd.github.v3.raw'
 }
 
@@ -61,12 +62,23 @@ foreach ($download in $config.downloads) {
         $localPath = [System.Environment]::ExpandEnvironmentVariables($localPath)
         
         Write-Host "📥 Downloading: $githubPath" -ForegroundColor Yellow
+        Write-Host "   From: $owner/$repo" -ForegroundColor Gray
         
-        # Construct URL
+        # Construct URL - FIX 2: Use API URL properly
         $url = "https://api.github.com/repos/$owner/$repo/contents/$githubPath"
+        Write-Host "   URL: $url" -ForegroundColor DarkGray
         
         # Download content
-        $content = Invoke-RestMethod -Uri $url -Headers $headers
+        $response = Invoke-RestMethod -Uri $url -Headers $headers
+        
+        # GitHub API returns content in different formats
+        if ($response.content) {
+            # If content is base64 encoded (standard API response)
+            $content = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($response.content))
+        } else {
+            # If content is already decoded (raw format)
+            $content = $response
+        }
         
         # Create directory if not exists
         $directory = [System.IO.Path]::GetDirectoryName($localPath)
@@ -76,13 +88,22 @@ foreach ($download in $config.downloads) {
         }
         
         # Save file
-        $content | Out-File -FilePath $localPath -Encoding utf8
+        $content | Out-File -FilePath $localPath -Encoding utf8 -Force
         
-        Write-Host "   ✅ Saved to: $localPath" -ForegroundColor Green
-        $successCount++
+        # Verify file was created
+        if (Test-Path $localPath) {
+            $fileSize = (Get-Item $localPath).Length
+            Write-Host "   ✅ Saved to: $localPath ($fileSize bytes)" -ForegroundColor Green
+            $successCount++
+        } else {
+            throw "File was not created successfully"
+        }
         
     } catch {
         Write-Host "   ❌ Error: $($_.Exception.Message)" -ForegroundColor Red
+        if ($_.Exception.Response) {
+            Write-Host "   HTTP Status: $($_.Exception.Response.StatusCode)" -ForegroundColor DarkRed
+        }
         $failCount++
     }
     
@@ -100,3 +121,5 @@ if ($failCount -eq 0) {
 } else {
     Write-Host "⚠️  Some downloads failed. Check the errors above." -ForegroundColor Yellow
 }
+
+exit $failCount
