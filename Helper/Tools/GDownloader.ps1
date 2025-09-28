@@ -41,10 +41,10 @@ if ([string]::IsNullOrWhiteSpace($owner) -or [string]::IsNullOrWhiteSpace($repo)
     exit 1
 }
 
-# .NET Console ကို တိုက်ရိုက်သုံးပါ
-[Console]::WriteLine("🔑 Authenticating as: $owner")
-[Console]::WriteLine("📦 Repository: $repo")
-[Console]::WriteLine("📁 Files to download: $($config.downloads.Count)")
+# Then use emoji
+Write-Host "🔑Authenticating as: $owner" -ForegroundColor Cyan
+Write-Host "📦Repository: $repo" -ForegroundColor Cyan
+Write-Host "📁Files to download: $($config.downloads.Count)" -ForegroundColor Cyan
 Write-Host ""
 
 $headers = @{
