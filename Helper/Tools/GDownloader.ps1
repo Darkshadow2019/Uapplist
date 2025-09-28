@@ -48,7 +48,7 @@ Write-Host ""
 $headers = @{
     'Authorization' = "token $token"
     'Accept' = 'application/vnd.github.v3.raw'
-}
+}@
 
 $successCount = 0
 $failCount = 0
