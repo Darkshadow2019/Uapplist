@@ -25,7 +25,7 @@ function Write-ColorOutput {
     # $symbols = @{
     #     success = "✓"
     #     error   = "x"
-    #     warning = "❕"
+    #     warning = "[❕]"
     #     info    = "ℹ"
     #     question = "?"
     #     download = "↓"
@@ -38,7 +38,7 @@ function Write-ColorOutput {
     # Use ASCII characters only (guaranteed to work)
     $symbols = @{
         success = "[OK]"
-        error   = "✖" 
+        error   = "[✖]" 
         warning = "[!]"
         info    = "[i]"
         question = "[?]"
@@ -164,7 +164,7 @@ foreach ($download in $config.downloads) {
         $directory = [System.IO.Path]::GetDirectoryName($localPath)
         if (![string]::IsNullOrEmpty($directory) -and !(Test-Path $directory)) {
             New-Item -ItemType Directory -Path $directory -Force | Out-Null
-            Write-Host "   📁 Created directory: $directory" -ForegroundColor Gray
+			Write-ColorOutput "Created directory:" "folder"; Write-Host "$directory" -ForegroundColor Gray
         }
         
         # Save file
