@@ -45,8 +45,8 @@ Write-Host "📁 Files to download: $($config.downloads.Count)" -ForegroundColor
 Write-Host ""
 
 $headers = @{
-    'Authorization' = "token $token"
-    'Accept' = "application/vnd.github.v3.raw"
+    'Authorization' = 'token $token'
+    'Accept' = 'application/vnd.github.v3.raw'
 }
 
 $successCount = 0
