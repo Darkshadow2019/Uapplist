@@ -161,9 +161,9 @@ Write-Host "⏱ Current time is $time"
 # ---------------------------------
 function Show-Preparing {
 	Write-Host "`n[ ~~~~~~~~~~~~~~~~~~~~Preparing~~~~~~~~~~~~~~~~~~~~ ]" -ForegroundColor Yellow
-	Write-Host "`n[ Loading" -NoNewline	-ForegroundColor Green
-	for ($i = 0; $i -lt 10; $i++) {
-    	 Write-Host "." -NoNewline
+	Write-Host "`n[ ⏳ Loading " -NoNewline	-ForegroundColor Green
+	for ($i = 0; $i -lt 8; $i++) {
+    	 Write-Host "☕" -NoNewline
     	Start-Sleep -Milliseconds 400
 	}
 	Write-Host " ]" -ForegroundColor Green
@@ -203,13 +203,10 @@ function Get-AppListFromGitHub {
     )
 
     Write-Host "`n~~~ 🌎Fetching application list🌎 ~~~" -ForegroundColor Cyan
-	
-
     try {
         <# # Fetch content from the provided raw URL. #>
         $response = Invoke-WebRequest -Uri $Url -UseBasicParsing -ErrorAction Stop
-        $appList = $response.Content.Split("`n") | Where-Object { $_ -ne "" }
-        
+        $appList = $response.Content.Split("`n") | Where-Object { $_ -ne "" }       
         Write-Host "📩 Found $($appList.Count) applications in the list." -ForegroundColor Green
         return $appList
     }
@@ -267,9 +264,9 @@ if ($null -ne $appsToProcess) {
     }
 }
 # Prepar Settings ------------------------------------------------------------------------------------
-Write-Host "`n[ Service Process ]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" -ForegroundColor Yellow
+Show-ProgressBar
+Write-Host "`n~~~~~~~~~~~~~[ Service Process ]~~~~~~~~~~~~~~~~~~~~" -ForegroundColor Yellow
 # Location Service OFF
-# Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\location" -Name "Value" -Value "Deny"
 $registryPath = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\location"
 $Name = "Value"
 $Value = "Deny"
@@ -286,7 +283,7 @@ if (Test-Path $registryPath) {
         }
     }
 } else {
-    Write-Host;
+    Write-Host "";
 }
 # ==================================================================================================
 # RDP Tool -----------------------
