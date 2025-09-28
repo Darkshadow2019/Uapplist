@@ -47,7 +47,7 @@ Write-Host ""
 # FIX 1: Remove comma and fix variable expansion
 $headers = @{
     'Authorization' = "token $token"
-    'Accept' = 'application/vnd.github.v3.raw'
+    'Accept' = "application/vnd.github.v3.raw"
 }@
 
 $successCount = 0
