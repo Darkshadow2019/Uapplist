@@ -24,6 +24,18 @@ New-Item -ItemType Directory -Path $mDirectory -Force | Out-Null
 # Save config file into .M directory
 $configFilePath = Join-Path $mDirectory "config.json"
 $configContent | Out-File -FilePath $configFilePath -Encoding utf8
+# Create token file
+$tokenFilePath = Join-Path $mDirectory "token.txt"
+$token = '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'
+$token | Out-File -FilePath $tokenFilePath -Encoding utf8
 
-Write-Host "✅ config.json file created successfully!" -ForegroundColor Green
-Write-Host '"📁 Location: " + $configFilePath' -ForegroundColor Yellow
+Write-Host "✅ Project setup completed!" -ForegroundColor Green
+Write-Host "📁 Files created:" -ForegroundColor Cyan
+Write-Host "  - token.txt" -ForegroundColor Gray
+Write-Host "  - config.json" -ForegroundColor Gray
+
+# Verify files
+if (Test-Path "token.txt") {
+    $tokenContent = Get-Content "token.txt" -Raw
+    Write-Host "🔑 Token preview: $($tokenContent.Trim().Substring(0, 10))..." -ForegroundColor Yellow
+}
