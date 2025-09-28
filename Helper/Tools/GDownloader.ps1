@@ -24,8 +24,8 @@ function Write-ColorOutput {
     # PowerShell-compatible symbols
     $symbols = @{
         success = "✓"
-        error   = "✗" 
-        warning = "!"
+        error   = "✖" 
+        warning = "❗"
         info    = "ⓘ"
         question = "?"
         download = "↓"
