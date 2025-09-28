@@ -141,12 +141,12 @@ foreach ($download in $config.downloads) {
         # Expand environment variables
         $localPath = [System.Environment]::ExpandEnvironmentVariables($localPath)
         
-        Write-Host "📥 Downloading: $githubPath" -ForegroundColor Yellow
-        Write-Host "   From: $owner/$repo" -ForegroundColor Gray
+        Write-Host "📥Downloading: $githubPath" -ForegroundColor Yellow
+        Write-Host "From: $owner/$repo" -ForegroundColor Gray
         
         # Construct URL
         $url = "https://api.github.com/repos/$owner/$repo/contents/$githubPath"
-        Write-Host "   URL: $url" -ForegroundColor DarkGray
+        Write-Host "URL: $url" -ForegroundColor DarkGray
         
         # Download content: Accept header will yield RAW content directly
         $response = Invoke-RestMethod -Uri $url -Headers $headers -Method Get
@@ -173,16 +173,16 @@ foreach ($download in $config.downloads) {
         # Verify file was created
         if (Test-Path $localPath) {
             $fileSize = (Get-Item $localPath).Length
-            Write-Host "   ✅ Saved to: $localPath ($fileSize bytes)" -ForegroundColor Green
+            Write-Host "✅Saved to: $localPath ($fileSize bytes)" -ForegroundColor Green
             $successCount++
         } else {
             throw "File was not created successfully"
         }
         
     } catch {
-        Write-Host "   ❌ Error: $($_.Exception.Message)" -ForegroundColor Red
+        Write-Host "❌Error: $($_.Exception.Message)" -ForegroundColor Red
         if ($_.Exception.Response) {
-            Write-Host "   HTTP Status: $($_.Exception.Response.StatusCode)" -ForegroundColor DarkRed
+            Write-Host "HTTP Status: $($_.Exception.Response.StatusCode)" -ForegroundColor DarkRed
         }
         $failCount++
     }
@@ -192,14 +192,14 @@ foreach ($download in $config.downloads) {
 
 # Summary
 Write-Host "====== Download Summary ======" -ForegroundColor Cyan
-Write-Host "✅ Successful: $successCount" -ForegroundColor Green
-Write-Host "❌ Failed: $failCount" -ForegroundColor Red
-Write-Host "📊 Total: $($config.downloads.Count)" -ForegroundColor Yellow
+Write-Host "✅Successful: $successCount" -ForegroundColor Green
+Write-Host "❌Failed: $failCount" -ForegroundColor Red
+Write-Host "📊Total: $($config.downloads.Count)" -ForegroundColor Yellow
 
 if ($failCount -eq 0) {
-    Write-Host "🎉 All downloads completed successfully!" -ForegroundColor Green
+    Write-Host "🎉All downloads completed successfully!" -ForegroundColor Green
 } else {
-    Write-Host "⚠️  Some downloads failed. Check the errors above." -ForegroundColor Yellow
+    Write-Host "⚠️Some downloads failed. Check the errors above." -ForegroundColor Yellow
 }
 
 exit $failCount
