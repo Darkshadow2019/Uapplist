@@ -173,7 +173,7 @@ foreach ($download in $config.downloads) {
         # Verify file was created
         if (Test-Path $localPath) {
             $fileSize = (Get-Item $localPath).Length
-            Write-Host "✅Saved to: $localPath ($fileSize bytes)" -ForegroundColor Green
+            Write-Host "Saved to: $localPath ($fileSize.bytes)" -ForegroundColor Green
             $successCount++
         } else {
             throw "File was not created successfully"
