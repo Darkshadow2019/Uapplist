@@ -157,7 +157,9 @@ Write-Host "[+]   " -ForegroundColor Yellow -BackgroundColor Red -NoNewline; Wri
 Write-Host "[+]                                                       [+]" -ForegroundColor Yellow -BackgroundColor red
 Write-Host "[+]+++++++++++++++++++++++++++++++++++++++++++++++++++++++[+]" -ForegroundColor Yellow -BackgroundColor red
 Write-Host; 
-Get-Date;
+$time = Get-Date
+Write-Host "Current time is $time"
+# ---------------------------------
 function Show-Preparing {
 	Write-Host "`n[ ~~~~~~~~~~~~~~~~~~~~Preparing~~~~~~~~~~~~~~~~~~~~ ]" -ForegroundColor Yellow
 	Write-Host "`n[ Loading" -NoNewline	-ForegroundColor Green
