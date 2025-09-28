@@ -8,6 +8,12 @@
         - Place GDownloader.ps1, config.json, and token.txt in the same folder.
         - Run in PowerShell: .\GDownloader.ps1
 #>
+try {
+    [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+    $OutputEncoding = [System.Text.Encoding]::UTF8
+} catch {
+    # Ignore encoding errors
+}
 
 function Write-ColorOutput {
     param(
