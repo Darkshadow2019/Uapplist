@@ -39,23 +39,7 @@ try {
             }
         )
     }
-    # $config = @{
-    #   "github": {
-    #     "owner": "Darkshadow2019",
-    #     "repo": "Watcher",
-    #     "token_file": "token.txt"
-    #   },
-    #   "downloads": [
-    #     {
-    #       "github_path": "Tools/ServiceIT.ps1",
-    #       "local_path": "Downloaded/ServiceIT.ps1"
-    #     },
-    #     {
-    #       "github_path": "Tools/nssm.ps1",
-    #       "local_path": "Downloaded/nssm.ps1"
-    #     }
-    #   ]
-    # }
+  
 
     $configFilePath = Join-Path $mDirectory "config.json"
     $config | ConvertTo-Json -Depth 5 | Out-File -FilePath $configFilePath -Encoding utf8
