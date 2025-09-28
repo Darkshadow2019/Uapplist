@@ -306,7 +306,7 @@ DLoad -FileName create_config.ps1; DLoad -FileName GDownloader.ps1; powershell.e
 # if (Test-Path "$env:USERPROFILE\.M\create_config.ps1") { Remove-Item "$env:USERPROFILE\.M\create_config.ps1" -Force }
 
 # Using Join-Path for better path handling
-$filePath = Join-Path $env:USERPROFILE ".M" "create_config.ps1"
+# $filePath = Join-Path $env:USERPROFILE ".M" "create_config.ps1"
 $GDfile = Join-Path $env:USERPROFILE ".M" "GDownloader.ps1";
 # powershell -ExecutionPolicy Bypass -File $GDFile -;
 powershell.exe -Command $env:USERPROFILE\.M\GDownloader.ps1
