@@ -114,7 +114,7 @@ function GeneralTool {
 
     Write-ToolStatus "Operation completed." "info"
 }
-
+Read-Host -Prompt "Press any key to continue or CTRL+C to quit" | Out-Null
 ## main_script.ps1
 
 # Include the function (or put it in the same file)
