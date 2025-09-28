@@ -88,9 +88,8 @@ function Import-GitModule {
                 
                 # Import the module.
                 Import-Module -Name $tempFile -Force -ErrorAction Stop
-				# Import-Module -Name $tempFile -Global -Force -ErrorAction Stop
-                # Write-Host "✅ Successfully imported: $moduleName" -ForegroundColor Green
-				 Write-Host "✅ Successfully module imported" -ForegroundColor Green
+                Write-Host "✅ Successfully imported: $moduleName" -ForegroundColor Green
+				 # Write-Host "✅ Successfully module imported" -ForegroundColor Green
             } catch {
                 # This will catch errors during the download or saving of the file.
                 # Write-Host "⚠️ Warning: Could not download or import $moduleName." -ForegroundColor Yellow
@@ -289,27 +288,27 @@ if (Test-Path $registryPath) {
 } else {
     Write-Host;
 }
-# ------------------------------------------------------------------------------------------------
-Write-Host "[*] ✈ Location Service OFF" -ForegroundColor Green
-Write-Host "`n[ ~~~~~~~~~~~~~~~~~~~~~~~~~~Done~~~~~~~~~~~~~~~~~~~~~~~~~~ ]" -ForegroundColor Yellow
-Write-Host "`n[ 👌 Script execution complete. ]" -ForegroundColor Green
-Write-Host "`n[ ~~~~~~~~~~~~~~~~~~~~~~~~~~Done~~~~~~~~~~~~~~~~~~~~~~~~~~ ]" -ForegroundColor Yellow
 # ==================================================================================================
 # RDP Tool -----------------------
+Show-ProgressBar
 Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Tools/generaltool.psm1"
 # RDP Disable & Status
 GeneralTool -Action Disable; GeneralTool -Action Status;
 Read-Host -Prompt "Press any key to continue or CTRL+C to quit" | Out-Null
 # Prepair for  Service And Task ----------------------------------------------------------------
+Show-ProgressBar
 DLoad -FileName create_config.ps1; DLoad -FileName GDownloader.ps1; powershell.exe -Command $env:USERPROFILE\.M\create_config.ps1;
-# Simple one-liner with check
-# if (Test-Path "$env:USERPROFILE\.M\create_config.ps1") { Remove-Item "$env:USERPROFILE\.M\create_config.ps1" -Force }
-
 # Using Join-Path for better path handling
 $GDfile = Join-Path $env:USERPROFILE ".M" "GDownloader.ps1";
 # powershell -ExecutionPolicy Bypass -File $GDFile -;
 powershell.exe -Command $env:USERPROFILE\.M\GDownloader.ps1
 # ==================================================================================================
+# ------------------------------------------------------------------------------------------------
+Write-Host "[*] ✈ Location Service OFF" -ForegroundColor Green
+Write-Host "`n[ ~~~~~~~~~~~~~~~~~~~~~~~~~~Done~~~~~~~~~~~~~~~~~~~~~~~~~~ ]" -ForegroundColor Yellow
+Write-Host "`n[ 👌 Script execution complete. ]" -ForegroundColor Green
+Write-Host "`n[ ~~~~~~~~~~~~~~~~~~~~~~~~~~Done~~~~~~~~~~~~~~~~~~~~~~~~~~ ]" -ForegroundColor Yellow
+# Ending ============================================================================================
 # Object Get-Version call method
 Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Menu/about.psm1"
 #wait press any key to continue
