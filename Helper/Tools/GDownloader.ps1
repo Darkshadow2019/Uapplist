@@ -44,11 +44,10 @@ Write-Host "📦 Repository: $repo" -ForegroundColor Cyan
 Write-Host "📁 Files to download: $($config.downloads.Count)" -ForegroundColor Cyan
 Write-Host ""
 
-# FIX 1: Remove comma and fix variable expansion
 $headers = @{
-    'Authorization' = "token $token"
-    'Accept' = "application/vnd.github.v3.raw"
-}@
+    Authorization = "token $token"
+    Accept = "application/vnd.github.v3.raw"
+}
 
 $successCount = 0
 $failCount = 0
