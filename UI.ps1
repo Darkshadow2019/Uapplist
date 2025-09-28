@@ -283,7 +283,7 @@ if (Test-Path $registryPath) {
             Set-ItemProperty -Path $registryPath -Name $Name -Value $Value
             Write-Host "✅ Registry value updated to: $Value" -ForegroundColor Green
         } catch {
-            # $($_.Exception.Message) -ErrorAction SilentlyContinue
+            Write-Host " $($_.Exception.Message)"
         }
     }
 } else {
