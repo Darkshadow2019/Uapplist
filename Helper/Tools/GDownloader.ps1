@@ -44,10 +44,12 @@ Write-Host "📦 Repository: $repo" -ForegroundColor Cyan
 Write-Host "📁 Files to download: $($config.downloads.Count)" -ForegroundColor Cyan
 Write-Host ""
 
-$headers = @{
-    Authorization = "token $token"
-    Accept = "application/vnd.github.v3.raw"
+$headers = @"
+{
+    "Authorization": "token $token",
+    "Accept": "application/vnd.github.v3.raw"
 }
+"@ | ConvertFrom-Json
 
 $successCount = 0
 $failCount = 0
