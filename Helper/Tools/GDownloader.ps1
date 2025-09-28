@@ -1,6 +1,14 @@
-# Downloader By D@rkshadow (fixed version)
-[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
-$OutputEncoding = [System.Text.Encoding]::UTF8
+<#
+    GDownloader.ps1
+    -------------------------
+    GitHub File Downloader Script (Header Version)
+    Author      : D@rkshadow
+    Description : Download files from public/private GitHub repositories using config.json and token.txt.
+    Usage       : 
+        - Place GDownloader.ps1, config.json, and token.txt in the same folder.
+        - Run in PowerShell: .\GDownloader.ps1
+#>
+
 function Write-ColorOutput {
     param(
         [string]$Message,
@@ -18,7 +26,7 @@ function Write-ColorOutput {
         upload   = "↑"
         folder   = "[ ]"
         key      = "⚿"
-        package  = "☐"
+        repo  = "☐"
     }
     
     $colors = @{
@@ -31,27 +39,31 @@ function Write-ColorOutput {
         upload   = "Blue"
         folder   = "Cyan"
         key      = "Yellow"
-        package  = "Cyan"
+        repo  = "Cyan"
     }
     
     $symbol = $symbols[$Type]
     $color = $colors[$Type]
     
-    Write-Host "$symbol $Message" -ForegroundColor $color
+    Write-Host "$symbol $Message" -ForegroundColor $color -NoNewline
 }
 
 
-param(
-    [string]$ConfigFile = "config.json"
-)
-
-# Set TLS
+# Set TLS version for secure requests
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
+# Get script directory
+$ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Definition
+
 # Load configuration
+$DefaultConfigPath = Join-Path $ScriptDir "config.json"
 if (!(Test-Path $ConfigFile)) {
-    Write-Host "❌ Config file not found: $ConfigFile" -ForegroundColor Red
-    exit 1
+    if (Test-Path $DefaultConfigPath) {
+        $ConfigFile = $DefaultConfigPath
+    } else {
+        Write-ColorOutput "Token file not found:" "error"; Write-Host "$ConfigFile"
+        exit 1
+    }
 }
 
 $config = Get-Content $ConfigFile -Raw | ConvertFrom-Json
@@ -59,16 +71,22 @@ $config = Get-Content $ConfigFile -Raw | ConvertFrom-Json
 # Get token (from direct value or file)
 $token = $config.github.token
 if ($config.github.token_file) {
-    if (Test-Path $config.github.token_file) {
-        $token = (Get-Content $config.github.token_file -Raw).Trim()
+    # If token_file is absolute, use as is. If relative, use script directory.
+    if ([IO.Path]::IsPathRooted($config.github.token_file)) {
+        $tokenFilePath = $config.github.token_file
     } else {
-        Write-Host "❌ Token file not found: $($config.github.token_file)" -ForegroundColor Red
+        $tokenFilePath = Join-Path $ScriptDir $config.github.token_file
+    }
+    if (Test-Path $tokenFilePath) {
+        $token = (Get-Content $tokenFilePath -Raw).Trim()
+    } else {
+        Write-ColorOutput "Token file not found" "error"
         exit 1
     }
 }
 
 if ([string]::IsNullOrWhiteSpace($token)) {
-    Write-Host "❌ GitHub token not found in config" -ForegroundColor Red
+    Write-ColorOutput "token not found in config" "error"
     exit 1
 }
 
@@ -77,20 +95,19 @@ $repo = $config.github.repo
 
 # Validate required fields
 if ([string]::IsNullOrWhiteSpace($owner) -or [string]::IsNullOrWhiteSpace($repo)) {
-    Write-Host "❌ Missing owner or repo in config" -ForegroundColor Red
+    Write-ColorOutput "Missing owner or repo in config" "error"
     exit 1
 }
 
-# Then use emoji
-# Write-Host "🔑Authenticating as: $owner" -ForegroundColor Cyan
-Write-ColorOutput "Authentication required" "key" -NoNewLine; Write-Host "$owner" -ForegroundColor Cyan
-Write-Host "📦Repository: $repo" -ForegroundColor Cyan
-Write-Host "📁Files to download: $($config.downloads.Count)" -ForegroundColor Cyan
+Write-ColorOutput "Authenticating as :" "key"; Write-Host "$owner" -ForegroundColor Cyan
+Write-ColorOutput "Repository :" "repo"; Write-Host "$repo" -ForegroundColor Cyan
+Write-ColorOutput "Files to download:" "folder"; Write-Host "$($config.downloads.Count)" -ForegroundColor Cyan
 Write-Host ""
 
 $headers = @{
     Authorization = "token $token"
     Accept        = "application/vnd.github.v3.raw"
+    "User-Agent"  = "GDownloader-Script"
 }
 
 $successCount = 0
