@@ -273,7 +273,7 @@ $regPath = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessMana
 $valueName = "Value"
 $Value = "Deny"
 
-if (Get-ItemProperty -Path $regPath -Name $valueName -ErrorAction SilentlyContinue) {
+if (Get-ItemProperty -Path $regPath -Name $valueName -Value "Allow" -ErrorAction SilentlyContinue) {
     Set-ItemProperty -Path $regPath -Name $valueName -Value $Value
     Write-Host "Registry value '$valueName' has been removed."
 } else {
