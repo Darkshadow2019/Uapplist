@@ -1,4 +1,4 @@
-# Downloader By D@rkshadow
+# Downloader By D@rkshadow (fixed version)
 param(
     [string]$ConfigFile = "config.json"
 )
@@ -44,14 +44,9 @@ Write-Host "📦 Repository: $repo" -ForegroundColor Cyan
 Write-Host "📁 Files to download: $($config.downloads.Count)" -ForegroundColor Cyan
 Write-Host ""
 
-# Skip the hash table entirely
-$authHeader = "token $token"
-$acceptHeader = "application/vnd.github.v3.raw"
-
-# Then use directly in Invoke-RestMethod
-$response = Invoke-RestMethod -Uri $url -Headers @{
-    Authorization = $authHeader
-    Accept = $acceptHeader
+$headers = @{
+    Authorization = "token $token"
+    Accept        = "application/vnd.github.v3.raw"
 }
 
 $successCount = 0
@@ -68,20 +63,20 @@ foreach ($download in $config.downloads) {
         Write-Host "📥 Downloading: $githubPath" -ForegroundColor Yellow
         Write-Host "   From: $owner/$repo" -ForegroundColor Gray
         
-        # Construct URL - FIX 2: Use API URL properly
+        # Construct URL
         $url = "https://api.github.com/repos/$owner/$repo/contents/$githubPath"
         Write-Host "   URL: $url" -ForegroundColor DarkGray
         
-        # Download content
-        $response = Invoke-RestMethod -Uri $url -Headers $headers
+        # Download content: Accept header will yield RAW content directly
+        $response = Invoke-RestMethod -Uri $url -Headers $headers -Method Get
         
-        # GitHub API returns content in different formats
-        if ($response.content) {
-            # If content is base64 encoded (standard API response)
+        # If response is a string (raw), else use content (base64)
+        if ($response -is [string]) {
+            $content = $response
+        } elseif ($response.content) {
             $content = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($response.content))
         } else {
-            # If content is already decoded (raw format)
-            $content = $response
+            throw "No content received from GitHub"
         }
         
         # Create directory if not exists
