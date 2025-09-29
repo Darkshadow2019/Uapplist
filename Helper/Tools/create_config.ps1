@@ -8,7 +8,7 @@ try {
     # Set execution policy for current session only
     Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force -ErrorAction SilentlyContinue
 
-    Write-Host "🚀 Starting Project Setup..." -ForegroundColor Cyan
+    Write-Host "Starting Project Setup..." -ForegroundColor Cyan
 
     # Validate token
     if (-not $GitHubToken.StartsWith("ghp_")) {
@@ -52,7 +52,7 @@ try {
     Write-Host "Token file created: $tokenFilePath" -ForegroundColor Green
 
     # Verification
-    Write-Host "`n🔍 Verifying setup..." -ForegroundColor Yellow
+    Write-Host "Verifying setup..." -ForegroundColor Yellow
     
     $files = @(
         @{Name = "config.json"; Path = $configFilePath}
@@ -68,11 +68,11 @@ try {
         }
     }
 
-    Write-Host "`n🎉 Project setup completed successfully!" -ForegroundColor Green
-    Write-Host "`n📁 Location: $mDirectory" -ForegroundColor Cyan
+    Write-Host "Project setup completed successfully!" -ForegroundColor Green
+    Write-Host "Location: $mDirectory" -ForegroundColor Cyan
 
 } catch {
-    Write-Host "`n❌ Error: $($_.Exception.Message)" -ForegroundColor Red
+    Write-Host "Error: $($_.Exception.Message)" -ForegroundColor Red
     exit 1
 }
 Start-Sleep -Milliseconds 500
