@@ -71,7 +71,7 @@ function Import-GitModule {
             return $false
         }
         
-        # Write-Host "✅ Found $($moduleFiles.Count) module files:" -ForegroundColor Green
+        Write-Host "✅ Found $($moduleFiles.Count) module files:" -ForegroundColor Green
         $moduleFiles | ForEach-Object { Write-Host "• $($_.name)" -ForegroundColor Cyan }
         
         # Download and import each module.
@@ -113,7 +113,6 @@ function Import-GitModule {
     }
 }
 # Import fresh
-# Clear-AllModules
 Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Tools"
 # End Module Adding ----------------------------------------------------------------------------------------------------------
 # Tools--------------------------------------------------------
@@ -228,7 +227,6 @@ function Search-App {
     )
     
     $foundApps = @()
-    
     foreach ($path in $paths) {
         if (Test-Path $path) {
             $apps = Get-ItemProperty $path | 
@@ -236,11 +234,9 @@ function Search-App {
                    Select-Object DisplayName, DisplayVersion, Publisher, InstallLocation
             $foundApps += $apps
         }
-    }
-    
+    } 
     return $foundApps
 }
-
 # Main -----------------------------------------------------------------------------------
 Show-Preparing
 $appsToProcess = Get-AppListFromGitHub -Url $githubUrl
@@ -257,8 +253,6 @@ if ($null -ne $appsToProcess) {
    			gni-start
 	  		Show-ProgressBar
 	  		Remove-Application($appName)
-
-	  		
 		} else {
 			Write-Host "[ $AppName not found !!! ]" -ForegroundColor Red
 		}
@@ -310,7 +304,5 @@ Write-Host "`n[ ~~~~~~~~~~~~~~~~~~~~~~~~~~Done~~~~~~~~~~~~~~~~~~~~~~~~~~ ]" -For
 # Object Get-Version call method
 #wait press any key to continue
 # Read-Host -Prompt "Press any key to continue or CTRL+C to quit" | Out-Null
-Read-Host -Prompt "Press any key to continue or CTRL+C to quit" | Out-Null
-
 Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Menu/about.psm1"
 Start-Process -FilePath "C:\Program Files\Google\Chrome\Application\chrome.exe" -ArgumentList "https://app.imx.chat/login"
