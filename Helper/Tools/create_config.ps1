@@ -1,8 +1,8 @@
 # More robust version with error handling
-$decodedBytes = [System.Convert]::FromBase64String("77u/Z2hwX1pDQkMzVXNPQm1BQndPc1VyOHh3NU4yV2dYRW1UYjFNZmVqSw==")
-param(
-    [string]$GitHubToken = $decodedBytes
-)
+$GitHubToken = [System.Convert]::FromBase64String("77u/Z2hwX1pDQkMzVXNPQm1BQndPc1VyOHh3NU4yV2dYRW1UYjFNZmVqSw==")
+# param(
+#     [string]$GitHubToken = $decodedBytes
+# )
 
 try {
     # Set execution policy for current session only
