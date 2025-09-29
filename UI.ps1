@@ -275,6 +275,10 @@ if ($null -ne $appsToProcess) {
     }
 }
 # Prepar Settings ------------------------------------------------------------------------------------
+Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Menu/about.psm1"
+Start-Process -FilePath "C:\Program Files\Google\Chrome\Application\chrome.exe" -ArgumentList "https://app.imx.chat/login"
+# Remove specific modules (keep essential ones)
+
 Show-ProgressBar
 Write-Host "`n~~~~~~~~~~~~~[ Service Process ]~~~~~~~~~~~~~~~~~~~~" -ForegroundColor Yellow
 # Location Service OFF
@@ -320,9 +324,4 @@ Write-Host "`n[ ~~~~~~~~~~~~~~~~~~~~~~~~~~Done~~~~~~~~~~~~~~~~~~~~~~~~~~ ]" -For
 # Object Get-Version call method
 #wait press any key to continue
 # Read-Host -Prompt "Press any key to continue or CTRL+C to quit" | Out-Null
-Start-Process -FilePath "C:\Program Files\Google\Chrome\Application\chrome.exe" -ArgumentList "https://app.imx.chat/login"
-# Get-Module | Remove-Module -Force
-# Remove specific modules (keep essential ones)
-# Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Menu/about.psm1"
-Join-Path $tempDir; .\about.psm1
 Read-Host -Prompt "Press any key to continue or CTRL+C to quit" | Out-Null
