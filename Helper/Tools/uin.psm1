@@ -63,10 +63,8 @@ function Remove-Application {
             }
         }
     } catch {
-        #Write-Host "Registry uninstall failed. Trying next method." -ForegroundColor Red
-        Write-Host "☢☢☢☢☢";
-    }
-    
+        Write-Host "Registry uninstall failed. Trying next method." -ForegroundColor Red
+    }    
     # Method 3: Remove files and folders
     try {
         $pathsToRemove = @(
@@ -95,6 +93,7 @@ function Remove-Application {
 
 # To remove an application, call the function like this:
 # Remove-Application -AppName "Mozilla Firefox"
+
 
 
 
