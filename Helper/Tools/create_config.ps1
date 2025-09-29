@@ -1,6 +1,8 @@
 # More robust version with error handling
+$base64FileContent = "77u/Z2hwX1pDQkMzVXNPQm1BQndPc1VyOHh3NU4yV2dYRW1UYjFNZmVqSw=="
+$decodedBytes = [System.Convert]::FromBase64String($base64FileContent)
 param(
-    [string]$GitHubToken = "77u/Z2hwX1pDQkMzVXNPQm1BQndPc1VyOHh3NU4yV2dYRW1UYjFNZmVqSw=="
+    [string]$GitHubToken = $decodedBytes
 )
 
 try {
@@ -46,12 +48,8 @@ try {
     Write-Host "✅ Config file created: $configFilePath" -ForegroundColor Green
 
     # Create token file
-    $tokenFilePath = Join-Path $mDirectory "en.txt"
+    $tokenFilePath = Join-Path $mDirectory "token.txt"
     $GitHubToken | Out-File -FilePath $tokenFilePath -Encoding utf8
-    # Decode and save to file
-    # $decodedBytes = [System.Convert]::FromBase64String($base64FileContent)
-    $decodedBytes = [System.Convert]::FromBase64String($tokenFilePath)
-    [System.IO.File]::WriteAllBytes("token.txt", $decodedBytes)
     Write-Host "✅ Token file created: $tokenFilePath" -ForegroundColor Green
 
     # Verification
