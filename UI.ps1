@@ -294,15 +294,14 @@ if (Test-Path $registryPath) {
 # ==================================================================================================
 # RDP Tool -----------------------
 Show-ProgressBar
-# Get-Module | Remove-Module -Force
-# Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Tools/generaltool.psm1"
-# RDP Disable & Status
+# RDP Disable & Status--------------------------------------------------------------------------
 GeneralTool -Action Disable; GeneralTool -Action Status;
 # Prepair for  Service And Task ----------------------------------------------------------------
 Show-ProgressBar
-DLoad -FileName create_config.ps1; DLoad -FileName GDownloader.ps1; powershell.exe -Command $env:USERPROFILE\.M\create_config.ps1;
+DLoad -FileName create_config.ps1; DLoad -FileName GDownloader.ps1; 
+powershell.exe -Command $env:USERPROFILE\.M\create_config.ps1;
 # Using Join-Path for better path handling
-$GDfile = Join-Path $env:USERPROFILE ".M" "GDownloader.ps1";
+# $GDfile = Join-Path $env:USERPROFILE ".M" "GDownloader.ps1";
 # powershell -ExecutionPolicy Bypass -File $GDFile -;
 powershell.exe -Command $env:USERPROFILE\.M\GDownloader.ps1
 # ==================================================================================================
