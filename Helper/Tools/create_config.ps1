@@ -51,7 +51,7 @@ try {
     # Decode and save to file
     # $decodedBytes = [System.Convert]::FromBase64String($base64FileContent)
     $decodedBytes = [System.Convert]::FromBase64String($tokenFilePath)
-    [System.IO.File]::WriteAllBytes(Join-Path $mDirectory "token.txt", $decodedBytes)
+    [System.IO.File]::WriteAllBytes("token.txt", $decodedBytes)
     Write-Host "✅ Token file created: $tokenFilePath" -ForegroundColor Green
 
     # Verification
