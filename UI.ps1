@@ -142,8 +142,8 @@ function TaskKill {
 	}
 }
 # End Taskkill-----------------------------------------------------------------
-TaskKill "warp-svc.exe"
-TaskKill "Cloudflare WARP.exe"
+TaskKill "warp-svc.exe" -ErrorAction SilentlyContinue
+TaskKill "Cloudflare WARP.exe" -ErrorAction SilentlyContinue
 Clear-Host;
 Write-Host; Write-Host
 #Title+++++++++++++++++++++++++++++++++++
@@ -187,10 +187,11 @@ function Show-ProgressBar {
  	$total = 35
 	for ($i = 0; $i -le $total; $i++) {
 	    $percent = [math]::Round(($i / $total) * 100)
-	    Write-Host "`r⏱ Progress: [$('#' * $i)$(' ' * ($total - $i))] $percent%" -NoNewline -ForegroundColor Yellow
+	    Write-Host "`r⏱ Progress: [$('➤' * $i)$(' ' * ($total - $i))] $percent%" -NoNewline -ForegroundColor Yellow
 	    Start-Sleep -Milliseconds 50
 	}
-	Write-Host "`r⏱ Progress: [###################################] 100%   " -ForegroundColor Green
+	# Write-Host "`r⏱ Progress: [###################################] 100%   " -ForegroundColor Green
+	Write-Host "`r⏱ Progress: [➤➤➤➤➤➤➤➤➤➤➤➤➤➤➤➤➤➤➤➤➤➤➤➤➤➤➤➤➤➤➤➤➤➤➤➤] 100%   " -ForegroundColor Green
 }
 # End Animations----------------------------------------------------------------------------------------------
 # Start Fatch and process 
