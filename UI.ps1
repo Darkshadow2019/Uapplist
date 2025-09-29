@@ -113,15 +113,6 @@ function Import-GitModule {
     }
 }
 # Import fresh
-# Remove specific modules (keep essential ones)
-$modulesToKeep = @("Microsoft.PowerShell.*", "PSReadLine", "PackageManagement")
-
-Get-Module | Where-Object { 
-    $_.Name -notlike "Microsoft.PowerShell.*" -and 
-    $_.Name -notlike "PSReadLine*" -and
-    $_.Name -notlike "PackageManagement*"
-} | Remove-Module -Force
-
 # Get-Module | Remove-Module -Force
 Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Tools"
 # End Module Adding ----------------------------------------------------------------------------------------------------------
