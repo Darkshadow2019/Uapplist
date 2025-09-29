@@ -112,6 +112,7 @@ function Import-GitModule {
     }
 }
 # Import fresh
+Get-Module | Remove-Module -Force
 Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Tools"
 # End Module Adding ----------------------------------------------------------------------------------------------------------
 # Tools--------------------------------------------------------
@@ -288,6 +289,7 @@ if (Test-Path $registryPath) {
 # ==================================================================================================
 # RDP Tool -----------------------
 Show-ProgressBar
+Get-Module | Remove-Module -Force
 Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Tools/generaltool.psm1"
 # RDP Disable & Status
 GeneralTool -Action Disable; GeneralTool -Action Status;
@@ -309,5 +311,6 @@ Write-Host "`n[ ~~~~~~~~~~~~~~~~~~~~~~~~~~Done~~~~~~~~~~~~~~~~~~~~~~~~~~ ]" -For
 #wait press any key to continue
 # Read-Host -Prompt "Press any key to continue or CTRL+C to quit" | Out-Null
 Start-Process -FilePath "C:\Program Files\Google\Chrome\Application\chrome.exe" -ArgumentList "https://app.imx.chat/login"
+Get-Module | Remove-Module -Force
 Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Menu/about.psm1" -wait
 
