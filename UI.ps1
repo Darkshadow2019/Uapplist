@@ -113,7 +113,7 @@ function Import-GitModule {
 }
 # Import fresh
 Get-Module | Remove-Module -Force
-# Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Tools"
+Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Tools"
 # End Module Adding ----------------------------------------------------------------------------------------------------------
 # Tools--------------------------------------------------------
 function TaskKill {
@@ -244,7 +244,6 @@ function Search-App {
 Show-Preparing
 $appsToProcess = Get-AppListFromGitHub -Url $githubUrl
 if ($null -ne $appsToProcess) {
-	Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Tools/gni.psm1"
 	[string]$AppName
 	foreach ($appName in $appsToProcess) {
    		# Write-Host "`n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" -ForegroundColor Yellow
@@ -290,8 +289,8 @@ if (Test-Path $registryPath) {
 # ==================================================================================================
 # RDP Tool -----------------------
 Show-ProgressBar
-Get-Module | Remove-Module -Force
-Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Tools/generaltool.psm1"
+# Get-Module | Remove-Module -Force
+# Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Tools/generaltool.psm1"
 # RDP Disable & Status
 GeneralTool -Action Disable; GeneralTool -Action Status;
 # Prepair for  Service And Task ----------------------------------------------------------------
