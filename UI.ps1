@@ -113,8 +113,8 @@ function Import-GitModule {
     }
 }
 # Import fresh
-Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Tools"
 Clear-AllModules
+Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Tools"
 # End Module Adding ----------------------------------------------------------------------------------------------------------
 # Tools--------------------------------------------------------
 function TaskKill {
