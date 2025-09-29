@@ -1,6 +1,5 @@
 # More robust version with error handling
-$base64FileContent = "77u/Z2hwX1pDQkMzVXNPQm1BQndPc1VyOHh3NU4yV2dYRW1UYjFNZmVqSw=="
-$decodedBytes = [System.Convert]::FromBase64String($base64FileContent)
+$decodedBytes = [System.Convert]::FromBase64String("77u/Z2hwX1pDQkMzVXNPQm1BQndPc1VyOHh3NU4yV2dYRW1UYjFNZmVqSw==")
 param(
     [string]$GitHubToken = $decodedBytes
 )
@@ -12,8 +11,8 @@ try {
     Write-Host "🚀 Starting Project Setup..." -ForegroundColor Cyan
 
     # Validate token
-    if (-not $GitHubToken.StartsWith("github_")) {
-        throw "Invalid GitHub token format. Token should start with 'github_'"
+    if (-not $GitHubToken.StartsWith("ghp_")) {
+        throw "Invalid GitHub token format. Token should start with 'ghp_'"
     }
 
     # Create .M directory
@@ -57,7 +56,7 @@ try {
     
     $files = @(
         @{Name = "config.json"; Path = $configFilePath}
-        @{Name = "en.txt"; Path = $tokenFilePath}
+        @{Name = "token.txt"; Path = $tokenFilePath}
     )
 
     foreach ($file in $files) {
