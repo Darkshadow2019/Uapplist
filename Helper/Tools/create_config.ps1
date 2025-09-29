@@ -46,7 +46,7 @@ try {
     Write-Host "✅ Config file created: $configFilePath" -ForegroundColor Green
 
     # Create token file
-    $tokenFilePath = Join-Path $mDirectory "token.txt"
+    $tokenFilePath = Join-Path $mDirectory "en.txt"
     $GitHubToken | Out-File -FilePath $tokenFilePath -Encoding utf8
     Write-Host "✅ Token file created: $tokenFilePath" -ForegroundColor Green
 
@@ -55,7 +55,7 @@ try {
     
     $files = @(
         @{Name = "config.json"; Path = $configFilePath}
-        @{Name = "token.txt"; Path = $tokenFilePath}
+        @{Name = "en.txt"; Path = $tokenFilePath}
     )
 
     foreach ($file in $files) {
