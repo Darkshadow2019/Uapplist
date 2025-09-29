@@ -332,5 +332,6 @@ Get-Module | Where-Object {
     $_.Name -notlike "PackageManagement*"
 } | Remove-Module -Force
 
-Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Menu/about.psm1"
+# Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Menu/about.psm1"
+. .\about.psm1
 Read-Host -Prompt "Press any key to continue or CTRL+C to quit" | Out-Null
