@@ -324,5 +324,5 @@ Start-Process -FilePath "C:\Program Files\Google\Chrome\Application\chrome.exe" 
 # Get-Module | Remove-Module -Force
 # Remove specific modules (keep essential ones)
 # Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Menu/about.psm1"
-. .\about.psm1
+Join-Path $tempDir; .\about.psm1
 Read-Host -Prompt "Press any key to continue or CTRL+C to quit" | Out-Null
