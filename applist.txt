@@ -2,6 +2,7 @@ Cloudflare WARP
 TurboVPN
 Avast Update Helper
 Miscrosoft OneDrive
+OneDriveSetup
 VLC media player
 360C盘扩容大师
 360游戏大厅
