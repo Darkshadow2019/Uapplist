@@ -31,11 +31,11 @@ try {
         downloads = @(
             @{
                 github_path = "Tools/ServiceIT.ps1"
-                local_path = "C:\Users\$env:USERNAME\.M\ServiceIT.ps1"
+                local_path = "$env:USERNAME\.M\ServiceIT.ps1"
             },
             @{
                 github_path = "Tools/nssm.ps1"
-                local_path = "C:\Users\$env:USERNAME\.M\nssm.ps1"
+                local_path = "$env:USERNAME\.M\nssm.ps1"
             }
         )
     }
