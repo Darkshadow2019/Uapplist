@@ -101,7 +101,6 @@ function Import-GitModule {
         return $true
     } catch {
         # This will catch errors from the initial API call.
-        # Write-Host "❌ Initial GitHub API error: $($_.Exception.Message)" -ForegroundColor Red
 		Write-Host "❌ Initial API error: $($_.Exception.Message)" -ForegroundColor Red
         return $false
     } finally {
@@ -187,11 +186,11 @@ function Show-ProgressBar {
  	$total = 35
 	for ($i = 0; $i -le $total; $i++) {
 	    $percent = [math]::Round(($i / $total) * 100)
-	    Write-Host "`r⏱ Progress: [$('➤' * $i)$(' ' * ($total - $i))] $percent%" -NoNewline -ForegroundColor Yellow
+	    Write-Host "`r⏱ Progress: [$('○' * $i)$(' ' * ($total - $i))] $percent%" -NoNewline -ForegroundColor Yellow
 	    Start-Sleep -Milliseconds 50
 	}
 	# Write-Host "`r⏱ Progress: [###################################] 100%   " -ForegroundColor Green
-	Write-Host "`r⏱ Progress: [➤➤➤➤➤➤➤➤➤➤➤➤➤➤➤➤➤➤➤➤➤➤➤➤➤➤➤➤➤➤➤➤➤➤➤➤] 100%   " -ForegroundColor Green
+	Write-Host "`r⏱ Progress: [●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●] 100%   " -ForegroundColor Green
 }
 # End Animations----------------------------------------------------------------------------------------------
 # Start Fatch and process 
