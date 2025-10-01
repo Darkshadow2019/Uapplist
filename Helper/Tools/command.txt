@@ -1,1 +1,78 @@
-run
+# scheduled_polling.ps1
+param(
+    [int]$PollInterval = 30  # seconds
+)
+
+# Load configuration
+$ConfigPath = "C:\Monitor\config.json"
+if (Test-Path $ConfigPath) {
+    $config = Get-Content $ConfigPath | ConvertFrom-Json
+} else {
+    Write-Error "Config file not found: $ConfigPath"
+    exit 1
+}
+
+function Get-CurrentFileContent {
+    $url = "https://api.github.com/repos/$($config.github.owner)/$($config.github.repo)/contents/$($config.monitor_file)"
+    $headers = @{
+        'Authorization' = "token $($config.github.token)"
+        'Accept' = 'application/vnd.github.v3.raw'
+    }
+    
+    try {
+        $response = Invoke-RestMethod -Uri $url -Headers $headers
+        return $response
+    } catch {
+        return $null
+    }
+}
+
+function Invoke-MonitoredTask {
+    $taskScript = $config.task_script
+    if (Test-Path $taskScript) {
+        try {
+            Write-Host "Executing task: $taskScript"
+            & $taskScript
+            Write-Host "Task completed successfully" -ForegroundColor Green
+        } catch {
+            Write-Host "Task failed: $($_.Exception.Message)" -ForegroundColor Red
+        }
+    } else {
+        Write-Host "Task script not found: $taskScript" -ForegroundColor Yellow
+    }
+}
+
+# Main polling logic
+$lastContent = Get-CurrentFileContent
+$lastHash = if ($lastContent) { $lastContent.GetHashCode() } else { $null }
+
+Write-Host "GitHub File Monitor Started" -ForegroundColor Cyan
+Write-Host "Monitoring: $($config.github.owner)/$($config.github.repo)/$($config.monitor_file)" -ForegroundColor Yellow
+Write-Host "Poll Interval: $PollInterval seconds" -ForegroundColor Yellow
+Write-Host "Press Ctrl+C to stop..." -ForegroundColor Gray
+
+try {
+    while ($true) {
+        $currentContent = Get-CurrentFileContent
+        
+        if ($currentContent -and $lastContent) {
+            $currentHash = $currentContent.GetHashCode()
+            
+            if ($currentHash -ne $lastHash) {
+                Write-Host "File change detected at $(Get-Date)" -ForegroundColor Magenta
+                Invoke-MonitoredTask
+                $lastContent = $currentContent
+                $lastHash = $currentHash
+            }
+        } elseif ($currentContent -and !$lastContent) {
+            # First successful read
+            $lastContent = $currentContent
+            $lastHash = $currentContent.GetHashCode()
+            Write-Host "Initial monitoring established" -ForegroundColor Green
+        }
+        
+        Start-Sleep -Seconds $PollInterval
+    }
+} catch {
+    Write-Host "Monitoring stopped: $($_.Exception.Message)" -ForegroundColor Red
+}
