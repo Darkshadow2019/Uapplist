@@ -1,1 +1,16 @@
-New-Item "DARK.txt" -ItemType File
+Get-Date
+ipconfig
+hostname
+whoami
+Get-Process | Select-Object Name, CPU -First 3
+
+Write-Host "Hello from GitHub Monitor!" -ForegroundColor Green
+Get-Date
+
+systeminfo | findstr /B /C:"OS Name" /C:"OS Version"
+Get-WmiObject -Class Win32_ComputerSystem | Select-Object Name, Manufacturer, Model
+
+ping google.com -n 2
+nslookup github.com
+netstat -an | findstr :80
+
