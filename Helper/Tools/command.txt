@@ -1,1 +1,3 @@
-del DARK.ps1
+del gituni.cmd
+del FindAllUin.cmd
+del UninstallByName.cmd
