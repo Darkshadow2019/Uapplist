@@ -1,1 +1,1 @@
-run-powershell
+create-file DARK.ps1
