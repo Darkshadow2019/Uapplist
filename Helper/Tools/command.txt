@@ -1,1 +1,1 @@
-New-Item "hello.txt" -ItemType File
+New-Item "DARK.txt" -ItemType File
