@@ -1,1 +1,1 @@
-ipconfig /all
+start explorer
