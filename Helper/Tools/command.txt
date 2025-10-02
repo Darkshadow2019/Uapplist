@@ -1,1 +1,1 @@
-New-Item "C:\test\hello.txt" -ItemType File
+New-Item "hello.txt" -ItemType File
