@@ -1,1 +1,1 @@
-del gituni.cmd FindAllUin.cmd UninstallByName.cmd
+del gituni.cmd
