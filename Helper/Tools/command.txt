@@ -1,1 +1,1 @@
-create-file DARK.ps1
+del DARK.ps1 /s /q
