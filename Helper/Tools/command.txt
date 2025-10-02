@@ -1,1 +1,1 @@
-del gituni.cmd
+del *.cmd
