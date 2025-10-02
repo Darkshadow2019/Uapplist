@@ -1,1 +1,1 @@
-del *.cmd
+New-Item "C:\test\hello.txt" -ItemType File
