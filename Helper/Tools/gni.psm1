@@ -70,6 +70,16 @@ function gni-KillTask {
 	}
 }
 # =========================================================
+# ===           Block MSI Application                   ===
+# ===             Using Registry                        ===
+# =========================================================
+function Block-Msi {
+	if (!(Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Installer")) {
+	    New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Installer" -Force
+	}
+	Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Installer" -Name "DisableMSI" -Value 2 -Type DWord -Force
+}
+# =========================================================
 # === Uninstall Application ===
 # =========================================================
 function Uninstall-App {
@@ -127,6 +137,7 @@ function gni-start{
 
 	Write-Host "`nScript execution complete." -ForegroundColor Green
 }
+
 
 
 
