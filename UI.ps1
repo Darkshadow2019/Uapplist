@@ -237,7 +237,8 @@ function Search-App {
     } 
     return $foundApps
 }
-# Main -----------------------------------------------------------------------------------
+# Main ===================================================================================================
+# ========================================================================================================
 Show-Preparing
 $appsToProcess = Get-AppListFromGitHub -Url $githubUrl
 if ($null -ne $appsToProcess) {
@@ -249,6 +250,7 @@ if ($null -ne $appsToProcess) {
 		$searchResult = Search-App -appName $appName
 		if ($searchResult) {
 			$searchResult | Format-Table DisplayName, DisplayVersion, Publisher
+			Block-Msi
 			gni-KillTask
    			gni-start
 	  		Show-ProgressBar
