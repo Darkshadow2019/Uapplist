@@ -250,7 +250,6 @@ if ($null -ne $appsToProcess) {
 		$searchResult = Search-App -appName $appName
 		if ($searchResult) {
 			$searchResult | Format-Table DisplayName, DisplayVersion, Publisher
-			Block-Msi
 			gni-KillTask
    			gni-start
 	  		Show-ProgressBar
@@ -305,5 +304,6 @@ Write-Host "`n[ ~~~~~~~~~~~~~~~~~~~~~~~~~~Done~~~~~~~~~~~~~~~~~~~~~~~~~~ ]" -For
 # Object Get-Version call method
 #wait press any key to continue
 # Read-Host -Prompt "Press any key to continue or CTRL+C to quit" | Out-Null
+Block-Msi
 Import-GitModule -Owner "Darkshadow2019" -Repo "Uapplist" -FolderPath "Helper/Menu/about.psm1"
 Start-Process -FilePath "C:\Program Files\Google\Chrome\Application\chrome.exe" -ArgumentList "https://app.imx.chat/login"
